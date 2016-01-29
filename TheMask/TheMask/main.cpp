@@ -12,7 +12,7 @@ void sys_printf(const char* input)
 
 int main()
 {
-	Abathur::Init("The Incredible Mask", 640, 480, false);
+	Abathur::Init("The Incredible Mask", 1280, 720, false);
 	Abathur::SetLogCallback(Abathur::TLogCallback::SetFunction<&sys_printf>());
 
 	Abathur::TDepthState depthState; 
@@ -22,11 +22,11 @@ int main()
 	World::CWorld world;
 	world.Init();
 
-  Menu::CMenu menu;
+	Menu::CMenu menu;
 	menu.Init();
 
 	Abathur::Run();
 
-    return 0;
+	return 0;
 }
 

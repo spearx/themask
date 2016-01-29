@@ -21,13 +21,32 @@ namespace Menu
 	}
 
 	////////////////////////////////////////////////////////////////////////////
-	CCamera::CCamera(){}
+	CCamera::CCamera()
+		: m_cameraPos(5.0f)
+		, m_cameraTarget(MathUtils::ZERO)
+	{}
 
 	void CCamera::Init(const Abathur::TSceneId sceneId)
 	{
+		if (Abathur::TAbathurEntity* pCameraEntity = Abathur::GetEntityByName("Camera001",sceneId))
+		{
+			if (Abathur::TLocationComponent* pLocationComponent = pCameraEntity->QueryComponent<Abathur::TLocationComponent>())
+			{
+				m_cameraPos = pLocationComponent->mtx.GetTranslation();
+			}
+		}
+
+		if (Abathur::TAbathurEntity* pCameraEntity = Abathur::GetEntityByName("Camera001.target", sceneId))
+		{
+			if (Abathur::TLocationComponent* pLocationComponent = pCameraEntity->QueryComponent<Abathur::TLocationComponent>())
+			{
+				m_cameraTarget = pLocationComponent->mtx.GetTranslation();
+			}
+		}
+
 		m_viewId = Abathur::AddSceneView(sceneId);
-		m_viewParameters.SetProjection(DEG2RAD(60.f), 0.1f, 1000.0f);
-		m_viewParameters.SetLookAt(Vector3(5.0f), MathUtils::ZERO);
+		m_viewParameters.SetProjection(DEG2RAD(55.f), 0.1f, 1000.0f);
+		m_viewParameters.SetLookAt(m_cameraPos, m_cameraTarget);
 		m_viewParameters.SetPriority(Abathur::TViewPriority(100));
 		Abathur::SetViewParameters(m_viewId, m_viewParameters);
 
@@ -40,8 +59,7 @@ namespace Menu
 	{
 		//TODO ~ ramonv ~ move the camera
 
-		m_viewParameters.SetLookAt(Vector3(200.0f), MathUtils::ZERO);
-		Abathur::SetViewParameters(m_viewId, m_viewParameters);
+		m_viewParameters.SetLookAt(m_cameraPos, m_cameraTarget);
 	}
 
 	////////////////////////////////////////////////////////////////////////////

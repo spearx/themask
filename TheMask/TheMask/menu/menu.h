@@ -31,8 +31,9 @@ namespace Menu
 	private: 
 		Abathur::TViewId         m_viewId;
 		Abathur::CViewParameters m_viewParameters;
-
 		Abathur::CScopedUpdate   m_update;
+		Vector3                  m_cameraPos;
+		Vector3                  m_cameraTarget;
 	};
 
 	class CMenu
