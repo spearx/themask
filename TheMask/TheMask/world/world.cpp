@@ -1,5 +1,7 @@
 #include "world.h"
 
+#include "player_component.h"
+
 namespace World
 {
 	/*
@@ -57,11 +59,16 @@ namespace World
 
 	void CWorld::Init()
 	{
+		Abathur::RegisterEntityComponent<CPlayerComponent>("comp_player");
 		Abathur::InitPhysX(Vector3(0.0f, -9.8f, 0.0f));
 
 		m_sceneId = Abathur::LoadScene("data/collision_test/scenes/collision_test.scene");
-
 		m_camera.Init(m_sceneId);
+
+		if (Abathur::TAbathurEntity* pPlayerEntity = Abathur::GetEntityByName("mask", m_sceneId))
+		{
+			m_playerId = pPlayerEntity->GetId();
+		}
 
 		Abathur::StartScene(m_sceneId); //TODO ~ ramonv ~ move this away in order to start the game on our demand instead of startup
 	}

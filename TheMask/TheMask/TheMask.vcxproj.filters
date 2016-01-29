@@ -8,6 +8,9 @@
     <ClCompile Include="world\world.cpp">
       <Filter>world</Filter>
     </ClCompile>
+    <ClCompile Include="world\player_component.cpp">
+      <Filter>world</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="menu">
@@ -22,6 +25,9 @@
       <Filter>menu</Filter>
     </ClInclude>
     <ClInclude Include="world\world.h">
+      <Filter>world</Filter>
+    </ClInclude>
+    <ClInclude Include="world\player_component.h">
       <Filter>world</Filter>
     </ClInclude>
   </ItemGroup>

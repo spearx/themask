@@ -150,6 +150,7 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="menu\menu.cpp" />
+    <ClCompile Include="world\player_component.cpp" />
     <ClCompile Include="world\world.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -159,6 +160,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="menu\menu.h" />
+    <ClInclude Include="world\player_component.h" />
     <ClInclude Include="world\world.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

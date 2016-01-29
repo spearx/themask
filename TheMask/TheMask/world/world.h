@@ -36,7 +36,8 @@ namespace World
 		void Init();
 
 	private: 
-		CCamera           m_camera;
-		Abathur::TSceneId m_sceneId; 
+		CCamera            m_camera;
+		Abathur::TSceneId  m_sceneId; 
+		Abathur::TEntityId m_playerId;
 	};
 }
