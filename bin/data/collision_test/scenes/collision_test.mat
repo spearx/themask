@@ -1,0 +1,62 @@
+{
+   "_01 - Default" : {
+      "ambient_color" : "0.588235  0.588235 0.588235 1.000000",
+      "emission_color" : "0.000000  0.000000 0.000000 1.000000",
+      "samplers" : {
+         "diffuse" : "data/collision_test/textures/ball_8.tga"
+      },
+      "specular_color" : "0.000000  0.000000 0.000000 1.000000",
+      "pixel_shader" : "data/shaders/fp_textured.glsl",
+      "vertex_shader" : "data/shaders/vp_basic.glsl"
+   },
+   "_02 - Default" : {
+      "ambient_color" : "0.588235  0.588235 0.588235 1.000000",
+      "emission_color" : "0.000000  0.000000 0.000000 1.000000",
+      "samplers" : {
+         "diffuse" : "data/collision_test/textures/wall_texture_by_shadowh3.tga"
+      },
+      "specular_color" : "0.000000  0.000000 0.000000 1.000000",
+      "pixel_shader" : "data/shaders/fp_textured.glsl",
+      "vertex_shader" : "data/shaders/vp_basic.glsl"      
+   },
+   "_03 - Default" : {
+      "ambient_color" : "0.588235  0.588235 0.588235 1.000000",
+      "emission_color" : "0.000000  0.000000 0.000000 1.000000",
+      "samplers" : {
+         "diffuse" : "data/collision_test/textures/crate side - Copy.tga"
+      },
+      "specular_color" : "0.000000  0.000000 0.000000 1.000000",
+      "pixel_shader" : "data/shaders/fp_textured.glsl",
+      "vertex_shader" : "data/shaders/vp_basic.glsl"
+   },
+   "_07 - Default" : {
+      "ambient_color" : "0.588235  0.588235 0.588235 1.000000",
+      "emission_color" : "0.000000  0.000000 0.000000 1.000000",
+      "samplers" : {
+         "diffuse" : "data/collision_test/textures/crate.tga"
+      },
+      "specular_color" : "0.000000  0.000000 0.000000 1.000000",
+      "pixel_shader" : "data/shaders/fp_textured.glsl",
+      "vertex_shader" : "data/shaders/vp_basic.glsl"
+   },
+   "_08 - Default" : {
+      "ambient_color" : "0.588235  0.588235 0.588235 1.000000",
+      "emission_color" : "0.000000  0.000000 0.000000 1.000000",
+      "samplers" : {
+         "diffuse" : "data/collision_test/textures/b701a514cc11c3300766f8b43b1762f5.tga"
+      },
+      "specular_color" : "0.000000  0.000000 0.000000 1.000000",
+      "pixel_shader" : "data/shaders/fp_textured.glsl",
+      "vertex_shader" : "data/shaders/vp_basic.glsl"
+   },
+   "_09 - Default" : {
+      "ambient_color" : "0.588235  0.588235 0.588235 1.000000",
+      "emission_color" : "0.000000  0.000000 0.000000 1.000000",
+      "samplers" : {
+         "diffuse" : "data/collision_test/textures/25.vintage-textures.tga"
+      },
+      "specular_color" : "0.000000  0.000000 0.000000 1.000000",
+      "pixel_shader" : "data/shaders/fp_textured.glsl",
+      "vertex_shader" : "data/shaders/vp_basic.glsl"
+   }
+}

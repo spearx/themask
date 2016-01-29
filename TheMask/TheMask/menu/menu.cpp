@@ -40,11 +40,6 @@ namespace Menu
 	{
 		//TODO ~ ramonv ~ move the camera
 
-		//hack (scene is super huge ) 
-		Matrix44 mtx;
-		mtx.SetScale(0.1f);
-		Abathur::setMatrix(Abathur::MATRIX_WORLD, &mtx);
-
 		m_viewParameters.SetLookAt(Vector3(200.0f), MathUtils::ZERO);
 		Abathur::SetViewParameters(m_viewId, m_viewParameters);
 	}
@@ -57,7 +52,7 @@ namespace Menu
 	void CMenu::Init()
 	{
 		//Load scene
-		m_sceneId = Abathur::LoadScene("data/gamejam/scenes/test_habitaciones.scene");
+		m_sceneId = Abathur::LoadScene("data/menu/scenes/themask_menu.scene");
 
 		//Cameras
 		m_camera.Init(m_sceneId);

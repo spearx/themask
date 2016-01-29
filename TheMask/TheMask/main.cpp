@@ -22,7 +22,7 @@ int main()
 	World::CWorld world;
 	world.Init();
 
-	Menu::CMenu menu;
+  Menu::CMenu menu;
 	menu.Init();
 
 	Abathur::Run();

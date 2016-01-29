@@ -1,0 +1,66 @@
+{
+   "Box001" : {
+      "comp_location" : {
+         "mtx" : "1.000 0.000 0.000 0.260 0.000 0.000 1.000 0.000 0.000 -1.000 0.000 -1.558 0.000 0.000 0.000 1.000"
+      },
+      "comp_visual" : {
+         "material" : "_02 - Default",
+         "mesh" : "data/collision_test/meshes/Box001.mesh"
+      }
+   },
+   "Box002" : {
+      "comp_location" : {
+         "mtx" : "1.000 0.000 0.000 -4.708 0.000 1.000 0.000 1.405 0.000 0.000 1.000 -6.738 0.000 0.000 0.000 1.000"
+      },
+      "comp_visual" : {
+         "material" : "_08 - Default",
+         "mesh" : "data/collision_test/meshes/Box002.mesh"
+      }
+   },
+   "Box003" : {
+      "comp_location" : {
+         "mtx" : "0.434 0.901 0.000 2.721 -0.901 0.434 0.000 2.259 0.000 0.000 1.000 -6.738 0.000 0.000 0.000 1.000"
+      },
+      "comp_visual" : {
+         "material" : "_03 - Default",
+         "mesh" : "data/collision_test/meshes/Box003.mesh"
+      }
+   },
+   "Box004" : {
+      "comp_location" : {
+         "mtx" : "0.632 0.000 -0.775 4.625 0.000 1.000 0.000 1.405 0.775 0.000 0.632 0.932 0.000 0.000 0.000 1.000"
+      },
+      "comp_visual" : {
+         "material" : "_07 - Default",
+         "mesh" : "data/collision_test/meshes/Box004.mesh"
+      }
+   },
+   "Camera001" : {
+      "comp_location" : {
+         "mtx" : "0.026 -0.011 -1.000 0.680 0.388 0.921 0.000 11.921 0.921 -0.388 0.028 21.414 0.000 0.000 0.000 1.000"
+      }
+   },
+   "Camera001.Target" : {
+      "comp_location" : {
+         "mtx" : "0.000 0.000 -1.000 0.000 0.000 1.000 0.000 1.613 1.000 0.000 0.000 -3.026 0.000 0.000 0.000 1.000"
+      }
+   },
+   "Cylinder001" : {
+      "comp_location" : {
+         "mtx" : "1.000 0.000 0.000 0.050 0.000 0.000 1.000 0.000 0.000 -1.000 0.000 0.076 0.000 0.000 0.000 1.000"
+      },
+      "comp_visual" : {
+         "material" : "_09 - Default",
+         "mesh" : "data/collision_test/meshes/Cylinder001.mesh"
+      }
+   },
+   "Sphere001" : {
+      "comp_location" : {
+         "mtx" : "1.000 0.000 0.000 -3.844 0.000 0.000 1.000 1.061 0.000 -1.000 0.000 -0.085 0.000 0.000 0.000 1.000"
+      },
+      "comp_visual" : {
+         "material" : "_01 - Default",
+         "mesh" : "data/collision_test/meshes/Sphere001.mesh"
+      }
+   }
+}
