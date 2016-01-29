@@ -101,12 +101,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)../../common/sdk/;$(SolutionDir)../../common/code/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)../../abathur/common/sdk/;$(SolutionDir)../../abathur/common/code/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)../../common/sdk/</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)../../abathur/common/sdk/</AdditionalLibraryDirectories>
       <AdditionalDependencies>abathur_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -136,14 +136,14 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)../../common/sdk/;$(SolutionDir)../../common/code/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)../../abathur/common/sdk/;$(SolutionDir)../../abathur/common/code/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)../../common/sdk/</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)../../abathur/common/sdk/</AdditionalLibraryDirectories>
       <AdditionalDependencies>abathur.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -154,14 +154,14 @@
     <ClCompile Include="world\world.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\common\code\common.vcxproj">
-      <Project>{0febdd8a-81d1-4457-a8af-b09dc7be7926}</Project>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="menu\menu.h" />
     <ClInclude Include="world\player_component.h" />
     <ClInclude Include="world\world.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\abathur\common\code\common.vcxproj">
+      <Project>{0febdd8a-81d1-4457-a8af-b09dc7be7926}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
