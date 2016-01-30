@@ -231,7 +231,6 @@ namespace World
 		  }
 		  else if (m_currentInteraction == "Interact_Item_2")
 		  { 
-
 			  Menu::CPopup::Get().AddTextLine("THIS IS ITERACTIVE ITEM 2!");
 		  }
 	  }
