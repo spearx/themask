@@ -69,6 +69,11 @@ namespace Menu
 	void CButtonComponent::SetEnable(const bool isEnabled)
 	{
 		m_isEnabled = isEnabled;
+		Abathur::TVisualComponent *comp = entity->QueryComponent<Abathur::TVisualComponent>();
+		if (comp)
+		{
+			comp->visible = true;
+		}
 	}
 	
 	bool CButtonComponent::IsPressed(const bool input)
