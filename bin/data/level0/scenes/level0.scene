@@ -119,7 +119,7 @@
          "mtx" : "1.000 0.000 0.000 -6.508 0.000 0.000 1.000 0.000 0.000 -1.000 0.000 -3.986 0.000 0.000 0.000 1.000"
       },
       "comp_visual" : {
-         "material" : "Material #138",
+         "material" : "Material #205",
          "mesh" : "data/level0/meshes/Centinel_Base_1.mesh"
       }
    },
@@ -128,7 +128,7 @@
          "mtx" : "1.000 0.000 0.000 -6.508 0.000 0.000 1.000 0.000 0.000 -1.000 0.000 -3.986 0.000 0.000 0.000 1.000"
       },
       "comp_visual" : {
-         "material" : "Material #138",
+         "material" : "Material #205",
          "mesh" : "data/level0/meshes/Centinel_Head_1.mesh"
       }
    },
@@ -154,7 +154,7 @@
          "static_friction" : "0.0"
       },
       "comp_visual" : {
-         "material" : "Room_1",
+         "material" : "Material #205",
          "mesh" : "data/level0/meshes/Item_1.mesh"
       }
    },
@@ -171,7 +171,7 @@
          "static_friction" : "0.0"
       },
       "comp_visual" : {
-         "material" : "Room_1",
+         "material" : "Material #205",
          "mesh" : "data/level0/meshes/Item_2.mesh"
       }
    },
@@ -188,7 +188,7 @@
          "static_friction" : "0.0"
       },
       "comp_visual" : {
-         "material" : "Room_1",
+         "material" : "Material #205",
          "mesh" : "data/level0/meshes/Item_3.mesh"
       }
    },
@@ -205,7 +205,7 @@
          "static_friction" : "0.0"
       },
       "comp_visual" : {
-         "material" : "Room_1",
+         "material" : "Material #205",
          "mesh" : "data/level0/meshes/Item_4.mesh"
       }
    },
@@ -222,7 +222,7 @@
          "static_friction" : "0.0"
       },
       "comp_visual" : {
-         "material" : "Room_1",
+         "material" : "Material #205",
          "mesh" : "data/level0/meshes/Item_5.mesh"
       }
    },
@@ -239,7 +239,7 @@
          "static_friction" : "0.0"
       },
       "comp_visual" : {
-         "material" : "Room_1",
+         "material" : "Material #205",
          "mesh" : "data/level0/meshes/Item_6.mesh"
       }
    },
@@ -248,8 +248,8 @@
          "mtx" : "1.000 0.000 0.000 0.000 0.000 0.000 1.000 0.000 0.000 -1.000 0.000 0.000 0.000 0.000 0.000 1.000"
       },
       "comp_visual" : {
-         "mesh" : "data/level0/meshes/Ivy.mesh",
-         "material" : "Ivy"         
+         "material" : "Material #3",
+         "mesh" : "data/level0/meshes/Ivy.mesh"
       }
    },
    "Laser_1" : {
@@ -357,6 +357,7 @@
          "mtx" : "1.000 0.000 0.000 -13.750 0.000 1.000 0.000 1.424 0.000 0.000 1.000 -2.397 0.000 0.000 0.000 1.000"
       },
       "comp_visual" : {
+         "material" : "Laser_A",
          "mesh" : "data/level0/meshes/Laser_A.mesh"
       }
    },
@@ -365,6 +366,7 @@
          "mtx" : "1.000 0.000 0.000 -12.595 0.000 1.000 0.000 0.653 0.000 0.000 1.000 -2.397 0.000 0.000 0.000 1.000"
       },
       "comp_visual" : {
+         "material" : "Laser_A",
          "mesh" : "data/level0/meshes/Laser_A001.mesh"
       }
    },
@@ -373,6 +375,7 @@
          "mtx" : "1.000 0.000 0.000 -11.497 0.000 1.000 0.000 1.321 0.000 0.000 1.000 -2.397 0.000 0.000 0.000 1.000"
       },
       "comp_visual" : {
+         "material" : "Laser_A",
          "mesh" : "data/level0/meshes/Laser_A002.mesh"
       }
    },
@@ -381,6 +384,7 @@
          "mtx" : "-1.000 0.000 0.000 -13.750 0.000 1.000 0.000 1.028 0.000 0.000 -1.000 4.850 0.000 0.000 0.000 1.000"
       },
       "comp_visual" : {
+         "material" : "Laser_A",
          "mesh" : "data/level0/meshes/Laser_A003.mesh"
       }
    },
@@ -389,6 +393,7 @@
          "mtx" : "-1.000 0.000 0.000 -12.595 0.000 1.000 0.000 1.502 0.000 0.000 -1.000 4.850 0.000 0.000 0.000 1.000"
       },
       "comp_visual" : {
+         "material" : "Laser_A",
          "mesh" : "data/level0/meshes/Laser_A004.mesh"
       }
    },
@@ -397,6 +402,7 @@
          "mtx" : "-1.000 0.000 0.000 -11.497 0.000 1.000 0.000 1.069 0.000 0.000 -1.000 4.850 0.000 0.000 0.000 1.000"
       },
       "comp_visual" : {
+         "material" : "Laser_A",
          "mesh" : "data/level0/meshes/Laser_A005.mesh"
       }
    },
@@ -405,6 +411,7 @@
          "mtx" : "0.000 0.000 1.000 -36.482 0.000 1.000 0.000 1.160 -1.000 0.000 0.000 4.725 0.000 0.000 0.000 1.000"
       },
       "comp_visual" : {
+         "material" : "Laser_A",
          "mesh" : "data/level0/meshes/Laser_A006.mesh"
       }
    },
@@ -413,6 +420,7 @@
          "mtx" : "0.000 0.000 1.000 -36.482 0.000 1.000 0.000 1.160 -1.000 0.000 0.000 -1.916 0.000 0.000 0.000 1.000"
       },
       "comp_visual" : {
+         "material" : "Laser_A",
          "mesh" : "data/level0/meshes/Laser_A007.mesh"
       }
    },
@@ -421,6 +429,7 @@
          "mtx" : "0.000 0.000 -1.000 -26.526 0.000 1.000 0.000 1.160 1.000 0.000 0.000 4.819 0.000 0.000 0.000 1.000"
       },
       "comp_visual" : {
+         "material" : "Laser_A",
          "mesh" : "data/level0/meshes/Laser_A008.mesh"
       }
    },
@@ -429,6 +438,7 @@
          "mtx" : "0.000 0.000 -1.000 -26.526 0.000 1.000 0.000 1.160 1.000 0.000 0.000 2.790 0.000 0.000 0.000 1.000"
       },
       "comp_visual" : {
+         "material" : "Laser_A",
          "mesh" : "data/level0/meshes/Laser_A009.mesh"
       }
    },
@@ -660,7 +670,7 @@
          "mtx" : "1.000 0.000 0.000 3.127 0.000 -0.707 0.707 1.216 0.000 -0.707 -0.707 5.035 0.000 0.000 0.000 1.000"
       },
       "comp_visual" : {
-         "material" : "Material #138",
+         "material" : "Material #205",
          "mesh" : "data/level0/meshes/Torch.mesh"
       }
    },
@@ -669,7 +679,7 @@
          "mtx" : "1.000 0.000 0.000 -2.990 0.000 -0.707 0.707 1.216 0.000 -0.707 -0.707 5.035 0.000 0.000 0.000 1.000"
       },
       "comp_visual" : {
-         "material" : "Material #138",
+         "material" : "Material #205",
          "mesh" : "data/level0/meshes/Torch001.mesh"
       }
    }
