@@ -1,7 +1,7 @@
 #include "offline_game.h"
 
-#include "menu/menu.h"
-#include "menu/button_component.h"
+#include "menu.h"
+#include "button_component.h"
 
 namespace Menu
 {
@@ -43,7 +43,7 @@ namespace Menu
 		}
 		m_sequenceIndex = 0u;
 		m_state = EState::Running;
-
+		m_update.Unregister();
 		m_update.Register(Abathur::GetUpdatePriority(Abathur::EUpdateTier::PostPhysics,Abathur::EUpdateStage::Default),Abathur::TUpdateCallback::SetMethod<COfflineGame,&COfflineGame::Update>(this));
 	}
 
@@ -74,14 +74,15 @@ namespace Menu
 				{
 					m_state = EState::Failed;
 					printf("FAILURE~~~~\n");
+					break;
 				}
 				else if (m_sequenceIndex >= SEQUENCE_LENGTH)
 				{
 					m_state = EState::Success;
 					printf("AWESOME~~~~\n");
+					break;
 				}
 
-				break;
 			}
 		}
 	}

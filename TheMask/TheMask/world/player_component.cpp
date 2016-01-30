@@ -4,6 +4,7 @@
 #include "world/triggers.h"
 #include "abathur_gui.h"
 #include "utils/math/Angle3.h"
+#include "menu/menu.h"
 
 namespace World
 {
@@ -46,6 +47,8 @@ namespace World
     m_update_post_physx.SetCallback(Abathur::TUpdateCallback::SetMethod<CPlayerComponent, &CPlayerComponent::UpdatePostPhysX>(this));
     m_update_post_physx.Register();
 
+	CTriggers::Get().RegisterListenner(CTriggers::TTriggerEventCallback::SetMethod<CPlayerComponent,&CPlayerComponent::OnTriggerEvent>(this));
+
     if (Abathur::TLocationComponent* pLocComponent = entity->QueryComponent<Abathur::TLocationComponent>())
     {
       m_matrix_original = Matrix33(pLocComponent->mtx);
@@ -62,7 +65,21 @@ namespace World
 
 	bool CPlayerComponent::OnButton(const Abathur::Input::EButton button, const Abathur::Input::EButtonEvent buttonEvent)
 	{
-		//TODO ~ ramonv ~ player controller
+		if (m_state != EState::Inactive && button == Abathur::Input::EButton::GamepadA)
+		{
+			if (m_currentInteraction == "Unlock_Totem" && !Menu::CMenu::Get().IsButtonEnabled(Menu::CMenu::Totem))
+			{
+				Menu::CMenu::Get().EnableButton(Menu::CMenu::Totem);
+			}
+			else if (m_currentInteraction == "Unlock_Laser_1" && !Menu::CMenu::Get().IsButtonEnabled(Menu::CMenu::Laser1))
+			{
+				Menu::CMenu::Get().EnableButton(Menu::CMenu::Laser1);
+			}
+			else if (m_currentInteraction == "Unlock_Laser_2" && !Menu::CMenu::Get().IsButtonEnabled(Menu::CMenu::Laser2))
+			{
+				Menu::CMenu::Get().EnableButton(Menu::CMenu::Laser2);
+			}
+		}
 		return false; 
 	}
 
@@ -168,4 +185,29 @@ namespace World
 		}
 	}
   }
+
+  void CPlayerComponent::OnTriggerEvent(const std::string &event_name, CTriggers::ETriggerEvent event_type)
+  {
+	  if (event_type == CTriggers::ETriggerEvent::ON_ENTER)
+	  {
+		  printf("On Trigger Event %s ON ENTER\n", event_name.c_str());
+
+		  if (event_name == "Interact_Cauldron")
+		  {
+			//  Menu::CMenu::Get().GetOfflineGame().Enable();
+		  }
+		  m_currentInteraction = event_name;
+	  }
+	  else if (event_type == CTriggers::ETriggerEvent::ON_EXIT)
+	  {
+		  printf("On Trigger Event %s ON EXIT\n", event_name.c_str());
+
+		  if (event_name == "Interact_Cauldron")
+		  {
+			//  Menu::CMenu::Get().GetOfflineGame().Disable();
+		  }
+		  m_currentInteraction = "";
+	  }
+  }
+
 }

@@ -2,7 +2,7 @@
 
 #include "abathur.h"
 
-#include "menu/offline_game.h"
+#include "offline_game.h"
 
 //declaration forward
 namespace World
@@ -36,6 +36,14 @@ namespace Menu
 	{
 	public:
 
+		enum EButton
+		{
+			Totem, 
+			Laser1, 
+			Laser2,
+			ButtonCount
+		};
+
 		enum class EState
 		{
 			Intro = 0, 
@@ -50,6 +58,9 @@ namespace Menu
 		void Init();
 
 		Abathur::TSceneId GetSceneId() const { return m_sceneId; }
+
+		bool IsButtonEnabled(const EButton button) const;
+		void EnableButton(const EButton button);
 
 		CCamera& GetCamera() { return m_camera; }
 		COfflineGame& GetOfflineGame() { return m_offlineGame; }
@@ -76,6 +87,8 @@ namespace Menu
 		Abathur::CScopedUpdate   m_preRenderUpdate;
 		Abathur::CScopedUpdate   m_logicUpdate;
 		EState                   m_state;
+
+		const char*              m_buttonNames[ButtonCount];
 	};
 
 }

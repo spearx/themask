@@ -8,14 +8,7 @@ namespace World
 {
   float gDistance = 5.0f;
 
-  void OnTriggerEvent(const std::string &event_name, CTriggers::ETriggerEvent event_type) {
-    if( event_type == CTriggers::ETriggerEvent::ON_ENTER)
-      printf("On Trigger Event %s ON ENTER\n", event_name.c_str());
-    else if (event_type == CTriggers::ETriggerEvent::ON_EXIT)
-      printf("On Trigger Event %s ON EXIT\n", event_name.c_str());
-  }
-
-	void testGrid(const Abathur::TViewId viewId, const Abathur::CViewParameters& params)
+ 	void testGrid(const Abathur::TViewId viewId, const Abathur::CViewParameters& params)
 	{
 		Abathur::renderGrid(8, 8, 2, 0xffffffff, 0xff00ffff);
 		Abathur::renderAxis(2.0f);
@@ -203,7 +196,6 @@ namespace World
       Abathur::TEntityId entity = Abathur::GetEntityIdByName("Item_6", m_sceneId);
       CTriggers::Get().RegisterTriggerSphere(entity, 1.0f, "Interact_Item_6");
     }
-    CTriggers::Get().RegisterListenner(CTriggers::TTriggerEventCallback::SetFunction<&OnTriggerEvent>());
   }
 
 

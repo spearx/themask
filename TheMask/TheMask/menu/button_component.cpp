@@ -1,6 +1,6 @@
 #include "button_component.h"
 
-#include "menu/menu.h"
+#include "menu.h"
 
 namespace Menu
 {
@@ -52,29 +52,18 @@ namespace Menu
 			m_isPressed = buttonEvent == Abathur::Input::EButtonEvent::Press ? m_isEnabled : false;
 		}
 
-		if (button == Abathur::Input::EButton::MouseRight)
-		{
-			CMenu::Get().GetOfflineGame().Enable();
-		}
-
-		if (button == Abathur::Input::EButton::MouseMiddle)
-		{
-			CMenu::Get().GetOfflineGame().Disable();
-		}
-
 		return false;
 	}
 
 	
 	bool CButtonComponent::OnDirection(const Abathur::Input::EDirection direction, const Vector2& value)
 	{
-		/*
-		if (direction == Abathur::Input::EDirection::MouseMove)
-		{
-			printf("We are hoving %d!!!!\n", IsMouseHover());
-		}
-		*/
 		return false;
+	}
+
+	bool CButtonComponent::IsEnabled() const 
+	{
+		return m_isEnabled;
 	}
 
 	void CButtonComponent::SetEnable(const bool isEnabled)
