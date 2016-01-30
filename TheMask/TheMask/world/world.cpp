@@ -11,7 +11,8 @@ namespace World
 	}
 
 	CCamera::CCamera()
-		: m_cameraPosition(MathUtils::ZERO)
+		: m_roomIndex(0u)
+		, m_cameraPosition(MathUtils::ZERO)
 		, m_cameraTarget(MathUtils::ZERO)
 	{}
 
@@ -20,42 +21,81 @@ namespace World
 		m_pRenderTarget = Abathur::createRenderTarget(512,512);
 
 		m_viewId = Abathur::AddSceneView(sceneId);
-		m_viewParameters.SetProjection(DEG2RAD(60.f), 0.1f, 10000.0f);
-		//m_viewParameters.SetRenderTarget(m_pRenderTarget);
+		m_viewParameters.SetProjection(DEG2RAD(70.f), 0.1f, 10000.0f);
+		m_viewParameters.SetRenderTarget(m_pRenderTarget);
 		m_viewParameters.SetPriority(Abathur::TViewPriority(1u));
 		m_viewParameters.SetBeforeCallback(Abathur::TViewCallback::SetFunction<&testGrid>());
     
-    m_cameraPosition = Vector3(5.0f);
-
-    if (Abathur::TAbathurEntity* pCameraEntity = Abathur::GetEntityByName("Camera_Room_1", sceneId))
-    {
-      if (Abathur::TLocationComponent* pLocationComponent = pCameraEntity->QueryComponent<Abathur::TLocationComponent>())
-      {
-        m_cameraPosition = pLocationComponent->mtx.GetTranslation();
-      }
-    }
+		m_cameraPosition = Vector3(5.0f);
 
 		m_viewParameters.SetLookAt(m_cameraPosition, m_cameraTarget);
 		Abathur::SetViewParameters(m_viewId, m_viewParameters);
 
 
-		m_update.SetPriority(Abathur::GetUpdatePriority(Abathur::EUpdateTier::PrePhysics, Abathur::EUpdateStage::Default));
+		m_update.SetPriority(Abathur::GetUpdatePriority(Abathur::EUpdateTier::PreRender, Abathur::EUpdateStage::Default));
 		m_update.SetCallback(Abathur::TUpdateCallback::SetMethod<CCamera, &CCamera::Update>(this));
 		m_update.Register();
 	}
 
+	void CCamera::AddRoom(const SRoom& room)
+	{
+		m_rooms.push_back(room);
+	}
+
+	void CCamera::SetRoomByTrigger(const Abathur::TEntityId triggerId)
+	{
+		for (int32 i = 0u, sz = m_rooms.size(); i < sz; ++i)
+		{
+			if (triggerId == m_rooms[i].triggerId)
+			{
+				m_roomIndex = i;
+				return;
+			}
+		}
+	}
+
+	void CCamera::SetNextRoom()
+	{
+		m_roomIndex = m_rooms.empty()? 0u : (m_roomIndex + 1) % m_rooms.size();
+	}
+	
+	void CCamera::SetPreviousRoom()
+	{
+		m_roomIndex = m_rooms.empty() ? 0u : (m_roomIndex - 1 + m_rooms.size())%m_rooms.size();
+	}
+
 	void CCamera::Update(const Abathur::SUpdateContext& context)
 	{
-		if (Abathur::TAbathurEntity* pPlayerEntity = Abathur::GetEntity(CWorld::Get().GetPlayerEntityId()))
+		const SRoom room = GetCurrentRoom();
+
+		if (Abathur::TAbathurEntity* pCameraEntity = Abathur::GetEntity(room.cameraId))
+		{
+			if (Abathur::TLocationComponent* pLocationComponent = pCameraEntity->QueryComponent<Abathur::TLocationComponent>())
+			{
+				m_cameraPosition = pLocationComponent->mtx.GetTranslation();
+			}
+		}
+
+		if (Abathur::TAbathurEntity* pPlayerEntity = Abathur::GetEntity(room.targetId))
 		{
 			if (Abathur::TLocationComponent* pLocationComponent = pPlayerEntity->QueryComponent<Abathur::TLocationComponent>())
 			{
-				m_cameraTarget = pLocationComponent->mtx.GetTranslation();
+				m_cameraTarget = pLocationComponent->mtx.GetTranslation() + Vector3(0.0f,1.5f,0.0f);
 			}
 		}
 
 		m_viewParameters.SetLookAt(m_cameraPosition, m_cameraTarget);
 		Abathur::SetViewParameters(m_viewId, m_viewParameters);
+	}
+
+	SRoom CCamera::GetCurrentRoom() const
+	{
+		if (m_roomIndex < m_rooms.size())
+		{
+			return m_rooms[m_roomIndex];
+		}
+
+		return SRoom();
 	}
 
 	/////////////////////////////////////////////////////////////
@@ -78,7 +118,7 @@ namespace World
 		SpawnPlayer();
 
 		//Cameras
-		m_playerCamera.Init(m_sceneId);
+		SetupCameras();
 
 		Abathur::StartScene(m_sceneId); //TODO ~ ramonv ~ move this away in order to start the game on our demand instead of startup
 	}
@@ -103,11 +143,11 @@ namespace World
 		
 		{
 			Abathur::TVisualComponent* pComponent = pPlayerEntity->AddComponent<Abathur::TVisualComponent>();
-      Abathur::loadTexture("data/textures/Mask_Diffuse.tga");
-      Abathur::loadMaterials("data/scenes/mask.mat");
-      pComponent->mesh     = Abathur::loadMesh("data/meshes/Mask.mesh");
+			Abathur::loadTexture("data/textures/Mask_Diffuse.tga");
+			Abathur::loadMaterials("data/scenes/mask.mat");
+			pComponent->mesh     = Abathur::loadMesh("data/meshes/Mask.mesh");
 			pComponent->material = Abathur::getMaterial("Material_Mask");
-      ASSERT(pComponent->material);
+			ASSERT(pComponent->material);
 		}
 
 		{
@@ -126,6 +166,22 @@ namespace World
 
 		pPlayerEntity->AddComponent<CPlayerComponent>();
 		m_playerId = pPlayerEntity->GetId();
+	}
+
+	void CWorld::SetupCameras()
+	{
+		//Room 1
+		{
+			const Abathur::TEntityId cameraId = Abathur::GetEntityIdByName("Camera_Room_1", m_sceneId);
+			m_playerCamera.AddRoom(SRoom(cameraId, m_playerId, Abathur::GetEntityIdByName("Trigger_Room_1", m_sceneId)));
+			m_witcherCamera.AddRoom(SRoom(cameraId, Abathur::GetEntityIdByName("Camera_Room_1.Target", m_sceneId)));
+		}
+
+		// ....
+		
+		m_playerCamera.Init(m_sceneId);
+		m_witcherCamera.Init(m_sceneId);
+
 	}
 
 }
