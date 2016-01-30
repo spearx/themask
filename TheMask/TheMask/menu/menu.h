@@ -2,6 +2,12 @@
 
 #include "abathur.h"
 
+//declaration forward
+namespace World
+{
+	class CWorld;
+}
+
 namespace Menu
 {
 	class CInput : public Abathur::Input::InputListener
@@ -43,10 +49,15 @@ namespace Menu
 
 		void Init();
 
+	private: 
+		void PreRenderUpdate(const Abathur::SUpdateContext& context);
+
 	private:
 		CCamera                  m_camera;
 		CInput                   m_input;
 		Abathur::TSceneId        m_sceneId;
+
+		Abathur::CScopedUpdate   m_preRenderUpdate;
 	};
 
 }
