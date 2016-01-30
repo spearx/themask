@@ -154,7 +154,7 @@ namespace World
        if (Abathur::TLocationComponent* pLocComponent = entity->QueryComponent<Abathur::TLocationComponent>())
        {
          Vector3 pos = pLocComponent->mtx.GetTranslation();
-         printf("Set Player pos %1.3f,%1.3f,%1.3f\n", pos.x, pos.y, pos.z);
+         //printf("Set Player pos %1.3f,%1.3f,%1.3f\n", pos.x, pos.y, pos.z);
          CTriggers::Get().SetPlayerPosition(pos);
        }
      }

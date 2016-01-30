@@ -163,9 +163,46 @@ namespace World
 	}
 
   void CWorld::RegisterTriggers() {
-    Abathur::TEntityId entity = Abathur::GetEntityIdByName("Button_Centinel_1", m_sceneId);
-    CTriggers::Get().RegisterTriggerSphere(entity, 1.0f, "Trigger_Activar_Lasers");
-
+    {
+      Abathur::TEntityId entity = Abathur::GetEntityIdByName("Button_Centinel_1", m_sceneId);
+      CTriggers::Get().RegisterTriggerSphere(entity, 1.0f, "Unlock_Totem");
+    }
+    {
+      Abathur::TEntityId entity = Abathur::GetEntityIdByName("Button_Laser_1", m_sceneId);
+      CTriggers::Get().RegisterTriggerSphere(entity, 1.0f, "Unlock_Laser_1");
+    }
+    {
+      Abathur::TEntityId entity = Abathur::GetEntityIdByName("Button_Laser_B", m_sceneId);
+      CTriggers::Get().RegisterTriggerSphere(entity, 1.0f, "Unlock_Laser_2");
+    }
+    {
+      Abathur::TEntityId entity = Abathur::GetEntityIdByName("Cauldron", m_sceneId);
+      CTriggers::Get().RegisterTriggerSphere(entity, 2.5f, "Interact_Cauldron");
+    }
+    {
+      Abathur::TEntityId entity = Abathur::GetEntityIdByName("Item_1", m_sceneId);
+      CTriggers::Get().RegisterTriggerSphere(entity, 1.0f, "Interact_Item_1");
+    }
+    {
+      Abathur::TEntityId entity = Abathur::GetEntityIdByName("Item_2", m_sceneId);
+      CTriggers::Get().RegisterTriggerSphere(entity, 1.0f, "Interact_Item_2");
+    }
+    {
+      Abathur::TEntityId entity = Abathur::GetEntityIdByName("Item_3", m_sceneId);
+      CTriggers::Get().RegisterTriggerSphere(entity, 1.0f, "Interact_Item_3");
+    }
+    {
+      Abathur::TEntityId entity = Abathur::GetEntityIdByName("Item_4", m_sceneId);
+      CTriggers::Get().RegisterTriggerSphere(entity, 1.0f, "Interact_Item_4");
+    }
+    {
+      Abathur::TEntityId entity = Abathur::GetEntityIdByName("Item_5", m_sceneId);
+      CTriggers::Get().RegisterTriggerSphere(entity, 1.0f, "Interact_Item_5");
+    }
+    {
+      Abathur::TEntityId entity = Abathur::GetEntityIdByName("Item_6", m_sceneId);
+      CTriggers::Get().RegisterTriggerSphere(entity, 1.0f, "Interact_Item_6");
+    }
     CTriggers::Get().RegisterListenner(CTriggers::TTriggerEventCallback::SetFunction<&OnTriggerEvent>());
   }
 

@@ -145,6 +145,14 @@
       "comp_location" : {
          "mtx" : "1.000 0.000 0.000 6.558 0.000 0.000 1.000 0.000 0.000 -1.000 0.000 3.884 0.000 0.000 0.000 1.000"
       },
+      "comp_physx" : {
+         "body" : "rigid_static",
+         "dynamic_friction" : "0.0",
+         "mesh" : "data/level0/meshes/Item_1.mesh",
+         "restitution" : "0.001",
+         "shape" : "mesh",
+         "static_friction" : "0.0"
+      },
       "comp_visual" : {
          "material" : "Room_1",
          "mesh" : "data/level0/meshes/Item_1.mesh"
@@ -153,6 +161,14 @@
    "Item_2" : {
       "comp_location" : {
          "mtx" : "1.000 0.000 0.000 -17.157 0.000 0.000 1.000 0.000 0.000 -1.000 0.000 -1.757 0.000 0.000 0.000 1.000"
+      },
+      "comp_physx" : {
+         "body" : "rigid_static",
+         "dynamic_friction" : "0.0",
+         "mesh" : "data/level0/meshes/Item_2.mesh",
+         "restitution" : "0.001",
+         "shape" : "mesh",
+         "static_friction" : "0.0"
       },
       "comp_visual" : {
          "material" : "Room_1",
@@ -163,6 +179,14 @@
       "comp_location" : {
          "mtx" : "1.000 0.000 0.000 -27.761 0.000 0.000 1.000 0.000 0.000 -1.000 0.000 6.395 0.000 0.000 0.000 1.000"
       },
+      "comp_physx" : {
+         "body" : "rigid_static",
+         "dynamic_friction" : "0.0",
+         "mesh" : "data/level0/meshes/Item_3.mesh",
+         "restitution" : "0.001",
+         "shape" : "mesh",
+         "static_friction" : "0.0"
+      },
       "comp_visual" : {
          "material" : "Room_1",
          "mesh" : "data/level0/meshes/Item_3.mesh"
@@ -171,6 +195,14 @@
    "Item_4" : {
       "comp_location" : {
          "mtx" : "1.000 0.000 0.000 30.529 0.000 0.000 1.000 0.000 0.000 -1.000 0.000 -17.290 0.000 0.000 0.000 1.000"
+      },
+      "comp_physx" : {
+         "body" : "rigid_static",
+         "dynamic_friction" : "0.0",
+         "mesh" : "data/level0/meshes/Item_4.mesh",
+         "restitution" : "0.001",
+         "shape" : "mesh",
+         "static_friction" : "0.0"
       },
       "comp_visual" : {
          "material" : "Room_1",
@@ -181,6 +213,14 @@
       "comp_location" : {
          "mtx" : "1.000 0.000 0.000 -27.820 0.000 0.000 1.000 0.000 0.000 -1.000 0.000 -23.370 0.000 0.000 0.000 1.000"
       },
+      "comp_physx" : {
+         "body" : "rigid_static",
+         "dynamic_friction" : "0.0",
+         "mesh" : "data/level0/meshes/Item_5.mesh",
+         "restitution" : "0.001",
+         "shape" : "mesh",
+         "static_friction" : "0.0"
+      },
       "comp_visual" : {
          "material" : "Room_1",
          "mesh" : "data/level0/meshes/Item_5.mesh"
@@ -189,6 +229,14 @@
    "Item_6" : {
       "comp_location" : {
          "mtx" : "1.000 0.000 0.000 18.219 0.000 0.000 1.000 0.000 0.000 -1.000 0.000 3.876 0.000 0.000 0.000 1.000"
+      },
+      "comp_physx" : {
+         "body" : "rigid_static",
+         "dynamic_friction" : "0.0",
+         "mesh" : "data/level0/meshes/Item_6.mesh",
+         "restitution" : "0.001",
+         "shape" : "mesh",
+         "static_friction" : "0.0"
       },
       "comp_visual" : {
          "material" : "Room_1",
