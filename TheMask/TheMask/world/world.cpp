@@ -30,7 +30,7 @@ namespace World
 
 		m_viewId = Abathur::AddSceneView(sceneId);
 		m_viewParameters.SetProjection(DEG2RAD(70.f), 0.1f, 10000.0f);
-		//m_viewParameters.SetRenderTarget(m_pRenderTarget);
+		m_viewParameters.SetRenderTarget(m_pRenderTarget);
 		m_viewParameters.SetPriority(Abathur::TViewPriority(1u));
     //m_viewParameters.SetBeforeCallback(Abathur::TViewCallback::SetFunction<&testGrid>());
     
@@ -100,12 +100,9 @@ namespace World
 		//Cameras
 		SetupCameras();
 		Abathur::StartScene(m_sceneId);
-	}
 
     //Triggers
     RegisterTriggers();
-
-		Abathur::StartScene(m_sceneId); //TODO ~ ramonv ~ move this away in order to start the game on our demand instead of startup    		
   }
 
 	void CWorld::SpawnPlayer()
