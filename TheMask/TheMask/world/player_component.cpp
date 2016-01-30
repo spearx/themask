@@ -204,21 +204,23 @@ namespace World
   {
 	  if (event_type == CTriggers::ETriggerEvent::ON_ENTER)
 	  {
-		  printf("On Trigger Event %s ON ENTER\n", event_name.c_str());
+		  //printf("On Trigger Event %s ON ENTER\n", event_name.c_str());
 
 		  if (event_name == "Interact_Cauldron")
 		  {
-			//Menu::CMenu::Get().GetOfflineGame().Enable();
+			printf("Enable Offline\n");
+			Menu::CMenu::Get().GetOfflineGame().Enable();
 		  }
 		  m_currentInteraction = event_name;
 	  }
 	  else if (event_type == CTriggers::ETriggerEvent::ON_EXIT)
 	  {
-		  printf("On Trigger Event %s ON EXIT\n", event_name.c_str());
+		  //printf("On Trigger Event %s ON EXIT\n", event_name.c_str());
 
 		  if (event_name == "Interact_Cauldron")
 		  {
-			//Menu::CMenu::Get().GetOfflineGame().Disable();
+			  printf("Disable Offline\n");
+			  Menu::CMenu::Get().GetOfflineGame().Disable();
 		  }
 		  m_currentInteraction = "";
 		  m_showItemDialog = false;
@@ -236,6 +238,22 @@ namespace World
 		  else if (m_currentInteraction == "Interact_Item_2")
 		  { 
 			  Menu::CPopup::Get().AddTextLine("THIS IS ITERACTIVE ITEM 2!");
+		  }
+		  else if (m_currentInteraction == "Interact_Item_3")
+		  {
+			  Menu::CPopup::Get().AddTextLine("THIS IS ITERACTIVE ITEM 3!");
+		  }
+		  else if (m_currentInteraction == "Interact_Item_4")
+		  {
+			  Menu::CPopup::Get().AddTextLine("THIS IS ITERACTIVE ITEM 4!");
+		  }
+		  else if (m_currentInteraction == "Interact_Item_5")
+		  {
+			  Menu::CPopup::Get().AddTextLine("THIS IS ITERACTIVE ITEM 5!");
+		  }
+		  else if (m_currentInteraction == "Interact_Item_6")
+		  {
+			  Menu::CPopup::Get().AddTextLine("THIS IS ITERACTIVE ITEM 6!");
 		  }
 	  }
   }

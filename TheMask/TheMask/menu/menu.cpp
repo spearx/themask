@@ -92,7 +92,7 @@ namespace Menu
 		m_camera.Init(m_sceneId);
 
 		//Register Updates
-		//m_offlineGame.Init();
+		m_offlineGame.Init();
 
 		InitButtons();
 
@@ -126,6 +126,8 @@ namespace Menu
 		case EState::Failed:
 		{
 			m_logicUpdate.Unregister();
+
+
 		}
 		break;
 		}
@@ -149,17 +151,20 @@ namespace Menu
 
 	void CMenu::LogicUpdate(const Abathur::SUpdateContext& context)
 	{
-    /*
+    
 		COfflineGame::EState state = m_offlineGame.GetState();
 		if (state == COfflineGame::EState::Success)
 		{
 			SetState(EState::Success);
+			return;
 		}
 		else if (state == COfflineGame::EState::Failed)
 		{
 			SetState(EState::Failed);
+			return;
 		}
-    */
+		
+
     for (int i = 0; i < ButtonCount;++i) {
       const char *button_name = m_buttonNames[i];
       CButtonComponent *button_comp = Abathur::GetEntityByName(button_name, m_sceneId)->QueryComponent<CButtonComponent>();
@@ -200,9 +205,9 @@ namespace Menu
 
 	void CMenu::InitButtons()
 	{
-		AddButton("button_1", Vector2(0.07f, 0.75f), Vector2(0.23f, 0.92f), Vector3(0.0f, 5.0f, 0.0f), Vector4(0.321f, 0.352f, 0.415f, 1.0f), Vector4(0.0f, 1.0f, 0.0f, 1.0f));
-		AddButton("button_2", Vector2(0.0f, 0.0f), Vector2(0.1f, 0.1f), Vector3(0.0f, 5.0f, 0.0f), Vector4(0.321f, 0.352f, 0.415f, 1.0f), Vector4(1.0f, 0.0f, 0.0f, 1.0f));
-		AddButton("button_3", Vector2(0.1f, 0.1f), Vector2(0.2f, 0.2f), Vector3(0.0f, 5.0f, 0.0f), Vector4(0.321f, 0.352f, 0.415f, 1.0f), Vector4(0.0f, 0.0f, 1.0f, 1.0f));
+		AddButton("button_1", Vector2(0.27f, 0.72f), Vector2(0.41f, 0.93f), Vector3(0.0f, 5.0f, 0.0f), Vector4(0.321f, 0.352f, 0.415f, 1.0f), Vector4(0.0f, 1.0f, 0.0f, 1.0f));
+		AddButton("button_2", Vector2(0.47f, 0.68f), Vector2(0.59f, 0.86f), Vector3(0.0f, 5.0f, 0.0f), Vector4(0.321f, 0.352f, 0.415f, 1.0f), Vector4(1.0f, 0.0f, 0.0f, 1.0f));
+		AddButton("button_3", Vector2(0.64f, 0.73f), Vector2(0.76f, 0.93f), Vector3(0.0f, 5.0f, 0.0f), Vector4(0.321f, 0.352f, 0.415f, 1.0f), Vector4(0.0f, 0.0f, 1.0f, 1.0f));
 
 		m_buttonNames[Totem]  = "button_1";
 		m_buttonNames[Laser1] = "button_2";

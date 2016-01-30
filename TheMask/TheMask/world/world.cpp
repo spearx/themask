@@ -22,7 +22,7 @@ namespace World
 		m_viewParameters.SetRenderTarget(m_pRenderTarget);
 		m_viewParameters.SetPriority(Abathur::TViewPriority(1u));
     
-		m_orientation = Vector2(MathUtils::ZERO);
+		m_orientation = Vector2(0.0f,gfPI*0.1f);
 		m_input = Vector2(MathUtils::ZERO);
 		
 		m_update.SetPriority(Abathur::GetUpdatePriority(Abathur::EUpdateTier::PreRender, Abathur::EUpdateStage::Default));
@@ -68,7 +68,7 @@ namespace World
 		{
 			if (Abathur::TLocationComponent* pLocationComponent = pPlayerEntity->QueryComponent<Abathur::TLocationComponent>())
 			{
-				target = pLocationComponent->mtx.GetTranslation() + Vector3(0.0f, 1.5f, 0.0f);
+				target = pLocationComponent->mtx.GetTranslation() + Vector3(0.0f, 0.5f, 0.0f);
 			}
 		}
 

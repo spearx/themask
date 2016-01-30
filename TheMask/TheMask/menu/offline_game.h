@@ -23,6 +23,9 @@ namespace Menu
 			First = 0, 
 			Second, 
 			Third, 
+			Fourth, 
+			Fifth, 
+			Sixth,
 
 			Count
 		};
