@@ -69,6 +69,18 @@ namespace Menu
 		m_preRenderUpdate.SetCallback(Abathur::TUpdateCallback::SetMethod<CMenu,&CMenu::PreRenderUpdate>(this));
 		m_preRenderUpdate.Register(Abathur::GetUpdatePriority(Abathur::EUpdateTier::PreRender, Abathur::EUpdateStage::Default));
 
+		//Button Setup
+		{
+			const char* entityName = "button_1"; 
+			if (Abathur::TAbathurEntity* pEntity = Abathur::GetEntityByName(entityName,m_sceneId))
+			{
+				CButtonComponent* pComponent = pEntity->AddComponent<CButtonComponent>();
+				pComponent->SetArea(Vector2(0.07f, 0.75f), Vector2(0.23f,0.92f));
+				pComponent->SetHoverOffset(Vector3(0.0f, 5.0f, 0.0f));
+				pComponent->SetPressedColor(Vector4(1.0f, 0.0f, 0.0f, 1.0f));
+			}
+		}
+
 		//Start Scene
 		Abathur::StartScene(m_sceneId);
 	}
