@@ -35,5 +35,8 @@ namespace World
 		float                  m_speed;
     float                  m_yaw;
     Matrix33               m_matrix_original;
+    std::string            m_room_name;
+    Matrix44               m_viewMatrix;
+    bool                   m_playerChangeRoom;
 	};
 }

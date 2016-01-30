@@ -6,15 +6,15 @@ namespace World
 {
 	struct SRoom
 	{
-		SRoom( const Abathur::TEntityId _cameraId  = Abathur::TEntityId::s_invalid
-		     , const Abathur::TEntityId _targetId  = Abathur::TEntityId::s_invalid
-			 , const Abathur::TEntityId _triggerId = Abathur::TEntityId::s_invalid)
-			: triggerId(_triggerId)
+		SRoom( const Abathur::TEntityId _cameraId
+		     , const Abathur::TEntityId _targetId
+			 , const std::string &_triggerName)
+			: triggerName(_triggerName)
 			, cameraId(_cameraId)
 			, targetId(_targetId)
 		{}
 
-		Abathur::TEntityId triggerId;
+    std::string        triggerName;
 		Abathur::TEntityId cameraId;
 		Abathur::TEntityId targetId;
 	};
@@ -33,7 +33,7 @@ namespace World
 
 		void AddRoom(const SRoom& room);
 
-		void SetRoomByTrigger(const Abathur::TEntityId triggerId);
+		void SetRoomByTrigger(const std::string &triggerName);
 		void SetNextRoom();
 		void SetPreviousRoom();
 
@@ -62,6 +62,8 @@ namespace World
 		inline CCamera& GetWitcherCamera() { return m_witcherCamera; }
 
 		inline Abathur::TEntityId GetPlayerEntityId() const { return m_playerId; }
+    
+    bool getRoomInside(const Vector3 &pos, std::string &room_name);
 
 	private: 
 		static CWorld& CreateInstance() { m_pInstance = new CWorld(); return *m_pInstance; }
