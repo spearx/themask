@@ -17,10 +17,12 @@ namespace Menu
 		virtual void Start() override;
 		virtual void Stop() override;
 
+		void SetEnable(const bool isEnabled);
+
 		inline void SetArea(const Vector2& min, const Vector2& max) { m_areaMin = min; m_areaMax = max; }
 
 		inline void SetHoverOffset(const Vector3& offset) { m_hoverOffsetTarget = offset; }
-		inline void SetPressedColor(const Vector4& color) { m_pressedColor = color; }
+		inline void SetPressedColor(const Vector4& base_color, const Vector4& color) { m_baseColor = base_color; m_pressedColor = color; }
 
 		bool IsPressed(const bool input);
 		bool JustPressed() const;
@@ -54,5 +56,6 @@ namespace Menu
 
 		bool    m_prevIsHover;
 		bool    m_isHover;
+		bool   m_isEnabled;
 	};
 }

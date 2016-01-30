@@ -17,6 +17,9 @@
     <ClCompile Include="world\triggers.cpp">
       <Filter>world</Filter>
     </ClCompile>
+    <ClCompile Include="menu\offline_game.cpp">
+      <Filter>menu</Filter>
+    </ClCompile>
     <ClCompile Include="menu\popup.cpp">
       <Filter>menu</Filter>
     </ClCompile>
@@ -44,6 +47,9 @@
     </ClInclude>
     <ClInclude Include="world\triggers.h">
       <Filter>world</Filter>
+    </ClInclude>
+    <ClInclude Include="menu\offline_game.h">
+      <Filter>menu</Filter>
     </ClInclude>
     <ClInclude Include="menu\popup.h">
       <Filter>menu</Filter>
