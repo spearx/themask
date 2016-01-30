@@ -94,7 +94,7 @@ namespace Menu
 		//Start Scene
 		Abathur::StartScene(m_sceneId);
 
-		SetState(EState::Intro);
+		SetState(EState::Playing);
 
     
 		//Load Font and configure Popup
@@ -114,7 +114,8 @@ namespace Menu
 				m_logicUpdate.SetCallback(Abathur::TUpdateCallback::SetMethod<CMenu, &CMenu::LogicUpdate>(this));
 				m_logicUpdate.Register(Abathur::GetUpdatePriority(Abathur::EUpdateTier::PostPhysics, Abathur::EUpdateStage::Default));
 			}
-			case EState::Success: 
+      break;
+      case EState::Success:
 			case EState::Failed:
 			{
 				m_logicUpdate.Unregister();
@@ -142,15 +143,43 @@ namespace Menu
 
 	void CMenu::LogicUpdate(const Abathur::SUpdateContext& context)
 	{
+    /*
 		COfflineGame::EState state = m_offlineGame.GetState();
-		if (state != COfflineGame::EState::Success)
+		if (state == COfflineGame::EState::Success)
 		{
 			SetState(EState::Success);
 		}
-		else if (state != COfflineGame::EState::Failed)
+		else if (state == COfflineGame::EState::Failed)
 		{
 			SetState(EState::Failed);
 		}
+    */
+    for (int i = 0; i < ButtonCount;++i) {
+      const char *button_name = m_buttonNames[i];
+      CButtonComponent *button_comp = Abathur::GetEntityByName(button_name, m_sceneId)->QueryComponent<CButtonComponent>();
+      if (button_comp->JustPressed())
+      {
+        if (i == Laser1)
+        {
+          World::CWorld::Get().GetLasers().DisableTypeLaser(World::CLasers::ELaserType::RED_LASER, true);
+        }
+        else if (i == Laser2)
+        {
+          World::CWorld::Get().GetLasers().DisableTypeLaser(World::CLasers::ELaserType::BLUE_LASER, true);
+        }
+      }
+      else if (button_comp->JustReleased())
+      {
+        if (i == Laser1)
+        {
+          World::CWorld::Get().GetLasers().EnableTypeLaser(World::CLasers::ELaserType::RED_LASER);
+        }
+        else if (i == Laser2)
+        {
+          World::CWorld::Get().GetLasers().EnableTypeLaser(World::CLasers::ELaserType::BLUE_LASER);
+        }
+      }
+    }
 	}
 
 	bool CMenu::IsButtonEnabled(const EButton button) const
