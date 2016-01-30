@@ -4,13 +4,11 @@
 
 namespace World
 {
-	/*
 	void testGrid(const Abathur::TViewId viewId, const Abathur::CViewParameters& params)
 	{
 		Abathur::renderGrid(8, 8, 2, 0xffffffff, 0xff00ffff);
 		Abathur::renderAxis(2.0f);
 	}
-	*/
 
 	CCamera::CCamera()
 		: m_roomIndex(0u)
@@ -23,12 +21,20 @@ namespace World
 		m_pRenderTarget = Abathur::createRenderTarget(512,512);
 
 		m_viewId = Abathur::AddSceneView(sceneId);
-		m_viewParameters.SetProjection(DEG2RAD(60.f), 0.1f, 1000.0f);
-		m_viewParameters.SetRenderTarget(m_pRenderTarget);
+		m_viewParameters.SetProjection(DEG2RAD(60.f), 0.1f, 10000.0f);
+		//m_viewParameters.SetRenderTarget(m_pRenderTarget);
 		m_viewParameters.SetPriority(Abathur::TViewPriority(1u));
-		//m_viewParameters.SetBeforeCallback(Abathur::TViewCallback::SetFunction<&testGrid>());
+		m_viewParameters.SetBeforeCallback(Abathur::TViewCallback::SetFunction<&testGrid>());
+    
+    m_cameraPosition = Vector3(5.0f);
 
-		m_cameraPosition = Vector3(5.0f); 
+    if (Abathur::TAbathurEntity* pCameraEntity = Abathur::GetEntityByName("Camera_Room_1", sceneId))
+    {
+      if (Abathur::TLocationComponent* pLocationComponent = pCameraEntity->QueryComponent<Abathur::TLocationComponent>())
+      {
+        m_cameraPosition = pLocationComponent->mtx.GetTranslation();
+      }
+    }
 
 		m_viewParameters.SetLookAt(m_cameraPosition, m_cameraTarget);
 		Abathur::SetViewParameters(m_viewId, m_viewParameters);
@@ -94,7 +100,7 @@ namespace World
 		Abathur::AddPhysXPlane(Vector3(0.0f, 1.0f, 0.0f), 0.0f);
 
 		//Load scene
-		m_sceneId = Abathur::LoadScene("data/collision_test/scenes/collision_test.scene");
+		m_sceneId = Abathur::LoadScene("data/level0/scenes/level0.scene");
 
 		//Spawn Player
 		SpawnPlayer();
@@ -125,8 +131,11 @@ namespace World
 		
 		{
 			Abathur::TVisualComponent* pComponent = pPlayerEntity->AddComponent<Abathur::TVisualComponent>();
-			pComponent->mesh     = Abathur::loadMesh("data/collision_test/meshes/Cylinder001.mesh");
-			pComponent->material = Abathur::getMaterial("_09 - Default");
+      Abathur::loadTexture("data/textures/Mask_Diffuse.tga");
+      Abathur::loadMaterials("data/scenes/mask.mat");
+      pComponent->mesh     = Abathur::loadMesh("data/meshes/Mask.mesh");
+			pComponent->material = Abathur::getMaterial("Material_Mask");
+      ASSERT(pComponent->material);
 		}
 
 		{
