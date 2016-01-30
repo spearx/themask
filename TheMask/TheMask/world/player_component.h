@@ -29,7 +29,7 @@ namespace World
 
 	private: 
 		EState                 m_state;
-		Vector3                m_inputDirection;
+		Vector2                m_inputDirection;
 		Vector3                m_alignment;
 		Abathur::CScopedUpdate m_update;
 		float                  m_speed;

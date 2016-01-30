@@ -20,7 +20,7 @@ namespace World
 	};
 	typedef std::vector<SRoom> TRooms;
 
-	class CCamera
+	class CCamera : public Abathur::Input::InputListener
 	{
 	public:
 		CCamera();
@@ -31,24 +31,33 @@ namespace World
 
 		Abathur::CViewParameters& GetViewParameters() { return m_viewParameters; }
 
+		/*
 		void AddRoom(const SRoom& room);
 
 		void SetRoomByTrigger(const std::string &triggerName);
 		void SetNextRoom();
 		void SetPreviousRoom();
+		*/
+
+		inline void SetTargetId(const Abathur::TEntityId input) { m_targetId = input;  }
 
 	private: 
-		SRoom GetCurrentRoom() const;
+		//SRoom GetCurrentRoom() const;
+
+		virtual bool OnDirection(const Abathur::Input::EDirection direction, const Vector2& value) override;
 
 	private: 
-		int32                     m_roomIndex;
+		//int32                   m_roomIndex;
 		Abathur::TViewId          m_viewId;
 		Abathur::CViewParameters  m_viewParameters;
 		Abathur::CScopedUpdate    m_update;
 		Abathur::TAbathurTexture* m_pRenderTarget;
-		Vector3                   m_cameraPosition;
-		Vector3                   m_cameraTarget;
-		TRooms                    m_rooms;
+		Abathur::TEntityId        m_targetId;
+		Vector2                   m_orientation;
+		Vector2                   m_input;
+		//Vector3                 m_cameraPosition;
+		//Vector3                 m_cameraTarget;
+		//TRooms                  m_rooms;
 	};
 
 	class CWorld
@@ -59,7 +68,6 @@ namespace World
 		void Init();
 
 		inline CCamera& GetPlayerCamera() { return m_playerCamera; }
-		inline CCamera& GetWitcherCamera() { return m_witcherCamera; }
 
 		inline Abathur::TEntityId GetPlayerEntityId() const { return m_playerId; }
     
@@ -77,7 +85,6 @@ namespace World
 		static CWorld*     m_pInstance;
 
 		CCamera            m_playerCamera;
-		CCamera            m_witcherCamera;
 		Abathur::TSceneId  m_sceneId;
 		Abathur::TEntityId m_playerId;
 	};

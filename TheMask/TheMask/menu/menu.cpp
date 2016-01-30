@@ -96,15 +96,6 @@ namespace Menu
 				Abathur::setMaterialParam(pVisualComponent->material, "diffuse", viewParameters.GetRenderTarget());
 			}
 		}
-
-		if (Abathur::TAbathurEntity* pCristalPlayer = Abathur::GetEntityByName("Ball_Down", m_sceneId))
-		{
-			if (Abathur::TVisualComponent* pVisualComponent = pCristalPlayer->QueryComponent<Abathur::TVisualComponent>())
-			{
-				Abathur::CViewParameters& viewParameters = World::CWorld::Get().GetWitcherCamera().GetViewParameters();
-				Abathur::setMaterialParam(pVisualComponent->material, "diffuse", viewParameters.GetRenderTarget());
-			}
-		}
 	}
 
 	bool CMenu::OnButton(const Abathur::Input::EButton button, const Abathur::Input::EButtonEvent buttonEvent)

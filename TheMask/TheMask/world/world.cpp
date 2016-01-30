@@ -21,9 +21,6 @@ namespace World
 	}
 
 	CCamera::CCamera()
-		: m_roomIndex(0u)
-		, m_cameraPosition(MathUtils::ZERO)
-		, m_cameraTarget(MathUtils::ZERO)
 	{}
 
 	void CCamera::Init(const Abathur::TSceneId sceneId)
@@ -36,77 +33,48 @@ namespace World
 		m_viewParameters.SetPriority(Abathur::TViewPriority(1u));
 		m_viewParameters.SetBeforeCallback(Abathur::TViewCallback::SetFunction<&testGrid>());
     
-		m_cameraPosition = Vector3(5.0f);
-
-		m_viewParameters.SetLookAt(m_cameraPosition, m_cameraTarget);
-		Abathur::SetViewParameters(m_viewId, m_viewParameters);
-    
+		m_orientation = Vector2(MathUtils::ZERO);
+		m_input = Vector2(MathUtils::ZERO);
+		
 		m_update.SetPriority(Abathur::GetUpdatePriority(Abathur::EUpdateTier::PreRender, Abathur::EUpdateStage::Default));
 		m_update.SetCallback(Abathur::TUpdateCallback::SetMethod<CCamera, &CCamera::Update>(this));
 		m_update.Register();
 	}
 
-	void CCamera::AddRoom(const SRoom& room)
+	bool CCamera::OnDirection(const Abathur::Input::EDirection direction, const Vector2& value)
 	{
-		m_rooms.push_back(room);
-	}
-
-	void CCamera::SetRoomByTrigger(const std::string &triggerName)
-	{
-		for (int32 i = 0u, sz = m_rooms.size(); i < sz; ++i)
+		if (direction == Abathur::Input::EDirection::GamepadRight)
 		{
-			if (triggerName == m_rooms[i].triggerName)
-			{
-				m_roomIndex = i;
-				return;
-			}
+			m_input = value; 
 		}
-	}
-
-	void CCamera::SetNextRoom()
-	{
-		m_roomIndex = m_rooms.empty()? 0u : (m_roomIndex + 1) % m_rooms.size();
-	}
-	
-	void CCamera::SetPreviousRoom()
-	{
-		m_roomIndex = m_rooms.empty() ? 0u : (m_roomIndex - 1 + m_rooms.size())%m_rooms.size();
+		return false;
 	}
 
 	void CCamera::Update(const Abathur::SUpdateContext& context)
 	{
-		const SRoom room = GetCurrentRoom();
+		Vector3 target(MathUtils::ZERO);
 
-		if (Abathur::TAbathurEntity* pCameraEntity = Abathur::GetEntity(room.cameraId))
-		{
-			if (Abathur::TLocationComponent* pLocationComponent = pCameraEntity->QueryComponent<Abathur::TLocationComponent>())
-			{
-				m_cameraPosition = pLocationComponent->mtx.GetTranslation();
-			}
-		}
-
-		if (Abathur::TAbathurEntity* pPlayerEntity = Abathur::GetEntity(room.targetId))
+		if (Abathur::TAbathurEntity* pPlayerEntity = Abathur::GetEntity(m_targetId))
 		{
 			if (Abathur::TLocationComponent* pLocationComponent = pPlayerEntity->QueryComponent<Abathur::TLocationComponent>())
 			{
-				m_cameraTarget = pLocationComponent->mtx.GetTranslation() + Vector3(0.0f,1.5f,0.0f);
+				target = pLocationComponent->mtx.GetTranslation() + Vector3(0.0f, 1.5f, 0.0f);
 			}
 		}
 
-		m_viewParameters.SetLookAt(m_cameraPosition, m_cameraTarget);
+		m_orientation += Vector2(-m_input.x,m_input.y)*context.frameTime*5.0f;
+		m_orientation.y = MathUtils::ClampTpl(m_orientation.y, -gfPI*0.4f, gfPI*0.4f);
+
+		Vector3 offset = Vector3(sinf( m_orientation.x ), 0.0f, cosf(m_orientation.x));
+		offset *= cosf(m_orientation.y);
+		offset.y = sinf(m_orientation.y);
+
+		offset *= 3.0f;
+
+		m_viewParameters.SetLookAt(target + offset, target);
 		Abathur::SetViewParameters(m_viewId, m_viewParameters);
 	}
-
-	SRoom CCamera::GetCurrentRoom() const
-	{
-		if (m_roomIndex < m_rooms.size())
-		{
-			return m_rooms[m_roomIndex];
-		}
-
-		return SRoom(Abathur::TEntityId::s_invalid, Abathur::TEntityId::s_invalid, "");
-	}
-
+	
   void onPhysXTrigger(Abathur::TEntityId entity_id, Abathur::ETriggerEvent event)
   {
     if (event == Abathur::ETriggerEvent::ON_ENTER_EVENT)
@@ -142,7 +110,7 @@ namespace World
 		Abathur::RegisterEntityComponent<CPlayerComponent>("comp_player");
 		Abathur::InitPhysX(Vector3(0.0f, -9.8f, 0.0f));
 		//Abathur::AddPhysXPlane(Vector3(0.0f, 1.0f, 0.0f), 0.0f);
-    Abathur::RegisterPhysXTrigger(Abathur::TPhysXTriggerCallback::SetFunction<&onPhysXTrigger>());
+		Abathur::RegisterPhysXTrigger(Abathur::TPhysXTriggerCallback::SetFunction<&onPhysXTrigger>());
 
 		//Load scene
 		m_sceneId = Abathur::LoadScene("data/level0/scenes/level0.scene");
@@ -155,15 +123,15 @@ namespace World
 
 		Abathur::StartScene(m_sceneId); //TODO ~ ramonv ~ move this away in order to start the game on our demand instead of startup
 
-    //Bounding Boxes Rooms
-    addRoomWithMaxCoords("Room_1", Vector3(-7.41f, 4.977f, 0.0f), Vector3(7.41f, -4.977f, 0.0f));
-    addRoomWithMaxCoords("Room_2", Vector3(-24.5f, 2.577f, 0.0f), Vector3(-8.0f, -4.977f, 0.0f));
-    addRoomWithMaxCoords("Room_3", Vector3(-36.6f, 7.39f, 0.0f), Vector3(-26.6f, -7.35f, 0.0f));
-    addRoomWithMaxCoords("Room_4", Vector3(-36.6f, 24.39f, 0.0f), Vector3(-26.6f, 9.35f, 0.0f));
+		//Bounding Boxes Rooms
+		addRoomWithMaxCoords("Room_1", Vector3(-7.41f, 4.977f, 0.0f), Vector3(7.41f, -4.977f, 0.0f));
+		addRoomWithMaxCoords("Room_2", Vector3(-24.5f, 2.577f, 0.0f), Vector3(-8.0f, -4.977f, 0.0f));
+		addRoomWithMaxCoords("Room_3", Vector3(-36.6f, 7.39f, 0.0f), Vector3(-26.6f, -7.35f, 0.0f));
+		addRoomWithMaxCoords("Room_4", Vector3(-36.6f, 24.39f, 0.0f), Vector3(-26.6f, 9.35f, 0.0f));
 
-    addRoomWithMaxCoords("Room_5", Vector3(-24.6f, 22.39f, 0.0f), Vector3(-1.2f, 12.0f, 0.0f));
-    addRoomWithMaxCoords("Room_6", Vector3(0.5f, 22.39f, 0.0f), Vector3(30.0f, 12.0f, 0.0f));
-    addRoomWithMaxCoords("Room_7", Vector3(9.0f, 6.0f, 0.0f), Vector3(20.6f, -6.0f, 0.0f));
+		addRoomWithMaxCoords("Room_5", Vector3(-24.6f, 22.39f, 0.0f), Vector3(-1.2f, 12.0f, 0.0f));
+		addRoomWithMaxCoords("Room_6", Vector3(0.5f, 22.39f, 0.0f), Vector3(30.0f, 12.0f, 0.0f));
+		addRoomWithMaxCoords("Room_7", Vector3(9.0f, 6.0f, 0.0f), Vector3(20.6f, -6.0f, 0.0f));
   }
 
 	void CWorld::SpawnPlayer()
@@ -213,11 +181,11 @@ namespace World
 
 	void CWorld::SetupCameras()
 	{
+		/*
 		//Room 1
 		{
 			Abathur::TEntityId cameraId = Abathur::GetEntityIdByName("Camera_Room_1", m_sceneId);
 			m_playerCamera.AddRoom(SRoom(cameraId, m_playerId, "Room_1"));
-      m_witcherCamera.AddRoom(SRoom(cameraId, Abathur::GetEntityIdByName("Camera_Room_1.Target", m_sceneId), ""));
 		}
 
     //Room 2
@@ -257,12 +225,12 @@ namespace World
     }
 
 
-
+	*/
 
     // ....
 		
 		m_playerCamera.Init(m_sceneId);
-		m_witcherCamera.Init(m_sceneId);
+		m_playerCamera.SetTargetId(m_playerId);
 
 	}
 
