@@ -42,8 +42,14 @@ namespace Menu
 		const Vector3 direction = viewParameters.Unproject(mousePosition);
 		const Vector3 origin    = viewParameters.GetTransform().t;
 
+		Abathur::TLocationComponent* pLocation = entity->QueryComponent<Abathur::TLocationComponent>(); 
+		Abathur::TVisualComponent* pVisual = entity->QueryComponent<Abathur::TVisualComponent>();
+		
+		if (pVisual && pLocation && pVisual->visible)
+		{
+			//pVisual->mesh
+		}
 
-		//PLACEHOLDER ~ TODO FINISH
 		return false; 
 	}
 }

@@ -13,7 +13,8 @@ namespace World
 	*/
 
 	CCamera::CCamera()
-		: m_cameraPosition(MathUtils::ZERO)
+		: m_roomIndex(0u)
+		, m_cameraPosition(MathUtils::ZERO)
 		, m_cameraTarget(MathUtils::ZERO)
 	{}
 
@@ -36,6 +37,33 @@ namespace World
 		m_update.SetPriority(Abathur::GetUpdatePriority(Abathur::EUpdateTier::PrePhysics, Abathur::EUpdateStage::Default));
 		m_update.SetCallback(Abathur::TUpdateCallback::SetMethod<CCamera, &CCamera::Update>(this));
 		m_update.Register();
+	}
+
+	void CCamera::AddRoom(const SRoom& room)
+	{
+		m_rooms.push_back(room);
+	}
+
+	void CCamera::SetRoomByTrigger(const Abathur::TEntityId triggerId)
+	{
+		for (int32 i = 0u, sz = m_rooms.size(); i < sz; ++i)
+		{
+			if (triggerId == m_rooms[i].triggerId)
+			{
+				m_roomIndex = i;
+				return;
+			}
+		}
+	}
+
+	void CCamera::SetNextRoom()
+	{
+		m_roomIndex = m_rooms.empty()? 0u : (m_roomIndex + 1) % m_rooms.size();
+	}
+	
+	void CCamera::SetPreviousRoom()
+	{
+		m_roomIndex = m_rooms.empty() ? 0u : (m_roomIndex - 1 + m_rooms.size())%m_rooms.size();
 	}
 
 	void CCamera::Update(const Abathur::SUpdateContext& context)
@@ -72,7 +100,7 @@ namespace World
 		SpawnPlayer();
 
 		//Cameras
-		m_playerCamera.Init(m_sceneId);
+		
 
 		Abathur::StartScene(m_sceneId); //TODO ~ ramonv ~ move this away in order to start the game on our demand instead of startup
 	}
@@ -117,6 +145,17 @@ namespace World
 
 		pPlayerEntity->AddComponent<CPlayerComponent>();
 		m_playerId = pPlayerEntity->GetId();
+	}
+
+	void CWorld::SetupCameras()
+	{
+		m_playerCamera.Init(m_sceneId);
+		m_witcherCamera.Init(m_sceneId);
+		
+		//Room 1
+		{
+
+		}
 	}
 
 }
