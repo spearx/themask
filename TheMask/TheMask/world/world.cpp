@@ -7,15 +7,8 @@
 namespace World
 {
   float gDistance = 5.0f;
-
- 	void testGrid(const Abathur::TViewId viewId, const Abathur::CViewParameters& params)
-	{
-		/*
-    Abathur::renderGrid(8, 8, 2, 0xffffffff, 0xff00ffff);
-		Abathur::renderAxis(2.0f);
-    */
-    CWorld::Get().GetLasers().Render();
-  }
+  Abathur::TAbathurEntity* pTotemEntity = nullptr;
+  Matrix44 matrixOriginal;
 
 	CCamera::CCamera()
 	{}
@@ -28,7 +21,6 @@ namespace World
 		m_viewParameters.SetProjection(DEG2RAD(70.f), 0.1f, 10000.0f);
 		m_viewParameters.SetRenderTarget(m_pRenderTarget);
 		m_viewParameters.SetPriority(Abathur::TViewPriority(1u));
-    m_viewParameters.SetBeforeCallback(Abathur::TViewCallback::SetFunction<&testGrid>());
     
 		m_orientation = Vector2(MathUtils::ZERO);
 		m_input = Vector2(MathUtils::ZERO);
@@ -36,6 +28,13 @@ namespace World
 		m_update.SetPriority(Abathur::GetUpdatePriority(Abathur::EUpdateTier::PreRender, Abathur::EUpdateStage::Default));
 		m_update.SetCallback(Abathur::TUpdateCallback::SetMethod<CCamera, &CCamera::Update>(this));
 		m_update.Register();
+
+    pTotemEntity = Abathur::GetEntityByName("Centinel_Head_1", sceneId);
+    ASSERT(pTotemEntity);
+    Abathur::TLocationComponent* pLocComponent = pTotemEntity->QueryComponent<Abathur::TLocationComponent>();
+    matrixOriginal = pLocComponent->mtx;
+    matrixOriginal.SetTranslation(Vector3(0.0f));
+
 	}
 
 	bool CCamera::OnDirection(const Abathur::Input::EDirection direction, const Vector2& value)
@@ -49,7 +48,19 @@ namespace World
 
 	void CCamera::Update(const Abathur::SUpdateContext& context)
 	{
-		ImGui::SliderFloat("Camera Distance:", &gDistance, 0.0f, 50.0f);
+    ImGui::SliderFloat("Camera Distance:", &gDistance, 0.0f, 50.0f);
+    static float rot_totem = 0.0f;
+    rot_totem += 1.0f * context.frameTime;
+    /*bool changed = ImGui::SliderFloat("Rotation Totem:", &rot_totem, 0.0f, 2.0f);
+    if (changed) {*/
+      Matrix33 mtx;
+      mtx.SetIdentity();
+      Abathur::TLocationComponent* pLocComponent = pTotemEntity->QueryComponent<Abathur::TLocationComponent>();
+      mtx.SetRotationY(rot_totem);
+      Vector3 loc = pLocComponent->mtx.GetTranslation();
+      pLocComponent->mtx = mtx * matrixOriginal;
+      pLocComponent->mtx.SetTranslation(loc);
+    //}
 
 		Vector3 target(MathUtils::ZERO);
 
@@ -95,6 +106,7 @@ namespace World
 
 		//Cameras
 		SetupCameras();
+
 		Abathur::StartScene(m_sceneId);
 
     //Triggers
@@ -102,6 +114,23 @@ namespace World
 
     //Lasers
     RegisterLasers();
+  }
+
+
+  void CWorld::AfterRenderCallback(const Abathur::TViewId viewId, const Abathur::CViewParameters& params)
+  {
+    /*
+    Abathur::renderGrid(8, 8, 2, 0xffffffff, 0xff00ffff);
+    Abathur::renderAxis(2.0f);
+    */
+    CWorld::Get().GetLasers().Render();
+    Abathur::TAbathurEntity* pPlayerEntity = Abathur::GetEntity(CWorld::Get().GetPlayerEntityId());
+    ASSERT(pPlayerEntity);
+    CPlayerComponent* pComponent = pPlayerEntity->AddComponent<CPlayerComponent>();
+    ASSERT(pComponent);
+    if (pComponent->m_currentInteraction != "")
+    {
+    }
   }
 
 	void CWorld::SpawnPlayer()
@@ -159,6 +188,9 @@ namespace World
 	{
     m_playerCamera.Init(m_sceneId);
 		m_playerCamera.SetTargetId(m_playerId);
+    Abathur::CViewParameters& m_viewParameters = m_playerCamera.GetViewParameters();
+    m_viewParameters.SetBeforeCallback(Abathur::TViewCallback::SetMethod<CWorld, &CWorld::AfterRenderCallback>(this));
+
 	}
 
   void CWorld::RegisterTriggers() {
@@ -219,6 +251,20 @@ namespace World
       data->AddRayLaser(Abathur::GetEntityIdByName("Laser_B", m_sceneId), Abathur::GetEntityIdByName("Laser_B004", m_sceneId));
       data->AddRayLaser(Abathur::GetEntityIdByName("Laser_B001", m_sceneId), Abathur::GetEntityIdByName("Laser_B003", m_sceneId));
       data->AddRayLaser(Abathur::GetEntityIdByName("Laser_B002", m_sceneId), Abathur::GetEntityIdByName("Laser_B005", m_sceneId));
+    }
+
+    {
+      Abathur::TEntityId entity_collision = Abathur::GetEntityIdByName("Laser_Collision_Red_002", m_sceneId);
+      CLasers::TLaserData *data = m_lasers.RegistreTypeLaser(CLasers::ELaserType::RED_LASER, entity_collision);
+      data->AddRayLaser(Abathur::GetEntityIdByName("Laser_A009", m_sceneId), Abathur::GetEntityIdByName("Laser_A007", m_sceneId));
+      data->AddRayLaser(Abathur::GetEntityIdByName("Laser_A008", m_sceneId), Abathur::GetEntityIdByName("Laser_A006", m_sceneId));
+    }
+
+    {
+      Abathur::TEntityId entity_collision = Abathur::GetEntityIdByName("Laser_Collision_Blue_002", m_sceneId);
+      CLasers::TLaserData *data = m_lasers.RegistreTypeLaser(CLasers::ELaserType::BLUE_LASER, entity_collision);
+      data->AddRayLaser(Abathur::GetEntityIdByName("Laser_B008", m_sceneId), Abathur::GetEntityIdByName("Laser_B007", m_sceneId));
+      data->AddRayLaser(Abathur::GetEntityIdByName("Laser_B009", m_sceneId), Abathur::GetEntityIdByName("Laser_B006", m_sceneId));
     }
 
   }

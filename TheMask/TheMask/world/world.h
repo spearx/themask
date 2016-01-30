@@ -68,6 +68,7 @@ namespace World
 
 		inline Abathur::TEntityId GetPlayerEntityId() const { return m_playerId; }
     CLasers &GetLasers() { return m_lasers; }
+    void AfterRenderCallback(const Abathur::TViewId viewId, const Abathur::CViewParameters& params);
 
 	private: 
 		static CWorld& CreateInstance() { m_pInstance = new CWorld(); return *m_pInstance; }

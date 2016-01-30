@@ -46,9 +46,10 @@ namespace World
     Matrix44               m_viewMatrix;
     bool                   m_playerChangeRoom;
 
-	Abathur::TEntityId     m_childId;
-	float                  m_totalTime;
+	  Abathur::TEntityId     m_childId;
+	  float                  m_totalTime;
 
-	std::string            m_currentInteraction;
+  public:
+	  std::string            m_currentInteraction;
 	};
 }

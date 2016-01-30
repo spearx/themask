@@ -69,15 +69,18 @@ namespace World
 		{
 			if (m_currentInteraction == "Unlock_Totem" && !Menu::CMenu::Get().IsButtonEnabled(Menu::CMenu::Totem))
 			{
-				Menu::CMenu::Get().EnableButton(Menu::CMenu::Totem);
+        Abathur::playAudio("data/audio/magic_spell1.wav", false);
+        Menu::CMenu::Get().EnableButton(Menu::CMenu::Totem);
 			}
 			else if (m_currentInteraction == "Unlock_Laser_1" && !Menu::CMenu::Get().IsButtonEnabled(Menu::CMenu::Laser1))
 			{
+        Abathur::playAudio("data/audio/magic_spell1.wav", false);
 				Menu::CMenu::Get().EnableButton(Menu::CMenu::Laser1);
 			}
 			else if (m_currentInteraction == "Unlock_Laser_2" && !Menu::CMenu::Get().IsButtonEnabled(Menu::CMenu::Laser2))
 			{
-				Menu::CMenu::Get().EnableButton(Menu::CMenu::Laser2);
+        Abathur::playAudio("data/audio/magic_spell1.wav", false);
+        Menu::CMenu::Get().EnableButton(Menu::CMenu::Laser2);
 			}
 		}
 		return false; 
