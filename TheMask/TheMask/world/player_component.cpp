@@ -36,6 +36,10 @@ namespace World
 		m_update.SetCallback(Abathur::TUpdateCallback::SetMethod<CPlayerComponent, &CPlayerComponent::Update>(this));
 		m_update.Register();
 
+    m_update_post_physx.SetPriority(Abathur::GetUpdatePriority(Abathur::EUpdateTier::PrePhysics, Abathur::EUpdateStage::Default));
+    m_update_post_physx.SetCallback(Abathur::TUpdateCallback::SetMethod<CPlayerComponent, &CPlayerComponent::UpdatePostPhysX>(this));
+    m_update_post_physx.Register();
+
     if (Abathur::TLocationComponent* pLocComponent = entity->QueryComponent<Abathur::TLocationComponent>())
     {
       m_matrix_original = Matrix33(pLocComponent->mtx);
@@ -89,17 +93,6 @@ namespace World
           mtx.SetRotationY(m_yaw);
           pLocComponent->mtx = mtx * m_matrix_original;
           pLocComponent->mtx.SetTranslation(t);
-
-          std::string curr_room_name;
-          bool inside = CWorld::Get().getRoomInside(t, curr_room_name);
-          printf("Player pos x:'%1.3f',y:'%1.3f',z:'%1.3f'\n", t.x, t.y, t.z);
-
-          if (inside && curr_room_name != m_room_name) {
-            m_room_name = curr_room_name;
-            printf("Enter Room '%s'\n", m_room_name.c_str());
-            CWorld::Get().GetPlayerCamera().SetRoomByTrigger(m_room_name);
-            m_playerChangeRoom = true;
-          }
         }
       }
 		}
@@ -108,15 +101,7 @@ namespace World
 
 	void CPlayerComponent::Update(const Abathur::SUpdateContext& context)
 	{
-		ImGui::SliderFloat("Player Speed:", &m_speed, 0.0f,50.0f);
-
-    float len = m_inputDirection.GetLengthSquared();
-    if (len < 0.01f && m_playerChangeRoom) {
-      //Matrix44 viewMatrix;
-      printf("We need view matrix next frame\n");
-      m_playerChangeRoom = false;
-    }
-      
+		ImGui::SliderFloat("Player Speed:", &m_speed, 0.0f,50.0f);    
 
 		if (Abathur::TPhysXComponent* pPhysicsComponent= entity->QueryComponent<Abathur::TPhysXComponent>())
 		{
@@ -125,4 +110,37 @@ namespace World
 		}
 
 	}
+
+  void CPlayerComponent::UpdatePostPhysX(const Abathur::SUpdateContext& context)
+  {    
+
+    float len = m_inputDirection.GetLengthSquared();
+    if (len < 0.01f )
+    {
+      if (m_playerChangeRoom) {
+        //Matrix44 viewMatrix;
+        printf("We need view matrix next frame\n");
+        m_playerChangeRoom = false;
+      }
+    }
+     else {
+       if (Abathur::TLocationComponent* pLocComponent = entity->QueryComponent<Abathur::TLocationComponent>())
+       {
+         Matrix33 mtx;
+         mtx.SetIdentity();
+         Vector3 t = pLocComponent->mtx.GetTranslation();
+
+         std::string curr_room_name;
+         bool inside = CWorld::Get().getRoomInside(t, curr_room_name);
+         printf("Player pos x:'%1.3f',y:'%1.3f',z:'%1.3f'\n", t.x, t.y, t.z);
+
+         if (inside && curr_room_name != m_room_name) {
+           m_room_name = curr_room_name;
+           printf("Enter Room '%s'\n", m_room_name.c_str());
+           CWorld::Get().GetPlayerCamera().SetRoomByTrigger(m_room_name);
+           m_playerChangeRoom = true;
+         }
+       }
+     }
+  }
 }

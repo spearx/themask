@@ -120,7 +120,7 @@ namespace Menu
 
 		Vector4 value = m_color.GetValue();
 
-		printf("Color: %.2f %.2f %.2f %.2f\n", value.x,value.y,value.z,value.w);
+		//printf("Color: %.2f %.2f %.2f %.2f\n", value.x,value.y,value.z,value.w);
 
 		Abathur::setMaterialParam(entity->QueryComponent<Abathur::TVisualComponent>()->material, "diffuse_color", const_cast<Vector4&>(m_color.GetValue()));
 		//uptade material tint color 

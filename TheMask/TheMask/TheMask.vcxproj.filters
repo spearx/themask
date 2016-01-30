@@ -14,6 +14,9 @@
     <ClCompile Include="menu\button_component.cpp">
       <Filter>menu</Filter>
     </ClCompile>
+    <ClCompile Include="world\triggers.cpp">
+      <Filter>world</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="menu">
@@ -35,6 +38,9 @@
     </ClInclude>
     <ClInclude Include="menu\button_component.h">
       <Filter>menu</Filter>
+    </ClInclude>
+    <ClInclude Include="world\triggers.h">
+      <Filter>world</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

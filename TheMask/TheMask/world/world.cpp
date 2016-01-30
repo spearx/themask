@@ -161,7 +161,7 @@ namespace World
     addRoomWithMaxCoords("Room_3", Vector3(-36.6f, 7.39f, 0.0f), Vector3(-26.6f, -7.35f, 0.0f));
     addRoomWithMaxCoords("Room_4", Vector3(-36.6f, 24.39f, 0.0f), Vector3(-26.6f, 9.35f, 0.0f));
 
-    addRoomWithMaxCoords("Room_5", Vector3(-24.6f, 22.39f, 0.0f), Vector3(-1.2f, 12.0f, 0.0f));
+    addRoomWithMaxCoords("Room_5", Vector3(-25.0f, 22.39f, 0.0f), Vector3(-1.2f, 12.0f, 0.0f));
     addRoomWithMaxCoords("Room_6", Vector3(0.5f, 22.39f, 0.0f), Vector3(30.0f, 12.0f, 0.0f));
     addRoomWithMaxCoords("Room_7", Vector3(9.0f, 6.0f, 0.0f), Vector3(20.6f, -6.0f, 0.0f));
   }
