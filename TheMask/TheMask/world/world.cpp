@@ -10,8 +10,11 @@ namespace World
 
  	void testGrid(const Abathur::TViewId viewId, const Abathur::CViewParameters& params)
 	{
-		Abathur::renderGrid(8, 8, 2, 0xffffffff, 0xff00ffff);
+		/*
+    Abathur::renderGrid(8, 8, 2, 0xffffffff, 0xff00ffff);
 		Abathur::renderAxis(2.0f);
+    */
+    CWorld::Get().GetLasers().Render();
   }
 
 	CCamera::CCamera()
@@ -25,7 +28,7 @@ namespace World
 		m_viewParameters.SetProjection(DEG2RAD(70.f), 0.1f, 10000.0f);
 		m_viewParameters.SetRenderTarget(m_pRenderTarget);
 		m_viewParameters.SetPriority(Abathur::TViewPriority(1u));
-    //m_viewParameters.SetBeforeCallback(Abathur::TViewCallback::SetFunction<&testGrid>());
+    m_viewParameters.SetBeforeCallback(Abathur::TViewCallback::SetFunction<&testGrid>());
     
 		m_orientation = Vector2(MathUtils::ZERO);
 		m_input = Vector2(MathUtils::ZERO);
@@ -96,6 +99,9 @@ namespace World
 
     //Triggers
     RegisterTriggers();
+
+    //Lasers
+    RegisterLasers();
   }
 
 	void CWorld::SpawnPlayer()
@@ -197,6 +203,26 @@ namespace World
       CTriggers::Get().RegisterTriggerSphere(entity, 1.0f, "Interact_Item_6");
     }
   }
+
+  void CWorld::RegisterLasers() {
+    {
+      Abathur::TEntityId entity_collision = Abathur::GetEntityIdByName("Laser_Collision_Red_001", m_sceneId);      
+      CLasers::TLaserData *data = m_lasers.RegistreTypeLaser(CLasers::ELaserType::RED_LASER, entity_collision);
+      data->AddRayLaser(Abathur::GetEntityIdByName("Laser_A002", m_sceneId), Abathur::GetEntityIdByName("Laser_A005", m_sceneId));
+      data->AddRayLaser(Abathur::GetEntityIdByName("Laser_A001", m_sceneId), Abathur::GetEntityIdByName("Laser_A004", m_sceneId));
+      data->AddRayLaser(Abathur::GetEntityIdByName("Laser_A", m_sceneId), Abathur::GetEntityIdByName("Laser_A003", m_sceneId));
+    }
+    
+    {
+      Abathur::TEntityId entity_collision = Abathur::GetEntityIdByName("Laser_Collision_Blue_001", m_sceneId);
+      CLasers::TLaserData *data = m_lasers.RegistreTypeLaser(CLasers::ELaserType::BLUE_LASER, entity_collision);
+      data->AddRayLaser(Abathur::GetEntityIdByName("Laser_B", m_sceneId), Abathur::GetEntityIdByName("Laser_B004", m_sceneId));
+      data->AddRayLaser(Abathur::GetEntityIdByName("Laser_B001", m_sceneId), Abathur::GetEntityIdByName("Laser_B003", m_sceneId));
+      data->AddRayLaser(Abathur::GetEntityIdByName("Laser_B002", m_sceneId), Abathur::GetEntityIdByName("Laser_B005", m_sceneId));
+    }
+
+  }
+
 
 
 }

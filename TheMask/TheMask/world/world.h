@@ -1,6 +1,7 @@
 #pragma once
 
 #include "abathur.h"
+#include "lasers.h"
 
 namespace World
 {
@@ -66,7 +67,8 @@ namespace World
 		inline CCamera& GetPlayerCamera() { return m_playerCamera; }
 
 		inline Abathur::TEntityId GetPlayerEntityId() const { return m_playerId; }
-    
+    CLasers &GetLasers() { return m_lasers; }
+
 	private: 
 		static CWorld& CreateInstance() { m_pInstance = new CWorld(); return *m_pInstance; }
 
@@ -75,6 +77,7 @@ namespace World
 		void SpawnPlayer();
 		void SetupCameras();
     void RegisterTriggers();
+    void RegisterLasers();
 
 	private: 
 		static CWorld*     m_pInstance;
@@ -82,5 +85,6 @@ namespace World
 		CCamera            m_playerCamera;
 		Abathur::TSceneId  m_sceneId;
 		Abathur::TEntityId m_playerId;
-	};
+    CLasers            m_lasers;
+  };
 }
