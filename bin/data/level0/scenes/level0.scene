@@ -532,6 +532,70 @@
          "mesh" : "data/level0/meshes/Laser_B009.mesh"
       }
    },
+   "Laser_Collision_Blue_001" : {
+      "comp_location" : {
+         "mtx" : "1.000 0.000 0.000 -21.720 0.000 0.000 1.000 0.000 0.000 -1.000 0.000 1.218 0.000 0.000 0.000 1.000"
+      },
+      "comp_physx" : {
+         "body" : "rigid_static",
+         "dynamic_friction" : "0.0",
+         "mesh" : "data/level0/meshes/Laser_Collision_Blue_001.mesh",
+         "restitution" : "0.001",
+         "shape" : "mesh",
+         "static_friction" : "0.0"
+      },
+      "comp_visual" : {
+         "mesh" : "data/level0/meshes/Laser_Collision_Blue_001.mesh"
+      }
+   },
+   "Laser_Collision_Blue_002" : {
+      "comp_location" : {
+         "mtx" : "1.000 0.000 0.000 -31.393 0.000 0.000 1.000 0.000 0.000 -1.000 0.000 -4.914 0.000 0.000 0.000 1.000"
+      },
+      "comp_physx" : {
+         "body" : "rigid_static",
+         "dynamic_friction" : "0.0",
+         "mesh" : "data/level0/meshes/Laser_Collision_Blue_002.mesh",
+         "restitution" : "0.001",
+         "shape" : "mesh",
+         "static_friction" : "0.0"
+      },
+      "comp_visual" : {
+         "mesh" : "data/level0/meshes/Laser_Collision_Blue_002.mesh"
+      }
+   },
+   "Laser_Collision_Red_001" : {
+      "comp_location" : {
+         "mtx" : "1.000 0.000 0.000 -12.485 0.000 0.000 1.000 0.000 0.000 -1.000 0.000 1.218 0.000 0.000 0.000 1.000"
+      },
+      "comp_physx" : {
+         "body" : "rigid_static",
+         "dynamic_friction" : "0.0",
+         "mesh" : "data/level0/meshes/Laser_Collision_Red_001.mesh",
+         "restitution" : "0.001",
+         "shape" : "mesh",
+         "static_friction" : "0.0"
+      },
+      "comp_visual" : {
+         "mesh" : "data/level0/meshes/Laser_Collision_Red_001.mesh"
+      }
+   },
+   "Laser_Collision_Red_002" : {
+      "comp_location" : {
+         "mtx" : "1.000 0.000 0.000 -31.393 0.000 0.000 1.000 0.000 0.000 -1.000 0.000 3.891 0.000 0.000 0.000 1.000"
+      },
+      "comp_physx" : {
+         "body" : "rigid_static",
+         "dynamic_friction" : "0.0",
+         "mesh" : "data/level0/meshes/Laser_Collision_Red_002.mesh",
+         "restitution" : "0.001",
+         "shape" : "mesh",
+         "static_friction" : "0.0"
+      },
+      "comp_visual" : {
+         "mesh" : "data/level0/meshes/Laser_Collision_Red_002.mesh"
+      }
+   },
    "Room_1" : {
       "comp_location" : {
          "mtx" : "1.000 0.000 0.000 0.000 0.000 0.000 1.000 0.000 0.000 -1.000 0.000 0.000 0.000 0.000 0.000 1.000"
