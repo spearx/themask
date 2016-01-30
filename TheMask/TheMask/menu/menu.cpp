@@ -137,7 +137,7 @@ namespace Menu
 	{
 		//TODO ~ intro transition proper
 
-		if (Abathur::TAbathurEntity* pCristalPlayer = Abathur::GetEntityByName("Ball_Up", m_sceneId))
+		if (Abathur::TAbathurEntity* pCristalPlayer = Abathur::GetEntityByName("Ball", m_sceneId))
 		{
 			if (Abathur::TVisualComponent* pVisualComponent = pCristalPlayer->QueryComponent<Abathur::TVisualComponent>())
 			{
