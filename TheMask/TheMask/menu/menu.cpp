@@ -1,26 +1,10 @@
 #include "menu.h"
 
+#include "menu/button_component.h"
 #include "world/world.h"
 
 namespace Menu
 {
-	CInput::CInput(){}
-
-	bool CInput::OnButton(const Abathur::Input::EButton button, const Abathur::Input::EButtonEvent buttonEvent)
-	{
-		//printf("Button: %d - event %d\n", button, buttonEvent);
-		return false; 
-	}
-
-	bool CInput::OnDirection(const Abathur::Input::EDirection direction, const Vector2& value)
-	{
-		//printf("Dir: %d - value %.2f %.2f\n", direction, value.x, value.y);
-		const Vector2 mousePosition = Abathur::Input::GetMousePosition();
-		//printf("Mouse Position: %.2f %.2f\n", mousePosition.x, mousePosition.y);
-
-		return false;
-	}
-
 	////////////////////////////////////////////////////////////////////////////
 	CCamera::CCamera()
 		: m_cameraPos(5.0f)
@@ -34,24 +18,15 @@ namespace Menu
 			if (Abathur::TLocationComponent* pLocationComponent = pCameraEntity->QueryComponent<Abathur::TLocationComponent>())
 			{
 				m_cameraPos = pLocationComponent->mtx.GetTranslation();
-        //m_cameraTarget = pLocationComponent->mtx.GetFront() + m_cameraPos;
-        /*Matrix34 mtx(pLocationComponent->mtx);
-        Quat q(mtx);
-        const Vector3 p = q * pLocationComponent->mtx.GetTranslation();
-        m_cameraPos = Vector3(p.x, p.y, p.z);*/
-      }
+			}
 		}
 
 		if (Abathur::TAbathurEntity* pCameraEntity = Abathur::GetEntityByName("Camera001.Target", sceneId))
 		{
 			if (Abathur::TLocationComponent* pLocationComponent = pCameraEntity->QueryComponent<Abathur::TLocationComponent>())
 			{       
-        m_cameraTarget = pLocationComponent->mtx.GetTranslation();
-        //Matrix34 mtx(pLocationComponent->mtx);
-        //Quat q(mtx);
-        //const Vector3 p = q * pLocationComponent->mtx.GetTranslation();
-        //m_cameraTarget = Vector3(p.x, p.y, p.z);
-      }
+				m_cameraTarget = pLocationComponent->mtx.GetTranslation();
+			}
 		}
 
 		m_viewId = Abathur::AddSceneView(sceneId);
@@ -70,25 +45,26 @@ namespace Menu
 		//TODO ~ ramonv ~ move the camera
 
 		m_viewParameters.SetLookAt(m_cameraPos, m_cameraTarget);
-    Abathur::SetViewParameters(m_viewId, m_viewParameters);
+		Abathur::SetViewParameters(m_viewId, m_viewParameters);
 	}
 
 	////////////////////////////////////////////////////////////////////////////
+
+	CMenu* CMenu::m_pInstance = nullptr;
 
 	CMenu::CMenu()
 	{}
 
 	void CMenu::Init()
 	{
+		Abathur::RegisterEntityComponent<CButtonComponent>("comp_player");
+
 		//Load scene
 		m_sceneId = Abathur::LoadScene("data/menu/scenes/themask_menu.scene");
 
 		//Cameras
 		m_camera.Init(m_sceneId);
 
-		//Input
-		//TODO ~ ramonv ~ to be implemented ( mouse clicks and buttons ) 
-		
 		//Register Updates
 		m_preRenderUpdate.SetCallback(Abathur::TUpdateCallback::SetMethod<CMenu,&CMenu::PreRenderUpdate>(this));
 		m_preRenderUpdate.Register(Abathur::GetUpdatePriority(Abathur::EUpdateTier::PreRender, Abathur::EUpdateStage::Default));
@@ -108,5 +84,12 @@ namespace Menu
 				Abathur::setMaterialParam(pVisualComponent->material, "diffuse", viewParameters.GetRenderTarget());
 			}
 		}
+	}
+
+	bool CMenu::OnButton(const Abathur::Input::EButton button, const Abathur::Input::EButtonEvent buttonEvent)
+	{
+		//TODO ~ ramonv ~ Start game event catch here
+		//printf("Button: %d - event %d\n", button, buttonEvent);
+		return false;
 	}
 }

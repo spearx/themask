@@ -25,7 +25,7 @@ int main()
 	World::CWorld& world = World::CWorld::Get();
 	world.Init();
 	
-	Menu::CMenu menu;
+	Menu::CMenu& menu = Menu::CMenu::Get();
 	menu.Init();
 	
 	Abathur::Run();

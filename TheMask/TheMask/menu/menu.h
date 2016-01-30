@@ -10,28 +10,16 @@ namespace World
 
 namespace Menu
 {
-	class CInput : public Abathur::Input::InputListener
-	{
-	public:
-		CInput();
-
-	private:
-		virtual bool OnButton(const Abathur::Input::EButton button, const Abathur::Input::EButtonEvent buttonEvent) override;
-		virtual bool OnDirection(const Abathur::Input::EDirection direction, const Vector2& value) override;
-
-	private:
-
-
-	};
-
 	class CCamera
 	{
 	public: 
 		CCamera();
 
 		void Init(const Abathur::TSceneId sceneId);
-	private: 
 
+		Abathur::CViewParameters& GetViewParameters() { return m_viewParameters; }
+
+	private: 
 		void Update(const Abathur::SUpdateContext& context);
 
 	private: 
@@ -42,21 +30,29 @@ namespace Menu
 		Vector3                  m_cameraTarget;
 	};
 
-	class CMenu
+	class CMenu : public Abathur::Input::InputListener
 	{
 	public:
-		CMenu();
+
+		static CMenu& Get() { return m_pInstance ? *m_pInstance : CreateInstance(); }
 
 		void Init();
 
+		CCamera& GetCamera() { return m_camera; }
+
 	private: 
+		static CMenu& CreateInstance() { m_pInstance = new CMenu();  return *m_pInstance; }
+
+		CMenu();
+
 		void PreRenderUpdate(const Abathur::SUpdateContext& context);
+		virtual bool OnButton(const Abathur::Input::EButton button, const Abathur::Input::EButtonEvent buttonEvent) override;
 
 	private:
-		CCamera                  m_camera;
-		CInput                   m_input;
-		Abathur::TSceneId        m_sceneId;
+		static CMenu*            m_pInstance;
 
+		CCamera                  m_camera;
+		Abathur::TSceneId        m_sceneId;
 		Abathur::CScopedUpdate   m_preRenderUpdate;
 	};
 

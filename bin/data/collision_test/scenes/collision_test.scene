@@ -49,19 +49,6 @@
       "comp_location" : {
          "mtx" : "1.000 0.000 0.000 0.050 0.000 0.000 1.000 0.000 0.000 -1.000 0.000 0.076 0.000 0.000 0.000 1.000"
       },
-       "comp_physx" : {
-         "body" : "character_controller",
-         "height" : "0.1",
-         "offset_loc" : "0.0 0.0 0.0",
-         "radius" : "0.37",
-         "static_friction" : "0.0",
-         "dynamic_friction" : "0.0",
-         "contact_offset" : "0.05",
-         "slope_limit" : "0.2",
-         "step_offset" : "0.175",
-         "min_distance" : "0.01",
-         "restitution" : "0.001"
-      },
       "comp_visual" : {
          "material" : "_09 - Default",
          "mesh" : "data/collision_test/meshes/Cylinder001.mesh"

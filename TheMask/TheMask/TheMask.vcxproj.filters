@@ -11,6 +11,9 @@
     <ClCompile Include="world\player_component.cpp">
       <Filter>world</Filter>
     </ClCompile>
+    <ClCompile Include="menu\button_component.cpp">
+      <Filter>menu</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="menu">
@@ -29,6 +32,9 @@
     </ClInclude>
     <ClInclude Include="world\player_component.h">
       <Filter>world</Filter>
+    </ClInclude>
+    <ClInclude Include="menu\button_component.h">
+      <Filter>menu</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

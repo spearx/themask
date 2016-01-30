@@ -31,7 +31,7 @@ namespace World
 
 		void Init();
 
-		inline CCamera& GetPlayerCamera() { return m_camera; }
+		inline CCamera& GetPlayerCamera() { return m_playerCamera; }
 
 		inline Abathur::TEntityId GetPlayerEntityId() const { return m_playerId; }
 
@@ -40,11 +40,13 @@ namespace World
 
 		CWorld();
 
+		void SpawnPlayer();
+
 	private: 
 		static CWorld*     m_pInstance;
 
-		CCamera            m_camera;
-		Abathur::TSceneId  m_sceneId; 
+		CCamera            m_playerCamera;
+		Abathur::TSceneId  m_sceneId;
 		Abathur::TEntityId m_playerId;
 	};
 }
