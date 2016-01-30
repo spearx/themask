@@ -39,13 +39,14 @@ namespace Menu
 	private: 
 		float   m_logicRadius; 
 
-		Vector3   m_initTransform; 
+		Matrix44  m_initTransform;
 		Vector3   m_hoverOffsetTarget;
 		Vector4   m_pressedColor;
 		Vector4   m_baseColor;
 
 		Interpolations::InterpolableFixed<Vector3, Interpolations::EaseOutBackInterpolation> m_transform;
 		Interpolations::InterpolableFixed<Vector4, Interpolations::EaseOutBackInterpolation> m_color;
+		Interpolations::InterpolableFixed<float,   Interpolations::EaseOutBackInterpolation> m_scale;
 
 		Vector2 m_areaMin; 
 		Vector2 m_areaMax;

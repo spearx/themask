@@ -5,6 +5,7 @@
 #include "abathur_gui.h"
 #include "utils/math/Angle3.h"
 #include "menu/menu.h"
+#include "menu/popup.h"
 
 namespace World
 {
@@ -19,6 +20,7 @@ namespace World
     , m_yaw(0.0f)
     , m_playerChangeRoom(false)
 	, m_totalTime(0.0f)
+	, m_showItemDialog(false)
 	{
     m_matrix_original.SetIdentity();
     m_viewMatrix.SetIdentity();
@@ -82,6 +84,13 @@ namespace World
         Abathur::playAudio("data/audio/magic_spell1.wav", false);
         Menu::CMenu::Get().EnableButton(Menu::CMenu::Laser2);
 			}
+			
+			if (m_currentInteraction == "Interact_Item_1" || m_currentInteraction == "Interact_Item_2" || m_currentInteraction == "Interact_Item_3" 
+			|| m_currentInteraction == "Interact_Item_4" || m_currentInteraction == "Interact_Item_5" || m_currentInteraction == "Interact_Item_6")
+			{
+				m_showItemDialog = buttonEvent == Abathur::Input::EButtonEvent::Press ? true : false;
+			}
+			
 		}
 		return false; 
 	}
@@ -103,6 +112,8 @@ namespace World
 		ImGui::SliderFloat("Frequency", &gFrequency, 0.0f, 10.0f);
 		ImGui::SliderFloat("Offset",    &gOffset,    -10.0f, 10.0f);
 		
+
+		ShowDialogs();
 
     Abathur::CViewParameters& cameraParameters = CWorld::Get().GetPlayerCamera().GetViewParameters();
     cameraParameters.GetViewMatrix(m_viewMatrix);
@@ -210,6 +221,21 @@ namespace World
 			//  Menu::CMenu::Get().GetOfflineGame().Disable();
 		  }
 		  m_currentInteraction = "";
+	  }
+  }
+
+  void CPlayerComponent::ShowDialogs()
+  {
+	  if (m_showItemDialog)
+	  {
+		  if (m_currentInteraction == "Interact_Item_1")
+		  {
+			  Menu::CPopup::Get().AddTextLine("THIS IS ITERACTIVE ITEM 1!");
+		  }
+		  else if (m_currentInteraction == "Interact_Item_2")
+		  { 
+			  Menu::CPopup::Get().AddTextLine("THIS IS ITERACTIVE ITEM 2!");
+		  }
 	  }
   }
 

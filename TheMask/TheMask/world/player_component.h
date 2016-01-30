@@ -32,6 +32,8 @@ namespace World
 
 		void Update(const Abathur::SUpdateContext& context);
     void UpdatePostPhysX(const Abathur::SUpdateContext& context);
+	void ShowDialogs();
+
 
 	private: 
 		EState                 m_state;
@@ -51,5 +53,6 @@ namespace World
 
   public:
 	  std::string            m_currentInteraction;
+	bool                 m_showItemDialog;
 	};
 }

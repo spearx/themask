@@ -8,7 +8,7 @@ namespace Menu
 		: m_logicRadius(1.0f)
 		, m_areaMin(MathUtils::ZERO)
 		, m_areaMax(MathUtils::ZERO)
-		, m_initTransform(MathUtils::ZERO)
+		, m_initTransform(MathUtils::IDENTITY)
 		, m_hoverOffsetTarget(MathUtils::ZERO)
 		, m_pressedColor(MathUtils::ZERO)
 		, m_prevIsHover(false)
@@ -34,9 +34,10 @@ namespace Menu
 	{
 		m_prevIsHover = false;
 		m_isHover = false; 
-		m_initTransform = entity->QueryComponent<Abathur::TLocationComponent>()->mtx.GetTranslation();
+		m_initTransform = entity->QueryComponent<Abathur::TLocationComponent>()->mtx;
 		m_color.Reset(m_baseColor);
-		m_transform.Reset(m_initTransform);
+		m_scale.Reset(0.0f);
+		m_transform.Reset(m_initTransform.GetTranslation());
 		m_update.Register(Abathur::GetUpdatePriority(Abathur::EUpdateTier::PostPhysics, Abathur::EUpdateStage::Latest), Abathur::TUpdateCallback::SetMethod<CButtonComponent,&CButtonComponent::Update>(this));
 	}
 
@@ -68,7 +69,21 @@ namespace Menu
 
 	void CButtonComponent::SetEnable(const bool isEnabled)
 	{
+		if (m_isEnabled && !isEnabled)
+		{
+			m_scale.SetValue(0.0f, 0.4f);
+		}
+		else if (!m_isEnabled && isEnabled)
+		{
+			m_scale.SetValue(1.0f, 0.4f);
+		}
+
 		m_isEnabled = isEnabled;
+		Abathur::TVisualComponent *comp = entity->QueryComponent<Abathur::TVisualComponent>();
+		if (comp)
+		{
+			comp->visible = true;
+		}
 	}
 	
 	bool CButtonComponent::IsPressed(const bool input)
@@ -100,11 +115,11 @@ namespace Menu
 		{
 			if (m_isHover && !m_prevIsHover)
 			{
-				m_transform.SetValue(m_initTransform+m_hoverOffsetTarget, 0.5f);
+				m_transform.SetValue(m_initTransform.GetTranslation()+m_hoverOffsetTarget, 0.5f);
 			}
 			else if (!m_isHover && m_prevIsHover)
 			{
-				m_transform.SetValue(m_initTransform, 0.5f);
+				m_transform.SetValue(m_initTransform.GetTranslation(), 0.5f);
 			}
 		}
 		else
@@ -125,10 +140,16 @@ namespace Menu
 		
 		m_transform.Update(context.frameTime);
 		m_color.Update(context.frameTime);
+		m_scale.Update(context.frameTime);
 
-		entity->QueryComponent<Abathur::TLocationComponent>()->mtx.SetTranslation(m_transform.GetValue());
 
 		Vector4 value = m_color.GetValue();
+
+		Matrix44 scaleMtx;
+		scaleMtx.SetScale(m_scale.GetValue());
+
+		entity->QueryComponent<Abathur::TLocationComponent>()->mtx = scaleMtx*m_initTransform;
+		entity->QueryComponent<Abathur::TLocationComponent>()->mtx.SetTranslation(m_transform.GetValue());
 
 		Abathur::setMaterialParam(entity->QueryComponent<Abathur::TVisualComponent>()->material, "diffuse_color", const_cast<Vector4&>(m_color.GetValue()));
 	
