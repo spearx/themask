@@ -12,15 +12,15 @@ void sys_printf(const char* input)
 
 int main()
 {
-	Abathur::Init("The Incredible Mask", 1280, 720, false);
+	Abathur::Init("The Incredible Mask", 1920, 1080, true);
 	Abathur::SetLogCallback(Abathur::TLogCallback::SetFunction<&sys_printf>());
 
 	Abathur::TDepthState depthState; 
 	depthState.enable_culling = true;
 	depthState.apply();
 
-	World::CWorld world;
-	world.Init();
+	//World::CWorld world;
+	//world.Init();
 
 	Menu::CMenu menu;
 	menu.Init();

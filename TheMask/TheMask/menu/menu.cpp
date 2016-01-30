@@ -33,15 +33,24 @@ namespace Menu
 			if (Abathur::TLocationComponent* pLocationComponent = pCameraEntity->QueryComponent<Abathur::TLocationComponent>())
 			{
 				m_cameraPos = pLocationComponent->mtx.GetTranslation();
-			}
+        //m_cameraTarget = pLocationComponent->mtx.GetFront() + m_cameraPos;
+        /*Matrix34 mtx(pLocationComponent->mtx);
+        Quat q(mtx);
+        const Vector3 p = q * pLocationComponent->mtx.GetTranslation();
+        m_cameraPos = Vector3(p.x, p.y, p.z);*/
+      }
 		}
 
-		if (Abathur::TAbathurEntity* pCameraEntity = Abathur::GetEntityByName("Camera001.target", sceneId))
+		if (Abathur::TAbathurEntity* pCameraEntity = Abathur::GetEntityByName("Camera001.Target", sceneId))
 		{
 			if (Abathur::TLocationComponent* pLocationComponent = pCameraEntity->QueryComponent<Abathur::TLocationComponent>())
-			{
-				m_cameraTarget = pLocationComponent->mtx.GetTranslation();
-			}
+			{       
+        m_cameraTarget = pLocationComponent->mtx.GetTranslation();
+        //Matrix34 mtx(pLocationComponent->mtx);
+        //Quat q(mtx);
+        //const Vector3 p = q * pLocationComponent->mtx.GetTranslation();
+        //m_cameraTarget = Vector3(p.x, p.y, p.z);
+      }
 		}
 
 		m_viewId = Abathur::AddSceneView(sceneId);
@@ -60,6 +69,7 @@ namespace Menu
 		//TODO ~ ramonv ~ move the camera
 
 		m_viewParameters.SetLookAt(m_cameraPos, m_cameraTarget);
+    Abathur::SetViewParameters(m_viewId, m_viewParameters);
 	}
 
 	////////////////////////////////////////////////////////////////////////////
