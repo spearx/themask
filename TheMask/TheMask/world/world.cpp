@@ -1,21 +1,19 @@
 #include "world.h"
 #include "player_component.h"
+#include "triggers.h"
 
 #include "abathur_gui.h"
 
 namespace World
 {
+  float gDistance = 5.0f;
 
-	float gDistance = 5.0f;
-
-  struct TRoomAABB {
-    std::string name;
-    Vector3 min;
-    Vector3 max;
-  };
-
-  typedef std::vector<TRoomAABB> VRoomsAbbs;
-  VRoomsAbbs rooms_aabbs;
+  void OnTriggerEvent(const std::string &event_name, CTriggers::ETriggerEvent event_type) {
+    if( event_type == CTriggers::ETriggerEvent::ON_ENTER)
+      printf("On Trigger Event %s ON ENTER\n", event_name.c_str());
+    else if (event_type == CTriggers::ETriggerEvent::ON_EXIT)
+      printf("On Trigger Event %s ON EXIT\n", event_name.c_str());
+  }
 
 	void testGrid(const Abathur::TViewId viewId, const Abathur::CViewParameters& params)
 	{
@@ -34,7 +32,7 @@ namespace World
 		m_viewParameters.SetProjection(DEG2RAD(70.f), 0.1f, 10000.0f);
 		m_viewParameters.SetRenderTarget(m_pRenderTarget);
 		m_viewParameters.SetPriority(Abathur::TViewPriority(1u));
-    m_viewParameters.SetBeforeCallback(Abathur::TViewCallback::SetFunction<&testGrid>());
+    //m_viewParameters.SetBeforeCallback(Abathur::TViewCallback::SetFunction<&testGrid>());
     
 		m_orientation = Vector2(MathUtils::ZERO);
 		m_input = Vector2(MathUtils::ZERO);
@@ -102,7 +100,10 @@ namespace World
 		//Cameras
 		SetupCameras();
 		Abathur::StartScene(m_sceneId);
-	}
+
+    //Triggers
+    RegisterTriggers();
+  }
 
 	void CWorld::SpawnPlayer()
 	{
@@ -159,18 +160,50 @@ namespace World
 	{
     m_playerCamera.Init(m_sceneId);
 		m_playerCamera.SetTargetId(m_playerId);
-
 	}
 
-  bool CWorld::getRoomInside(const Vector3 &pos, std::string &room_name) {
-    for (auto &r : rooms_aabbs)
+  void CWorld::RegisterTriggers() {
     {
-      if (r.min.x < pos.x && r.max.x > pos.x && r.min.z < pos.z && r.max.z > pos.z) {
-        room_name = r.name;
-        return true;
-      }
+      Abathur::TEntityId entity = Abathur::GetEntityIdByName("Button_Centinel_1", m_sceneId);
+      CTriggers::Get().RegisterTriggerSphere(entity, 1.0f, "Unlock_Totem");
     }
-    return false;
+    {
+      Abathur::TEntityId entity = Abathur::GetEntityIdByName("Button_Laser_1", m_sceneId);
+      CTriggers::Get().RegisterTriggerSphere(entity, 1.0f, "Unlock_Laser_1");
+    }
+    {
+      Abathur::TEntityId entity = Abathur::GetEntityIdByName("Button_Laser_B", m_sceneId);
+      CTriggers::Get().RegisterTriggerSphere(entity, 1.0f, "Unlock_Laser_2");
+    }
+    {
+      Abathur::TEntityId entity = Abathur::GetEntityIdByName("Cauldron", m_sceneId);
+      CTriggers::Get().RegisterTriggerSphere(entity, 2.5f, "Interact_Cauldron");
+    }
+    {
+      Abathur::TEntityId entity = Abathur::GetEntityIdByName("Item_1", m_sceneId);
+      CTriggers::Get().RegisterTriggerSphere(entity, 1.0f, "Interact_Item_1");
+    }
+    {
+      Abathur::TEntityId entity = Abathur::GetEntityIdByName("Item_2", m_sceneId);
+      CTriggers::Get().RegisterTriggerSphere(entity, 1.0f, "Interact_Item_2");
+    }
+    {
+      Abathur::TEntityId entity = Abathur::GetEntityIdByName("Item_3", m_sceneId);
+      CTriggers::Get().RegisterTriggerSphere(entity, 1.0f, "Interact_Item_3");
+    }
+    {
+      Abathur::TEntityId entity = Abathur::GetEntityIdByName("Item_4", m_sceneId);
+      CTriggers::Get().RegisterTriggerSphere(entity, 1.0f, "Interact_Item_4");
+    }
+    {
+      Abathur::TEntityId entity = Abathur::GetEntityIdByName("Item_5", m_sceneId);
+      CTriggers::Get().RegisterTriggerSphere(entity, 1.0f, "Interact_Item_5");
+    }
+    {
+      Abathur::TEntityId entity = Abathur::GetEntityIdByName("Item_6", m_sceneId);
+      CTriggers::Get().RegisterTriggerSphere(entity, 1.0f, "Interact_Item_6");
+    }
+    CTriggers::Get().RegisterListenner(CTriggers::TTriggerEventCallback::SetFunction<&OnTriggerEvent>());
   }
 
 

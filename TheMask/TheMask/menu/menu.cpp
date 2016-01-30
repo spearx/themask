@@ -91,10 +91,10 @@ namespace Menu
 		SetState(EState::Intro);
 
     
-    //Load Font and configure Popup
-    Abathur::TAbathurFont *font = Abathur::loadFont("data/fonts/mask_font.fnt", "data/fonts/mask_font.tga");
-    ASSERT(font);
-    CPopup::Get().Init(font);
+		//Load Font and configure Popup
+		Abathur::TAbathurFont *font = Abathur::loadFont("data/fonts/mask_font.fnt", "data/fonts/mask_font.tga");
+		ASSERT(font);
+		CPopup::Get().Init(font);
 
 	}
 

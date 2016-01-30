@@ -8,24 +8,31 @@ namespace World
 	class CTriggers
 	{
   public:
-    typedef CFunctionCaller1<const std::string &> TTriggerEventCallback;
-
-
-    enum class ETriggerType {
-      TRIGGER_BOX,
-      TRIGGER_SPHERE
+    
+    enum class ETriggerEvent {
+      ON_ENTER,
+      ON_EXIT,
+      NOT_EVENT
     };
 
- private:
-    struct TTriggerBox {
+    typedef CFunctionCaller2<const std::string &, ETriggerEvent> TTriggerEventCallback;
+
+ private:   
+
+   enum class ETriggerType {
+     TRIGGER_BOX,
+     TRIGGER_SPHERE
+   };
+
+   struct TTriggerBox {
       Vector3 min;
       Vector3 max;
-      bool isInside(const Vector3 pos) const;
+      bool isInside(const Vector3 &pos) const;
     };
     struct TTriggerSphere {
       Vector3 center;
       float radius;
-      bool isInside(const Vector3 pos) const;
+      bool isInside(const Vector3 &pos) const;
     };
 
     struct TTrigger
@@ -33,6 +40,7 @@ namespace World
       ETriggerType type;
       TTriggerBox box;
       TTriggerSphere sphere;
+      bool is_inside;
       std::string event_name;
     };
 
@@ -48,10 +56,10 @@ namespace World
 
     CTriggers();
     void RegisterTriggerSphere(Abathur::TEntityId entity, float radius, const std::string &event_name);
-    void RegisterTriggerBox(Vector3 &min, Vector3 &max, const std::string &event_name);
+    void RegisterTriggerBox(Vector3 min, Vector3 max, const std::string &event_name);
     void RegisterListenner(TTriggerEventCallback listener);
 
-    void SetPlayerPosition(const Vector3 &pos);
+    void SetPlayerPosition(Vector3 pos);
 
     static CTriggers& Get() { return m_pInstance ? *m_pInstance : CreateInstance(); }
   };

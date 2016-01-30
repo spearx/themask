@@ -17,10 +17,10 @@
     <ClCompile Include="world\triggers.cpp">
       <Filter>world</Filter>
     </ClCompile>
-    <ClCompile Include="menu\offline_game.cpp">
+    <ClCompile Include="menu\popup.cpp">
       <Filter>menu</Filter>
     </ClCompile>
-    <ClCompile Include="menu\popup.cpp">
+    <ClCompile Include="menu\offline_game.cpp">
       <Filter>menu</Filter>
     </ClCompile>
   </ItemGroup>
@@ -48,10 +48,10 @@
     <ClInclude Include="world\triggers.h">
       <Filter>world</Filter>
     </ClInclude>
-    <ClInclude Include="menu\offline_game.h">
+    <ClInclude Include="menu\popup.h">
       <Filter>menu</Filter>
     </ClInclude>
-    <ClInclude Include="menu\popup.h">
+    <ClInclude Include="menu\offline_game.h">
       <Filter>menu</Filter>
     </ClInclude>
   </ItemGroup>
