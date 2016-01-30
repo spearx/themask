@@ -69,7 +69,7 @@ namespace World
 		//Init world
 		Abathur::RegisterEntityComponent<CPlayerComponent>("comp_player");
 		Abathur::InitPhysX(Vector3(0.0f, -9.8f, 0.0f));
-		Abathur::AddPhysXPlane(Vector3(0.0f, 1.0f, 0.0f), 0.0f);
+		//Abathur::AddPhysXPlane(Vector3(0.0f, 1.0f, 0.0f), 0.0f);
 
 		//Load scene
 		m_sceneId = Abathur::LoadScene("data/level0/scenes/level0.scene");

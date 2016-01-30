@@ -33,5 +33,7 @@ namespace World
 		Vector3                m_alignment;
 		Abathur::CScopedUpdate m_update;
 		float                  m_speed;
+    float                  m_yaw;
+    Matrix33               m_matrix_original;
 	};
 }
