@@ -106,7 +106,7 @@
       "vertex_shader" : "data/shaders/vp_basic_lighting.glsl"
    },
    "Material #3" : {
-      "ambient_color" : "1.000000  1.000000 1.000000 1.000000",
+      "ambient_color" : "0.631373  0.541176 0.384314 1.000000",
       "emission_color" : "0.000000  0.000000 0.000000 1.000000",
       "pixel_shader" : "data/shaders/fp_textured.glsl",
       "samplers" : {

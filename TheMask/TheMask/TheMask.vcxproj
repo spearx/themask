@@ -157,6 +157,7 @@
     <ClCompile Include="menu\menu.cpp" />
     <ClCompile Include="menu\offline_game.cpp" />
     <ClCompile Include="menu\popup.cpp" />
+    <ClCompile Include="world\lasers.cpp" />
     <ClCompile Include="world\player_component.cpp" />
     <ClCompile Include="world\triggers.cpp" />
     <ClCompile Include="world\world.cpp" />
@@ -166,6 +167,7 @@
     <ClInclude Include="menu\menu.h" />
     <ClInclude Include="menu\offline_game.h" />
     <ClInclude Include="menu\popup.h" />
+    <ClInclude Include="world\lasers.h" />
     <ClInclude Include="world\player_component.h" />
     <ClInclude Include="world\triggers.h" />
     <ClInclude Include="world\world.h" />
