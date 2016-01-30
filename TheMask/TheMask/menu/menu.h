@@ -76,6 +76,7 @@ namespace Menu
 
 		void PreRenderUpdate(const Abathur::SUpdateContext& context);
 		void LogicUpdate(const Abathur::SUpdateContext& context);
+		void InitButtons();
 		virtual bool OnButton(const Abathur::Input::EButton button, const Abathur::Input::EButtonEvent buttonEvent) override;
 
 	private:
