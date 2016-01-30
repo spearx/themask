@@ -28,7 +28,7 @@ namespace World
 
 	void CCamera::Init(const Abathur::TSceneId sceneId)
 	{
-		m_pRenderTarget = Abathur::createRenderTarget(512,512);
+		m_pRenderTarget = Abathur::createRenderTarget(1024,1024);
 
 		m_viewId = Abathur::AddSceneView(sceneId);
 		m_viewParameters.SetProjection(DEG2RAD(70.f), 0.1f, 10000.0f);
@@ -101,13 +101,12 @@ namespace World
 
 		//Cameras
 		SetupCameras();
-
-		Abathur::StartScene(m_sceneId); //TODO ~ ramonv ~ move this away in order to start the game on our demand instead of startup    		
-  }
+		Abathur::StartScene(m_sceneId);
+	}
 
 	void CWorld::SpawnPlayer()
 	{
-		Abathur::TAbathurEntity* pPlayerEntity = Abathur::SpawnEnitity("player", m_sceneId);
+		Abathur::TAbathurEntity* pPlayerEntity = Abathur::SpawnEnitity("Player", m_sceneId);
 		ASSERT(pPlayerEntity);
 
 		{
@@ -122,7 +121,8 @@ namespace World
 				}
 			}
 		}
-		
+
+		/*
 		{
 			Abathur::TVisualComponent* pComponent = pPlayerEntity->AddComponent<Abathur::TVisualComponent>();
 			Abathur::loadTexture("data/textures/Mask_Diffuse.tga");
@@ -131,6 +131,7 @@ namespace World
 			pComponent->material = Abathur::getMaterial("Material_Mask");
 			ASSERT(pComponent->material);
 		}
+		*/
 
 		{
 			Abathur::TPhysXComponent* pComponent = pPlayerEntity->AddComponent<Abathur::TPhysXComponent>();
@@ -146,7 +147,11 @@ namespace World
 			pComponent->mRestitution     = 0.001f;
 		}
 
-		pPlayerEntity->AddComponent<CPlayerComponent>();
+		{
+			CPlayerComponent* pComponent = pPlayerEntity->AddComponent<CPlayerComponent>();
+			pComponent->CreateChildEntities(m_sceneId);
+		}
+
 		m_playerId = pPlayerEntity->GetId();
 	}
 

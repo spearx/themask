@@ -21,6 +21,8 @@ namespace World
 		virtual void Start() override;
 		virtual void Stop() override;
 
+		void CreateChildEntities(const Abathur::TSceneId sceneId);
+
 	private:
 		virtual bool OnButton(const Abathur::Input::EButton button, const Abathur::Input::EButtonEvent buttonEvent) override;
 		virtual bool OnDirection(const Abathur::Input::EDirection direction, const Vector2& value) override;
@@ -40,5 +42,8 @@ namespace World
     std::string            m_room_name;
     Matrix44               m_viewMatrix;
     bool                   m_playerChangeRoom;
+
+	Abathur::TEntityId     m_childId;
+	float                  m_totalTime;
 	};
 }

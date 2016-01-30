@@ -68,7 +68,6 @@ namespace Menu
 
 	void CMenu::Init()
 	{
-		SetState(EState::Intro);
 
 		Abathur::RegisterEntityComponent<CButtonComponent>("comp_player");
 
@@ -83,12 +82,14 @@ namespace Menu
 
 		//AddButton("button_1",Vector2(0.07f, 0.75f), Vector2(0.23f, 0.92f), Vector3(0.0f, 5.0f, 0.0f), Vector4(0.321f, 0.352f, 0.415f, 1.0f), Vector4(1.0f, 0.0f, 0.0f, 1.0f));
 
-
 		m_preRenderUpdate.SetCallback(Abathur::TUpdateCallback::SetMethod<CMenu, &CMenu::PreRenderUpdate>(this));
 		m_preRenderUpdate.Register(Abathur::GetUpdatePriority(Abathur::EUpdateTier::PreRender, Abathur::EUpdateStage::Default));
 
 		//Start Scene
 		Abathur::StartScene(m_sceneId);
+
+		SetState(EState::Intro);
+
     
     //Load Font and configure Popup
     Abathur::TAbathurFont *font = Abathur::loadFont("data/fonts/mask_font.fnt", "data/fonts/mask_font.tga");
@@ -104,10 +105,13 @@ namespace Menu
 			case EState::Intro: break;
 			case EState::Playing: 
 			{
+				m_logicUpdate.SetCallback(Abathur::TUpdateCallback::SetMethod<CMenu, &CMenu::LogicUpdate>(this));
+				m_logicUpdate.Register(Abathur::GetUpdatePriority(Abathur::EUpdateTier::PostPhysics, Abathur::EUpdateStage::Default));
 			}
 			case EState::Success: 
 			case EState::Failed:
 			{
+				m_logicUpdate.Unregister();
 			}
 			break;
 		}
@@ -118,6 +122,8 @@ namespace Menu
 	void CMenu::PreRenderUpdate(const Abathur::SUpdateContext& context)
 	{
 		//Map other scene viewport
+		//TODO ~ intro transition proper
+
 		if (Abathur::TAbathurEntity* pCristalPlayer = Abathur::GetEntityByName("Ball_Up", m_sceneId))
 		{
 			if (Abathur::TVisualComponent* pVisualComponent = pCristalPlayer->QueryComponent<Abathur::TVisualComponent>())
@@ -128,17 +134,16 @@ namespace Menu
 		}
 	}
 
-
 	void CMenu::LogicUpdate(const Abathur::SUpdateContext& context)
 	{
 		COfflineGame::EState state = m_offlineGame.GetState();
 		if (state != COfflineGame::EState::Success)
 		{
-			//TODO ~ ramonv ~ to be implemented
+			SetState(EState::Success);
 		}
 		else if (state != COfflineGame::EState::Failed)
 		{
-			//TODO ~ ramonv ~ to be implemented
+			SetState(EState::Failed);
 		}
 	}
 
@@ -158,8 +163,10 @@ namespace Menu
 
 	bool CMenu::OnButton(const Abathur::Input::EButton button, const Abathur::Input::EButtonEvent buttonEvent)
 	{
-		//TODO ~ ramonv ~ Start game event catch here
-		//printf("Button: %d - event %d\n", button, buttonEvent);
+		if (m_state == EState::Intro && button == Abathur::Input::EButton::GamepadStart)
+		{
+			SetState(EState::Playing);
+		}
 		return false;
 	}
 }

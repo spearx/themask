@@ -63,8 +63,6 @@ namespace Menu
 
 	void COfflineGame::Update(const Abathur::SUpdateContext& context)
 	{
-		printf("sequence %d\n", m_sequenceIndex);
-
 		for (int i = 0u; i < Count; ++i)
 		{
 			CButtonComponent* pButton = GetButtonComponent(m_buttons[i]);
