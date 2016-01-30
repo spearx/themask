@@ -1,4 +1,74 @@
 {
+   "Button_Centinel" : {
+      "ambient_color" : "1.000000  1.000000 1.000000 1.000000",
+      "emission_color" : "0.000000  0.000000 0.000000 1.000000",
+      "samplers" : {
+         "diffuse" : "data/level0/textures/Button_Centinel_Diffuse.tga"
+      },
+      "pixel_shader" : "data/shaders/fp_textured.glsl",
+      "vertex_shader" : "data/shaders/vp_basic.glsl",
+      "specular_color" : "0.000000  0.000000 0.000000 1.000000"
+   },
+   "Button_Laser_A" : {
+      "ambient_color" : "1.000000  1.000000 1.000000 1.000000",
+      "emission_color" : "0.000000  0.000000 0.000000 1.000000",
+      "samplers" : {
+         "diffuse" : "data/level0/textures/Button_Laser_A_Diffuse.tga"
+      },
+      "pixel_shader" : "data/shaders/fp_textured.glsl",
+      "vertex_shader" : "data/shaders/vp_basic.glsl",
+      "specular_color" : "0.000000  0.000000 0.000000 1.000000"
+   },
+   "Button_Laser_B" : {
+      "ambient_color" : "1.000000  1.000000 1.000000 1.000000",
+      "emission_color" : "0.000000  0.000000 0.000000 1.000000",
+      "samplers" : {
+         "diffuse" : "data/level0/textures/Button_Laser_B_Diffuse.tga"
+      },
+      "pixel_shader" : "data/shaders/fp_textured.glsl",
+      "vertex_shader" : "data/shaders/vp_basic.glsl",
+      "specular_color" : "0.000000  0.000000 0.000000 1.000000"
+   },
+   "Cauldreon_Stones" : {
+      "ambient_color" : "0.631373  0.541176 0.384314 1.000000",
+      "emission_color" : "0.000000  0.000000 0.000000 1.000000",
+      "samplers" : {
+         "diffuse" : "data/level0/textures/Circle_Stones_Diffuse.tga"
+      },
+      "pixel_shader" : "data/shaders/fp_textured.glsl",
+      "vertex_shader" : "data/shaders/vp_basic.glsl",
+      "specular_color" : "0.099000  0.099000 0.099000 1.000000"
+   },
+   "Laser_B" : {
+      "ambient_color" : "0.631373  0.541176 0.384314 1.000000",
+      "emission_color" : "0.000000  0.000000 0.000000 1.000000",
+      "samplers" : {
+         "diffuse" : "data/level0/textures/Laser_B.tga"
+      },
+      "pixel_shader" : "data/shaders/fp_textured.glsl",
+      "vertex_shader" : "data/shaders/vp_basic.glsl",
+      "specular_color" : "0.333000  0.333000 0.333000 1.000000"
+   },
+   "Material #135" : {
+      "ambient_color" : "1.000000  1.000000 1.000000 1.000000",
+      "emission_color" : "0.000000  0.000000 0.000000 1.000000",
+      "samplers" : {
+         "diffuse" : "data/level0/textures/Cauldron_Diffuse.tga"
+      },
+      "pixel_shader" : "data/shaders/fp_textured.glsl",
+      "vertex_shader" : "data/shaders/vp_basic.glsl",
+      "specular_color" : "0.000000  0.000000 0.000000 1.000000"
+   },
+   "Material #138" : {
+      "ambient_color" : "1.000000  1.000000 1.000000 1.000000",
+      "emission_color" : "0.000000  0.000000 0.000000 1.000000",
+      "samplers" : {
+         "diffuse" : "data/level0/textures/Stones_LightingMap.tga"
+      },
+      "pixel_shader" : "data/shaders/fp_textured.glsl",
+      "vertex_shader" : "data/shaders/vp_basic.glsl",
+      "specular_color" : "0.000000  0.000000 0.000000 1.000000"
+   },
    "Material #2" : {
       "ambient_color" : "0.588000  0.588000 0.588000 1.000000",
       "diffuse_color" : "0.588000  0.588000 0.588000 1.000000",
@@ -6,5 +76,95 @@
       "pixel_shader" : "data/shaders/fp_basic_lighting.glsl",
       "specular_color" : "0.000000  0.000000 0.000000 1.000000",
       "vertex_shader" : "data/shaders/vp_basic_lighting.glsl"
+   },
+   "Material #204" : {
+      "ambient_color" : "1.000000  1.000000 1.000000 1.000000",
+      "emission_color" : "0.000000  0.000000 0.000000 1.000000",
+      "samplers" : {
+         "diffuse" : "data/level0/textures/Bricks_Diffuse.tga"
+      },
+      "pixel_shader" : "data/shaders/fp_textured.glsl",
+      "vertex_shader" : "data/shaders/vp_basic.glsl",
+      "specular_color" : "0.000000  0.000000 0.000000 1.000000"
+   },
+   "Room_1" : {
+      "ambient_color" : "1.000000  1.000000 1.000000 1.000000",
+      "emission_color" : "0.000000  0.000000 0.000000 1.000000",
+      "samplers" : {
+         "diffuse" : "data/level0/textures/Room_1_LightingMap.tga"
+      },
+      "pixel_shader" : "data/shaders/fp_textured.glsl",
+      "vertex_shader" : "data/shaders/vp_basic.glsl",
+      "specular_color" : "0.000000  0.000000 0.000000 1.000000"
+   },
+   "Room_2" : {
+      "ambient_color" : "1.000000  1.000000 1.000000 1.000000",
+      "emission_color" : "0.000000  0.000000 0.000000 1.000000",
+      "samplers" : {
+         "diffuse" : "data/level0/textures/Room_2_LightingMap.tga"
+      },
+      "pixel_shader" : "data/shaders/fp_textured.glsl",
+      "vertex_shader" : "data/shaders/vp_basic.glsl",
+      "specular_color" : "0.000000  0.000000 0.000000 1.000000"
+   },
+   "Room_3" : {
+      "ambient_color" : "1.000000  1.000000 1.000000 1.000000",
+      "emission_color" : "0.000000  0.000000 0.000000 1.000000",
+      "samplers" : {
+         "diffuse" : "data/level0/textures/Room_3_LightingMap.tga"
+      },
+      "pixel_shader" : "data/shaders/fp_textured.glsl",
+      "vertex_shader" : "data/shaders/vp_basic.glsl",
+      "specular_color" : "0.000000  0.000000 0.000000 1.000000"
+   },
+   "Room_4" : {
+      "ambient_color" : "1.000000  1.000000 1.000000 1.000000",
+      "emission_color" : "0.000000  0.000000 0.000000 1.000000",
+      "samplers" : {
+         "diffuse" : "data/level0/textures/Room_4_LightingMap.tga"
+      },
+      "pixel_shader" : "data/shaders/fp_textured.glsl",
+      "vertex_shader" : "data/shaders/vp_basic.glsl",
+      "specular_color" : "0.000000  0.000000 0.000000 1.000000"
+   },
+   "Room_5" : {
+      "ambient_color" : "1.000000  1.000000 1.000000 1.000000",
+      "emission_color" : "0.000000  0.000000 0.000000 1.000000",
+      "samplers" : {
+         "diffuse" : "data/level0/textures/Room_5_LightingMap.tga"
+      },
+      "pixel_shader" : "data/shaders/fp_textured.glsl",
+      "vertex_shader" : "data/shaders/vp_basic.glsl",
+      "specular_color" : "0.000000  0.000000 0.000000 1.000000"
+   },
+   "Room_6" : {
+      "ambient_color" : "1.000000  1.000000 1.000000 1.000000",
+      "emission_color" : "0.000000  0.000000 0.000000 1.000000",
+      "samplers" : {
+         "diffuse" : "data/level0/textures/Room_6_LightingMap.tga"
+      },
+      "pixel_shader" : "data/shaders/fp_textured.glsl",
+      "vertex_shader" : "data/shaders/vp_basic.glsl",
+      "specular_color" : "0.000000  0.000000 0.000000 1.000000"
+   },
+   "Room_7" : {
+      "ambient_color" : "1.000000  1.000000 1.000000 1.000000",
+      "emission_color" : "0.000000  0.000000 0.000000 1.000000",
+      "samplers" : {
+         "diffuse" : "data/level0/textures/Room_7_LightingMap.tga"
+      },
+      "pixel_shader" : "data/shaders/fp_textured.glsl",
+      "vertex_shader" : "data/shaders/vp_basic.glsl",
+      "specular_color" : "0.000000  0.000000 0.000000 1.000000"
+   },
+   "Ivy" : {
+      "ambient_color" : "1.000000  1.000000 1.000000 1.000000",
+      "emission_color" : "0.000000  0.000000 0.000000 1.000000",
+      "samplers" : {
+         "diffuse" : "data/level0/textures/Ivy_Diffuse.tga"
+      },
+      "pixel_shader" : "data/shaders/fp_textured.glsl",
+      "vertex_shader" : "data/shaders/vp_basic.glsl",
+      "specular_color" : "0.000000  0.000000 0.000000 1.000000"
    }
 }

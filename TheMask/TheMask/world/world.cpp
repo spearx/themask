@@ -1,21 +1,19 @@
 #include "world.h"
 #include "player_component.h"
+#include "triggers.h"
 
 #include "abathur_gui.h"
 
 namespace World
 {
+  float gDistance = 5.0f;
 
-	float gDistance = 5.0f;
-
-  struct TRoomAABB {
-    std::string name;
-    Vector3 min;
-    Vector3 max;
-  };
-
-  typedef std::vector<TRoomAABB> VRoomsAbbs;
-  VRoomsAbbs rooms_aabbs;
+  void OnTriggerEvent(const std::string &event_name, CTriggers::ETriggerEvent event_type) {
+    if( event_type == CTriggers::ETriggerEvent::ON_ENTER)
+      printf("On Trigger Event %s ON ENTER\n", event_name.c_str());
+    else if (event_type == CTriggers::ETriggerEvent::ON_EXIT)
+      printf("On Trigger Event %s ON EXIT\n", event_name.c_str());
+  }
 
 	void testGrid(const Abathur::TViewId viewId, const Abathur::CViewParameters& params)
 	{
@@ -32,9 +30,9 @@ namespace World
 
 		m_viewId = Abathur::AddSceneView(sceneId);
 		m_viewParameters.SetProjection(DEG2RAD(70.f), 0.1f, 10000.0f);
-		m_viewParameters.SetRenderTarget(m_pRenderTarget);
+		//m_viewParameters.SetRenderTarget(m_pRenderTarget);
 		m_viewParameters.SetPriority(Abathur::TViewPriority(1u));
-    m_viewParameters.SetBeforeCallback(Abathur::TViewCallback::SetFunction<&testGrid>());
+    //m_viewParameters.SetBeforeCallback(Abathur::TViewCallback::SetFunction<&testGrid>());
     
 		m_orientation = Vector2(MathUtils::ZERO);
 		m_input = Vector2(MathUtils::ZERO);
@@ -102,6 +100,9 @@ namespace World
 		//Cameras
 		SetupCameras();
 
+    //Triggers
+    RegisterTriggers();
+
 		Abathur::StartScene(m_sceneId); //TODO ~ ramonv ~ move this away in order to start the game on our demand instead of startup    		
   }
 
@@ -154,18 +155,13 @@ namespace World
 	{
     m_playerCamera.Init(m_sceneId);
 		m_playerCamera.SetTargetId(m_playerId);
-
 	}
 
-  bool CWorld::getRoomInside(const Vector3 &pos, std::string &room_name) {
-    for (auto &r : rooms_aabbs)
-    {
-      if (r.min.x < pos.x && r.max.x > pos.x && r.min.z < pos.z && r.max.z > pos.z) {
-        room_name = r.name;
-        return true;
-      }
-    }
-    return false;
+  void CWorld::RegisterTriggers() {
+    Abathur::TEntityId entity = Abathur::GetEntityIdByName("Button_Centinel_1", m_sceneId);
+    CTriggers::Get().RegisterTriggerSphere(entity, 1.0f, "Trigger_Activar_Lasers");
+
+    CTriggers::Get().RegisterListenner(CTriggers::TTriggerEventCallback::SetFunction<&OnTriggerEvent>());
   }
 
 

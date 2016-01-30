@@ -67,8 +67,6 @@ namespace World
 
 		inline Abathur::TEntityId GetPlayerEntityId() const { return m_playerId; }
     
-    bool getRoomInside(const Vector3 &pos, std::string &room_name);
-
 	private: 
 		static CWorld& CreateInstance() { m_pInstance = new CWorld(); return *m_pInstance; }
 
@@ -76,6 +74,7 @@ namespace World
 
 		void SpawnPlayer();
 		void SetupCameras();
+    void RegisterTriggers();
 
 	private: 
 		static CWorld*     m_pInstance;
