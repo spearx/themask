@@ -37,7 +37,7 @@ namespace Menu
 		m_initTransform = entity->QueryComponent<Abathur::TLocationComponent>()->mtx.GetTranslation();
 		m_color.Reset(m_baseColor);
 		m_transform.Reset(m_initTransform);
-		m_update.Register(Abathur::GetUpdatePriority(Abathur::EUpdateTier::PrePhysics, Abathur::EUpdateStage::Default), Abathur::TUpdateCallback::SetMethod<CButtonComponent,&CButtonComponent::Update>(this));
+		m_update.Register(Abathur::GetUpdatePriority(Abathur::EUpdateTier::PostPhysics, Abathur::EUpdateStage::Latest), Abathur::TUpdateCallback::SetMethod<CButtonComponent,&CButtonComponent::Update>(this));
 	}
 
 	void CButtonComponent::Stop()
@@ -52,14 +52,14 @@ namespace Menu
 			m_isPressed = buttonEvent == Abathur::Input::EButtonEvent::Press ? m_isEnabled : false;
 		}
 
-		if (button == Abathur::Input::EButton::MouseRight )
+		if (button == Abathur::Input::EButton::MouseRight)
 		{
-			SetEnable(false);
+			CMenu::Get().GetOfflineGame().Enable();
 		}
 
-		if (button == Abathur::Input::EButton::MouseMiddle )
+		if (button == Abathur::Input::EButton::MouseMiddle)
 		{
-			SetEnable(true);
+			CMenu::Get().GetOfflineGame().Disable();
 		}
 
 		return false;
