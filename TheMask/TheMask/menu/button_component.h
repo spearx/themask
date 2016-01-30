@@ -17,6 +17,7 @@ namespace Menu
 		virtual void Start() override;
 		virtual void Stop() override;
 
+		bool IsEnabled() const;
 		void SetEnable(const bool isEnabled);
 
 		inline void SetArea(const Vector2& min, const Vector2& max) { m_areaMin = min; m_areaMax = max; }

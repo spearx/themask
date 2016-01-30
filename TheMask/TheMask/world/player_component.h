@@ -1,6 +1,7 @@
 #pragma once
 
 #include "abathur.h"
+#include "triggers.h"
 
 namespace World
 {
@@ -27,6 +28,8 @@ namespace World
 		virtual bool OnButton(const Abathur::Input::EButton button, const Abathur::Input::EButtonEvent buttonEvent) override;
 		virtual bool OnDirection(const Abathur::Input::EDirection direction, const Vector2& value) override;
 
+		void OnTriggerEvent(const std::string &event_name, CTriggers::ETriggerEvent event_type);
+
 		void Update(const Abathur::SUpdateContext& context);
     void UpdatePostPhysX(const Abathur::SUpdateContext& context);
 
@@ -45,5 +48,7 @@ namespace World
 
 	Abathur::TEntityId     m_childId;
 	float                  m_totalTime;
+
+	std::string            m_currentInteraction;
 	};
 }
