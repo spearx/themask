@@ -47,7 +47,6 @@ namespace World
 		virtual bool OnDirection(const Abathur::Input::EDirection direction, const Vector2& value) override;
 
 	private: 
-		//int32                   m_roomIndex;
 		Abathur::TViewId          m_viewId;
 		Abathur::CViewParameters  m_viewParameters;
 		Abathur::CScopedUpdate    m_update;
@@ -55,9 +54,6 @@ namespace World
 		Abathur::TEntityId        m_targetId;
 		Vector2                   m_orientation;
 		Vector2                   m_input;
-		//Vector3                 m_cameraPosition;
-		//Vector3                 m_cameraTarget;
-		//TRooms                  m_rooms;
 	};
 
 	class CWorld

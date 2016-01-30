@@ -40,6 +40,8 @@ namespace Menu
 
 		CCamera& GetCamera() { return m_camera; }
 
+		Abathur::TEntityId AddButton(const char* entityName, const Vector2& areaMin, const Vector2& areaMax, const Vector3& hoverOffset, const Vector4& baseTintColor, const Vector4& tintColor);
+
 	private: 
 		static CMenu& CreateInstance() { m_pInstance = new CMenu();  return *m_pInstance; }
 

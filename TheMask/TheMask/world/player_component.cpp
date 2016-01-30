@@ -139,7 +139,6 @@ namespace World
 			pPhysicsComponent->MoveActor(moveDir*m_speed*context.frameTime,context.frameTime);
 		}
 
-
 		//alignment
 
 		if (moveDir.GetLengthSquared() > 0.0f)

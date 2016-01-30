@@ -15,7 +15,9 @@ namespace Menu
 		, m_isHover(false)
 		, m_isPrevPressed(false)
 		, m_isPressed(false)
+		, m_isEnabled(true)
 	{
+		m_baseColor = Vector4(1.0f);
 	}
 
 	void CButtonComponent::Load(Json::Value &json_data)
@@ -33,7 +35,6 @@ namespace Menu
 		m_prevIsHover = false;
 		m_isHover = false; 
 		m_initTransform = entity->QueryComponent<Abathur::TLocationComponent>()->mtx.GetTranslation();
-		m_baseColor = Vector4(0.321569f, 0.352941f, 0.415686f, 1.000000f);
 		m_color.Reset(m_baseColor);
 		m_transform.Reset(m_initTransform);
 		m_update.Register(Abathur::GetUpdatePriority(Abathur::EUpdateTier::PrePhysics, Abathur::EUpdateStage::Default), Abathur::TUpdateCallback::SetMethod<CButtonComponent,&CButtonComponent::Update>(this));
@@ -48,8 +49,19 @@ namespace Menu
 	{
 		if (button == Abathur::Input::EButton::MouseLeft && m_isHover)
 		{
-			m_isPressed = buttonEvent == Abathur::Input::EButtonEvent::Press ? true : false;
+			m_isPressed = buttonEvent == Abathur::Input::EButtonEvent::Press ? m_isEnabled : false;
 		}
+
+		if (button == Abathur::Input::EButton::MouseRight )
+		{
+			SetEnable(false);
+		}
+
+		if (button == Abathur::Input::EButton::MouseMiddle )
+		{
+			SetEnable(true);
+		}
+
 		return false;
 	}
 
@@ -63,6 +75,11 @@ namespace Menu
 		}
 		*/
 		return false;
+	}
+
+	void CButtonComponent::SetEnable(const bool isEnabled)
+	{
+		m_isEnabled = isEnabled;
 	}
 	
 	bool CButtonComponent::IsPressed(const bool input)
@@ -82,11 +99,15 @@ namespace Menu
 
 	void CButtonComponent::Update(const Abathur::SUpdateContext& context)
 	{
-
 		m_prevIsHover = m_isHover;
-		m_isHover = IsMouseHover();
+		m_isHover = m_isEnabled && IsMouseHover();
 
-		if (!m_isPressed)
+		if (!m_isEnabled)
+		{
+			m_isPressed = false;
+		}
+
+		if (!m_isPressed )
 		{
 			if (m_isHover && !m_prevIsHover)
 			{
@@ -120,11 +141,8 @@ namespace Menu
 
 		Vector4 value = m_color.GetValue();
 
-		printf("Color: %.2f %.2f %.2f %.2f\n", value.x,value.y,value.z,value.w);
-
 		Abathur::setMaterialParam(entity->QueryComponent<Abathur::TVisualComponent>()->material, "diffuse_color", const_cast<Vector4&>(m_color.GetValue()));
-		//uptade material tint color 
-		
+	
 	}
 
 	bool CButtonComponent::IsMouseHover() const

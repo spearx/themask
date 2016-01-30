@@ -2,8 +2,12 @@
 
 #include "player_component.h"
 
+#include "abathur_gui.h"
+
 namespace World
 {
+
+	float gDistance = 5.0f;
 
   struct TRoomAABB {
     std::string name;
@@ -52,6 +56,8 @@ namespace World
 
 	void CCamera::Update(const Abathur::SUpdateContext& context)
 	{
+		ImGui::SliderFloat("Camera Distance:", &gDistance, 0.0f, 50.0f);
+
 		Vector3 target(MathUtils::ZERO);
 
 		if (Abathur::TAbathurEntity* pPlayerEntity = Abathur::GetEntity(m_targetId))
@@ -69,7 +75,7 @@ namespace World
 		offset *= cosf(m_orientation.y);
 		offset.y = sinf(m_orientation.y);
 
-		offset *= 3.0f;
+		offset *= gDistance;
 
 		m_viewParameters.SetLookAt(target + offset, target);
 		Abathur::SetViewParameters(m_viewId, m_viewParameters);

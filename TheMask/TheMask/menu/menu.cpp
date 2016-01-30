@@ -13,7 +13,7 @@ namespace Menu
 
 	void CCamera::Init(const Abathur::TSceneId sceneId)
 	{
-		if (Abathur::TAbathurEntity* pCameraEntity = Abathur::GetEntityByName("Camera001",sceneId))
+		if (Abathur::TAbathurEntity* pCameraEntity = Abathur::GetEntityByName("Camera001", sceneId))
 		{
 			if (Abathur::TLocationComponent* pLocationComponent = pCameraEntity->QueryComponent<Abathur::TLocationComponent>())
 			{
@@ -24,7 +24,7 @@ namespace Menu
 		if (Abathur::TAbathurEntity* pCameraEntity = Abathur::GetEntityByName("Camera001.Target", sceneId))
 		{
 			if (Abathur::TLocationComponent* pLocationComponent = pCameraEntity->QueryComponent<Abathur::TLocationComponent>())
-			{       
+			{
 				m_cameraTarget = pLocationComponent->mtx.GetTranslation();
 			}
 		}
@@ -66,20 +66,10 @@ namespace Menu
 		m_camera.Init(m_sceneId);
 
 		//Register Updates
-		m_preRenderUpdate.SetCallback(Abathur::TUpdateCallback::SetMethod<CMenu,&CMenu::PreRenderUpdate>(this));
+		m_preRenderUpdate.SetCallback(Abathur::TUpdateCallback::SetMethod<CMenu, &CMenu::PreRenderUpdate>(this));
 		m_preRenderUpdate.Register(Abathur::GetUpdatePriority(Abathur::EUpdateTier::PreRender, Abathur::EUpdateStage::Default));
 
-		//Button Setup
-		{
-			const char* entityName = "button_1"; 
-			if (Abathur::TAbathurEntity* pEntity = Abathur::GetEntityByName(entityName,m_sceneId))
-			{
-				CButtonComponent* pComponent = pEntity->AddComponent<CButtonComponent>();
-				pComponent->SetArea(Vector2(0.07f, 0.75f), Vector2(0.23f,0.92f));
-				pComponent->SetHoverOffset(Vector3(0.0f, 5.0f, 0.0f));
-				pComponent->SetPressedColor(Vector4(1.0f, 0.0f, 0.0f, 1.0f));
-			}
-		}
+		AddButton("button_1",Vector2(0.07f, 0.75f), Vector2(0.23f, 0.92f), Vector3(0.0f, 5.0f, 0.0f), Vector4(0.321f, 0.352f, 0.415f, 1.0f), Vector4(1.0f, 0.0f, 0.0f, 1.0f));
 
 		//Start Scene
 		Abathur::StartScene(m_sceneId);
@@ -92,10 +82,23 @@ namespace Menu
 		{
 			if (Abathur::TVisualComponent* pVisualComponent = pCristalPlayer->QueryComponent<Abathur::TVisualComponent>())
 			{
-				Abathur::CViewParameters& viewParameters = World::CWorld::Get().GetPlayerCamera().GetViewParameters(); 
+				Abathur::CViewParameters& viewParameters = World::CWorld::Get().GetPlayerCamera().GetViewParameters();
 				Abathur::setMaterialParam(pVisualComponent->material, "diffuse", viewParameters.GetRenderTarget());
 			}
 		}
+	}
+
+	Abathur::TEntityId CMenu::AddButton(const char* entityName, const Vector2& areaMin, const Vector2& areaMax, const Vector3& hoverOffset, const Vector4& baseTintColor, const Vector4& tintColor)
+	{
+		if (Abathur::TAbathurEntity* pEntity = Abathur::GetEntityByName(entityName, m_sceneId))
+		{
+			CButtonComponent* pComponent = pEntity->AddComponent<CButtonComponent>();
+			pComponent->SetArea(areaMin, areaMax);
+			pComponent->SetHoverOffset(hoverOffset);
+			pComponent->SetPressedColor(baseTintColor,tintColor);
+			return pEntity->GetId();
+		}
+		return Abathur::TEntityId::s_invalid;
 	}
 
 	bool CMenu::OnButton(const Abathur::Input::EButton button, const Abathur::Input::EButtonEvent buttonEvent)
