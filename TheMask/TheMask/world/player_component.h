@@ -30,7 +30,7 @@ namespace World
 
 	private: 
 		EState                 m_state;
-		Vector3                m_inputDirection;
+		Vector2                m_inputDirection;
 		Vector3                m_alignment;
     Abathur::CScopedUpdate m_update;
     Abathur::CScopedUpdate m_update_post_physx;

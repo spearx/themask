@@ -1,10 +1,19 @@
 #include "menu.h"
+#include "popup.h"
 
 #include "menu/button_component.h"
 #include "world/world.h"
 
 namespace Menu
 {
+
+  void afterRender(const Abathur::TViewId viewId, const Abathur::CViewParameters& params)
+  {
+    //CPopup::Get().AddTextLine("Hola mundo");
+    //CPopup::Get().AddTextLine("Adios...");
+    CPopup::Get().Render();
+  }
+  
 	////////////////////////////////////////////////////////////////////////////
 	CCamera::CCamera()
 		: m_cameraPos(5.0f)
@@ -33,6 +42,8 @@ namespace Menu
 		m_viewParameters.SetProjection(DEG2RAD(55.f), 0.1f, 1000.0f);
 		m_viewParameters.SetLookAt(m_cameraPos, m_cameraTarget);
 		m_viewParameters.SetPriority(Abathur::TViewPriority(100));
+    m_viewParameters.SetAfterCallback(Abathur::TViewCallback::SetFunction<&afterRender>());
+
 		Abathur::SetViewParameters(m_viewId, m_viewParameters);
 
 		m_update.SetPriority(Abathur::GetUpdatePriority(Abathur::EUpdateTier::PrePhysics, Abathur::EUpdateStage::Default));
@@ -83,6 +94,12 @@ namespace Menu
 
 		//Start Scene
 		Abathur::StartScene(m_sceneId);
+    
+    //Load Font and configure Popup
+    Abathur::TAbathurFont *font = Abathur::loadFont("data/fonts/mask_font.fnt", "data/fonts/mask_font.tga");
+    ASSERT(font);
+    CPopup::Get().Init(font);
+
 	}
 
 	void CMenu::PreRenderUpdate(const Abathur::SUpdateContext& context)

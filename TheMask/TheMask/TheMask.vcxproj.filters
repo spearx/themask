@@ -17,6 +17,9 @@
     <ClCompile Include="world\triggers.cpp">
       <Filter>world</Filter>
     </ClCompile>
+    <ClCompile Include="menu\popup.cpp">
+      <Filter>menu</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="menu">
@@ -41,6 +44,9 @@
     </ClInclude>
     <ClInclude Include="world\triggers.h">
       <Filter>world</Filter>
+    </ClInclude>
+    <ClInclude Include="menu\popup.h">
+      <Filter>menu</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
