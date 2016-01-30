@@ -256,11 +256,11 @@
       },
       "comp_physx" : {
          "body" : "rigid_static",
-         "mesh" : "data/level0/meshes/Room_007.mesh",
-         "shape" : "mesh",
-         "static_friction" : "0.0",
          "dynamic_friction" : "0.0",
-         "restitution" : "0.001"         
+         "mesh" : "data/level0/meshes/Room_007.mesh",
+         "restitution" : "0.001",
+         "shape" : "mesh",
+         "static_friction" : "0.0"
       },
       "comp_visual" : {
          "material" : "Material #2",
@@ -273,11 +273,11 @@
       },
       "comp_physx" : {
          "body" : "rigid_static",
-         "mesh" : "data/level0/meshes/Room_1.mesh",
-         "shape" : "mesh",
-         "static_friction" : "0.0",
          "dynamic_friction" : "0.0",
-         "restitution" : "0.001"         
+         "mesh" : "data/level0/meshes/Room_1.mesh",
+         "restitution" : "0.001",
+         "shape" : "mesh",
+         "static_friction" : "0.0"
       },
       "comp_visual" : {
          "material" : "Material #2",
@@ -290,12 +290,12 @@
       },
       "comp_physx" : {
          "body" : "rigid_static",
-         "mesh" : "data/level0/meshes/Room_2.mesh",
-         "shape" : "mesh",
-         "static_friction" : "0.0",
          "dynamic_friction" : "0.0",
-         "restitution" : "0.001"         
-      },      
+         "mesh" : "data/level0/meshes/Room_2.mesh",
+         "restitution" : "0.001",
+         "shape" : "mesh",
+         "static_friction" : "0.0"
+      },
       "comp_visual" : {
          "material" : "Material #2",
          "mesh" : "data/level0/meshes/Room_2.mesh"
@@ -307,11 +307,11 @@
       },
       "comp_physx" : {
          "body" : "rigid_static",
-         "mesh" : "data/level0/meshes/Room_3.mesh",
-         "shape" : "mesh",
-         "static_friction" : "0.0",
          "dynamic_friction" : "0.0",
-         "restitution" : "0.001"         
+         "mesh" : "data/level0/meshes/Room_3.mesh",
+         "restitution" : "0.001",
+         "shape" : "mesh",
+         "static_friction" : "0.0"
       },
       "comp_visual" : {
          "material" : "Material #2",
@@ -324,12 +324,12 @@
       },
       "comp_physx" : {
          "body" : "rigid_static",
-         "mesh" : "data/level0/meshes/Room_4.mesh",
-         "shape" : "mesh",
-         "static_friction" : "0.0",
          "dynamic_friction" : "0.0",
-         "restitution" : "0.001"         
-      },     
+         "mesh" : "data/level0/meshes/Room_4.mesh",
+         "restitution" : "0.001",
+         "shape" : "mesh",
+         "static_friction" : "0.0"
+      },
       "comp_visual" : {
          "material" : "Material #2",
          "mesh" : "data/level0/meshes/Room_4.mesh"
@@ -341,12 +341,12 @@
       },
       "comp_physx" : {
          "body" : "rigid_static",
-         "mesh" : "data/level0/meshes/Room_5.mesh",
-         "shape" : "mesh",
-         "static_friction" : "0.0",
          "dynamic_friction" : "0.0",
-         "restitution" : "0.001"         
-      },     
+         "mesh" : "data/level0/meshes/Room_5.mesh",
+         "restitution" : "0.001",
+         "shape" : "mesh",
+         "static_friction" : "0.0"
+      },
       "comp_visual" : {
          "material" : "Material #2",
          "mesh" : "data/level0/meshes/Room_5.mesh"
@@ -358,15 +358,23 @@
       },
       "comp_physx" : {
          "body" : "rigid_static",
-         "mesh" : "data/level0/meshes/Room_5.mesh",
-         "shape" : "mesh",
-         "static_friction" : "0.0",
          "dynamic_friction" : "0.0",
-         "restitution" : "0.001"         
+         "mesh" : "data/level0/meshes/Room_5.mesh",
+         "restitution" : "0.001",
+         "shape" : "mesh",
+         "static_friction" : "0.0"
       },
       "comp_visual" : {
          "material" : "Material #2",
          "mesh" : "data/level0/meshes/Room_6.mesh"
+      }
+   },
+   "Room_7" : {
+      "comp_location" : {
+         "mtx" : "1.000 0.000 0.000 17.000 0.000 0.000 1.000 0.000 0.000 -1.000 0.000 0.000 0.000 0.000 0.000 1.000"
+      },
+      "comp_visual" : {
+         "mesh" : "data/level0/meshes/Room_7.mesh"
       }
    },
    "SpawnPoint" : {
@@ -401,6 +409,14 @@
          "mesh" : "data/level0/meshes/Trigger_Cauldron.mesh"
       }
    },
+   "Trigger_Room_1" : {
+      "comp_location" : {
+         "mtx" : "1.000 0.000 0.000 -0.074 0.000 0.000 1.000 0.000 0.000 -1.000 0.000 -2.736 0.000 0.000 0.000 1.000"
+      },
+      "comp_visual" : {
+         "mesh" : "data/level0/meshes/Trigger_Room_1.mesh"
+      }
+   },
    "Trigger_Room_1_2" : {
       "comp_location" : {
          "mtx" : "1.000 0.000 0.000 -8.500 0.000 0.000 1.000 0.000 0.000 -1.000 0.000 0.000 0.000 0.000 0.000 1.000"
@@ -408,6 +424,14 @@
       "comp_visual" : {
          "material" : "Material #2",
          "mesh" : "data/level0/meshes/Trigger_Room_1_2.mesh"
+      }
+   },
+   "Trigger_Room_2" : {
+      "comp_location" : {
+         "mtx" : "1.000 0.000 0.000 -17.101 0.000 0.000 1.000 0.000 0.000 -1.000 0.000 -2.736 0.000 0.000 0.000 1.000"
+      },
+      "comp_visual" : {
+         "mesh" : "data/level0/meshes/Trigger_Room_2.mesh"
       }
    },
    "Trigger_Room_2_3" : {
@@ -419,6 +443,14 @@
          "mesh" : "data/level0/meshes/Trigger_Room_2_3.mesh"
       }
    },
+   "Trigger_Room_3" : {
+      "comp_location" : {
+         "mtx" : "1.000 0.000 0.000 -31.405 0.000 0.000 1.000 0.000 0.000 -1.000 0.000 -2.736 0.000 0.000 0.000 1.000"
+      },
+      "comp_visual" : {
+         "mesh" : "data/level0/meshes/Trigger_Room_3.mesh"
+      }
+   },
    "Trigger_Room_3_4" : {
       "comp_location" : {
          "mtx" : "1.000 0.000 0.000 -31.500 0.000 0.000 1.000 0.000 0.000 -1.000 0.000 -8.500 0.000 0.000 0.000 1.000"
@@ -426,6 +458,14 @@
       "comp_visual" : {
          "material" : "Material #2",
          "mesh" : "data/level0/meshes/Trigger_Room_3_4.mesh"
+      }
+   },
+   "Trigger_Room_4" : {
+      "comp_location" : {
+         "mtx" : "1.000 0.000 0.000 -31.405 0.000 0.000 1.000 0.000 0.000 -1.000 0.000 -19.709 0.000 0.000 0.000 1.000"
+      },
+      "comp_visual" : {
+         "mesh" : "data/level0/meshes/Trigger_Room_4.mesh"
       }
    },
    "Trigger_Room_4_5" : {
@@ -437,6 +477,14 @@
          "mesh" : "data/level0/meshes/Trigger_Room_4_5.mesh"
       }
    },
+   "Trigger_Room_5" : {
+      "comp_location" : {
+         "mtx" : "1.000 0.000 0.000 -19.339 0.000 0.000 1.000 0.000 0.000 -1.000 0.000 -19.709 0.000 0.000 0.000 1.000"
+      },
+      "comp_visual" : {
+         "mesh" : "data/level0/meshes/Trigger_Room_5.mesh"
+      }
+   },
    "Trigger_Room_5_6" : {
       "comp_location" : {
          "mtx" : "1.000 0.000 0.000 -0.500 0.000 0.000 1.000 0.000 0.000 -1.000 0.000 -17.050 0.000 0.000 0.000 1.000"
@@ -446,6 +494,14 @@
          "mesh" : "data/level0/meshes/Trigger_Room_5_6.mesh"
       }
    },
+   "Trigger_Room_6" : {
+      "comp_location" : {
+         "mtx" : "1.000 0.000 0.000 5.630 0.000 0.000 1.000 0.000 0.000 -1.000 0.000 -19.709 0.000 0.000 0.000 1.000"
+      },
+      "comp_visual" : {
+         "mesh" : "data/level0/meshes/Trigger_Room_6.mesh"
+      }
+   },
    "Trigger_Room_6_7" : {
       "comp_location" : {
          "mtx" : "1.000 0.000 0.000 14.260 0.000 0.000 1.000 0.000 0.000 -1.000 0.000 -11.000 0.000 0.000 0.000 1.000"
@@ -453,6 +509,14 @@
       "comp_visual" : {
          "material" : "Material #2",
          "mesh" : "data/level0/meshes/Trigger_Room_6_7.mesh"
+      }
+   },
+   "Trigger_Room_7" : {
+      "comp_location" : {
+         "mtx" : "1.000 0.000 0.000 16.903 0.000 0.000 1.000 0.000 0.000 -1.000 0.000 -2.736 0.000 0.000 0.000 1.000"
+      },
+      "comp_visual" : {
+         "mesh" : "data/level0/meshes/Trigger_Room_7.mesh"
       }
    },
    "Trigger_Room_7_1" : {
