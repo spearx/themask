@@ -68,6 +68,7 @@ namespace Menu
 
 	void CMenu::Init()
 	{
+
 		Abathur::RegisterEntityComponent<CButtonComponent>("comp_player");
 
 		//Load scene
@@ -77,13 +78,18 @@ namespace Menu
 		m_camera.Init(m_sceneId);
 
 		//Register Updates
+		m_offlineGame.Init();
+
+		//AddButton("button_1",Vector2(0.07f, 0.75f), Vector2(0.23f, 0.92f), Vector3(0.0f, 5.0f, 0.0f), Vector4(0.321f, 0.352f, 0.415f, 1.0f), Vector4(1.0f, 0.0f, 0.0f, 1.0f));
+
 		m_preRenderUpdate.SetCallback(Abathur::TUpdateCallback::SetMethod<CMenu, &CMenu::PreRenderUpdate>(this));
 		m_preRenderUpdate.Register(Abathur::GetUpdatePriority(Abathur::EUpdateTier::PreRender, Abathur::EUpdateStage::Default));
 
-		AddButton("button_1",Vector2(0.07f, 0.75f), Vector2(0.23f, 0.92f), Vector3(0.0f, 5.0f, 0.0f), Vector4(0.321f, 0.352f, 0.415f, 1.0f), Vector4(1.0f, 0.0f, 0.0f, 1.0f));
-
 		//Start Scene
 		Abathur::StartScene(m_sceneId);
+
+		SetState(EState::Intro);
+
     
     //Load Font and configure Popup
     Abathur::TAbathurFont *font = Abathur::loadFont("data/fonts/mask_font.fnt", "data/fonts/mask_font.tga");
@@ -92,9 +98,32 @@ namespace Menu
 
 	}
 
+	void CMenu::SetState(const EState newState)
+	{
+		switch (newState)
+		{
+			case EState::Intro: break;
+			case EState::Playing: 
+			{
+				m_logicUpdate.SetCallback(Abathur::TUpdateCallback::SetMethod<CMenu, &CMenu::LogicUpdate>(this));
+				m_logicUpdate.Register(Abathur::GetUpdatePriority(Abathur::EUpdateTier::PostPhysics, Abathur::EUpdateStage::Default));
+			}
+			case EState::Success: 
+			case EState::Failed:
+			{
+				m_logicUpdate.Unregister();
+			}
+			break;
+		}
+		
+		m_state = newState;
+	}
+
 	void CMenu::PreRenderUpdate(const Abathur::SUpdateContext& context)
 	{
 		//Map other scene viewport
+		//TODO ~ intro transition proper
+
 		if (Abathur::TAbathurEntity* pCristalPlayer = Abathur::GetEntityByName("Ball_Up", m_sceneId))
 		{
 			if (Abathur::TVisualComponent* pVisualComponent = pCristalPlayer->QueryComponent<Abathur::TVisualComponent>())
@@ -102,6 +131,19 @@ namespace Menu
 				Abathur::CViewParameters& viewParameters = World::CWorld::Get().GetPlayerCamera().GetViewParameters();
 				Abathur::setMaterialParam(pVisualComponent->material, "diffuse", viewParameters.GetRenderTarget());
 			}
+		}
+	}
+
+	void CMenu::LogicUpdate(const Abathur::SUpdateContext& context)
+	{
+		COfflineGame::EState state = m_offlineGame.GetState();
+		if (state != COfflineGame::EState::Success)
+		{
+			SetState(EState::Success);
+		}
+		else if (state != COfflineGame::EState::Failed)
+		{
+			SetState(EState::Failed);
 		}
 	}
 
@@ -113,6 +155,7 @@ namespace Menu
 			pComponent->SetArea(areaMin, areaMax);
 			pComponent->SetHoverOffset(hoverOffset);
 			pComponent->SetPressedColor(baseTintColor,tintColor);
+			pComponent->SetEnable(false);
 			return pEntity->GetId();
 		}
 		return Abathur::TEntityId::s_invalid;
@@ -120,8 +163,10 @@ namespace Menu
 
 	bool CMenu::OnButton(const Abathur::Input::EButton button, const Abathur::Input::EButtonEvent buttonEvent)
 	{
-		//TODO ~ ramonv ~ Start game event catch here
-		//printf("Button: %d - event %d\n", button, buttonEvent);
+		if (m_state == EState::Intro && button == Abathur::Input::EButton::GamepadStart)
+		{
+			SetState(EState::Playing);
+		}
 		return false;
 	}
 }
