@@ -6,9 +6,17 @@ namespace World
 {
 	struct SRoom
 	{
+		SRoom( const Abathur::TEntityId _cameraId  = Abathur::TEntityId::s_invalid
+		     , const Abathur::TEntityId _targetId  = Abathur::TEntityId::s_invalid
+			 , const Abathur::TEntityId _triggerId = Abathur::TEntityId::s_invalid)
+			: triggerId(_triggerId)
+			, cameraId(_cameraId)
+			, targetId(_targetId)
+		{}
+
 		Abathur::TEntityId triggerId;
 		Abathur::TEntityId cameraId;
-		Abathur::TEntityId cameraTarget;
+		Abathur::TEntityId targetId;
 	};
 	typedef std::vector<SRoom> TRooms;
 
@@ -28,6 +36,9 @@ namespace World
 		void SetRoomByTrigger(const Abathur::TEntityId triggerId);
 		void SetNextRoom();
 		void SetPreviousRoom();
+
+	private: 
+		SRoom GetCurrentRoom() const;
 
 	private: 
 		int32                     m_roomIndex;
