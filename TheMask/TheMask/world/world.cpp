@@ -5,21 +5,17 @@
 namespace World
 {
 	/*
-	CPlayer::CPlayer() {}
-
-	void CPlayer::Init() {}
-	*/
-
-	/////////////////////////////////////////////////////////////
-
-	//CCamera::CCamera(){}
-	/*
 	void testGrid(const Abathur::TViewId viewId, const Abathur::CViewParameters& params)
 	{
 		Abathur::renderGrid(8, 8, 2, 0xffffffff, 0xff00ffff);
 		Abathur::renderAxis(2.0f);
 	}
 	*/
+
+	CCamera::CCamera()
+		: m_cameraPosition(MathUtils::ZERO)
+		, m_cameraTarget(MathUtils::ZERO)
+	{}
 
 	void CCamera::Init(const Abathur::TSceneId sceneId)
 	{
@@ -31,8 +27,9 @@ namespace World
 		m_viewParameters.SetPriority(Abathur::TViewPriority(1u));
 		//m_viewParameters.SetBeforeCallback(Abathur::TViewCallback::SetFunction<&testGrid>());
 
-		m_viewParameters.SetLookAt(Vector3(5.0f), MathUtils::ZERO);
+		m_cameraPosition = Vector3(5.0f); 
 
+		m_viewParameters.SetLookAt(m_cameraPosition, m_cameraTarget);
 		Abathur::SetViewParameters(m_viewId, m_viewParameters);
 
 
@@ -43,13 +40,15 @@ namespace World
 
 	void CCamera::Update(const Abathur::SUpdateContext& context)
 	{
-		//hack 
-		Matrix44 mtx = MathUtils::IDENTITY; 
-		Abathur::setMatrix(Abathur::MATRIX_WORLD, &mtx);
+		if (Abathur::TAbathurEntity* pPlayerEntity = Abathur::GetEntity(CWorld::Get().GetPlayerEntityId()))
+		{
+			if (Abathur::TLocationComponent* pLocationComponent = pPlayerEntity->QueryComponent<Abathur::TLocationComponent>())
+			{
+				m_cameraTarget = pLocationComponent->mtx.GetTranslation();
+			}
+		}
 
-		//TODO ~ ramonv ~ look at player
-		m_viewParameters.SetLookAt(Vector3(5.0f),Vector3(0.0f,1.0f,0.0f));
-
+		m_viewParameters.SetLookAt(m_cameraPosition, m_cameraTarget);
 		Abathur::SetViewParameters(m_viewId, m_viewParameters);
 	}
 

@@ -4,19 +4,10 @@
 
 namespace World
 {
-	/*
-	class CPlayer
-	{
-
-	public: 
-		CPlayer();
-		void Init();
-	};
-	*/
 	class CCamera
 	{
 	public:
-		//CCamera(const CWorld& worldRef);
+		CCamera();
 
 		void Init(const Abathur::TSceneId sceneId);
 
@@ -29,6 +20,8 @@ namespace World
 		Abathur::CViewParameters  m_viewParameters;
 		Abathur::CScopedUpdate    m_update;
 		Abathur::TAbathurTexture* m_pRenderTarget;
+		Vector3                   m_cameraPosition;
+		Vector3                   m_cameraTarget;
 	};
 
 	class CWorld
@@ -39,6 +32,8 @@ namespace World
 		void Init();
 
 		inline CCamera& GetPlayerCamera() { return m_camera; }
+
+		inline Abathur::TEntityId GetPlayerEntityId() const { return m_playerId; }
 
 	private: 
 		static CWorld& CreateInstance() { m_pInstance = new CWorld(); return *m_pInstance; }
