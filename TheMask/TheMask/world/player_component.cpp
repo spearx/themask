@@ -205,7 +205,7 @@ namespace World
 
 		  if (event_name == "Interact_Cauldron")
 		  {
-			//  Menu::CMenu::Get().GetOfflineGame().Enable();
+			//Menu::CMenu::Get().GetOfflineGame().Enable();
 		  }
 		  m_currentInteraction = event_name;
 	  }
@@ -215,9 +215,10 @@ namespace World
 
 		  if (event_name == "Interact_Cauldron")
 		  {
-			//  Menu::CMenu::Get().GetOfflineGame().Disable();
+			//Menu::CMenu::Get().GetOfflineGame().Disable();
 		  }
 		  m_currentInteraction = "";
+		  m_showItemDialog = false;
 	  }
   }
 

@@ -3,9 +3,14 @@
 
 #include "button_component.h"
 #include "world/world.h"
+#include "abathur_gui.h"
 
 namespace Menu
 {
+
+	Vector2 gCameraMoveFreq(0.1f,0.1f);
+	Vector2 gCameraMoveAmp(0.2f, 0.5f);
+	Vector2 gCameraMovePhase(0.5f, 0.0f);
 
 	void afterRender(const Abathur::TViewId viewId, const Abathur::CViewParameters& params)
 	{
@@ -18,6 +23,7 @@ namespace Menu
 	CCamera::CCamera()
 		: m_cameraPos(5.0f)
 		, m_cameraTarget(MathUtils::ZERO)
+		, m_totalTime(0.0f)
 	{}
 
 	void CCamera::Init(const Abathur::TSceneId sceneId)
@@ -53,9 +59,17 @@ namespace Menu
 
 	void CCamera::Update(const Abathur::SUpdateContext& context)
 	{
-		//TODO ~ ramonv ~ move the camera
+		ImGui::SliderFloat("Camera Move Freq X", &gCameraMoveFreq.x, 0.0f, 10.0f);
+		ImGui::SliderFloat("Camera Move Freq Y", &gCameraMoveFreq.y, 0.0f, 10.0f);
 
-		m_viewParameters.SetLookAt(m_cameraPos, m_cameraTarget);
+		ImGui::SliderFloat("Camera Move Amp X", &gCameraMoveAmp.x, 0.0f, 10.0f);
+		ImGui::SliderFloat("Camera Move Amp Y", &gCameraMoveAmp.y, 0.0f, 10.0f);
+
+		ImGui::SliderFloat("Camera Move Phase X", &gCameraMovePhase.x, 0.0f, 10.0f);
+		ImGui::SliderFloat("Camera Move Phase Y", &gCameraMovePhase.y, 0.0f, 10.0f);
+
+		m_totalTime += context.frameTime;
+		m_viewParameters.SetLookAt(m_cameraPos, m_cameraTarget+Vector3(gCameraMoveAmp.x*sinf(gCameraMovePhase.x+gCameraMoveFreq.x*gfPI2*m_totalTime), gCameraMoveAmp.y*cosf(gCameraMovePhase.y + gCameraMoveFreq.y*gfPI2*m_totalTime),0.0f));
 		Abathur::SetViewParameters(m_viewId, m_viewParameters);
 	}
 
@@ -121,7 +135,6 @@ namespace Menu
 
 	void CMenu::PreRenderUpdate(const Abathur::SUpdateContext& context)
 	{
-		//Map other scene viewport
 		//TODO ~ intro transition proper
 
 		if (Abathur::TAbathurEntity* pCristalPlayer = Abathur::GetEntityByName("Ball_Up", m_sceneId))

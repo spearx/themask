@@ -30,6 +30,7 @@ namespace Menu
 		Abathur::CScopedUpdate   m_update;
 		Vector3                  m_cameraPos;
 		Vector3                  m_cameraTarget;
+		float                    m_totalTime;
 	};
 
 	class CMenu : public Abathur::Input::InputListener
