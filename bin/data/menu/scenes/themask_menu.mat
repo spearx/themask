@@ -20,7 +20,7 @@
    "Ball_Up" : {
       "ambient_color" : "1.000000  1.000000 1.000000 1.000000",
       "emission_color" : "0.000000  0.000000 0.000000 1.000000",
-      "pixel_shader" : "data/shaders/fp_textured.glsl",
+      "pixel_shader" : "data/shaders/fp_textured_ball.glsl",
       "samplers" : {
          "diffuse" : "data/menu/textures/Ball_Up.tga"
       },
