@@ -55,6 +55,8 @@ namespace World
 
 	/////////////////////////////////////////////////////////////
 
+	CWorld* CWorld::m_pInstance = nullptr;
+
 	CWorld::CWorld(){}
 
 	void CWorld::Init()
@@ -62,11 +64,14 @@ namespace World
 		Abathur::RegisterEntityComponent<CPlayerComponent>("comp_player");
 		Abathur::InitPhysX(Vector3(0.0f, -9.8f, 0.0f));
 
+		Abathur::AddPhysXPlane(Vector3(0.0f, 1.0f, 0.0f), 0.0f);
+
 		m_sceneId = Abathur::LoadScene("data/collision_test/scenes/collision_test.scene");
 		m_camera.Init(m_sceneId);
 
-		if (Abathur::TAbathurEntity* pPlayerEntity = Abathur::GetEntityByName("mask", m_sceneId))
+		if (Abathur::TAbathurEntity* pPlayerEntity = Abathur::GetEntityByName("Cylinder001", m_sceneId))
 		{
+			pPlayerEntity->AddComponent<CPlayerComponent>();
 			m_playerId = pPlayerEntity->GetId();
 		}
 

@@ -1,5 +1,6 @@
 #include "menu.h"
 
+#include "world/world.h"
 
 namespace Menu
 {
@@ -7,15 +8,15 @@ namespace Menu
 
 	bool CInput::OnButton(const Abathur::Input::EButton button, const Abathur::Input::EButtonEvent buttonEvent)
 	{
-		printf("Button: %d - event %d\n", button, buttonEvent);
+		//printf("Button: %d - event %d\n", button, buttonEvent);
 		return false; 
 	}
 
 	bool CInput::OnDirection(const Abathur::Input::EDirection direction, const Vector2& value)
 	{
-		printf("Dir: %d - value %.2f %.2f\n", direction, value.x, value.y);
+		//printf("Dir: %d - value %.2f %.2f\n", direction, value.x, value.y);
 		const Vector2 mousePosition = Abathur::Input::GetMousePosition();
-		printf("Mouse Position: %.2f %.2f\n", mousePosition.x, mousePosition.y);
+		//printf("Mouse Position: %.2f %.2f\n", mousePosition.x, mousePosition.y);
 
 		return false;
 	}
@@ -76,8 +77,26 @@ namespace Menu
 		m_camera.Init(m_sceneId);
 
 		//Input
+		//TODO ~ ramonv ~ to be implemented ( mouse clicks and buttons ) 
+		
+		//Register Updates
+		m_preRenderUpdate.SetCallback(Abathur::TUpdateCallback::SetMethod<CMenu,&CMenu::PreRenderUpdate>(this));
+		m_preRenderUpdate.Register(Abathur::GetUpdatePriority(Abathur::EUpdateTier::PreRender, Abathur::EUpdateStage::Default));
 
 		//Start Scene
 		Abathur::StartScene(m_sceneId);
+	}
+
+	void CMenu::PreRenderUpdate(const Abathur::SUpdateContext& context)
+	{
+		//Map other scene viewport
+		if (Abathur::TAbathurEntity* pCristalPlayer = Abathur::GetEntityByName("Ball_Up", m_sceneId))
+		{
+			if (Abathur::TVisualComponent* pVisualComponent = pCristalPlayer->QueryComponent<Abathur::TVisualComponent>())
+			{
+				Abathur::CViewParameters& viewParameters = World::CWorld::Get().GetPlayerCamera().GetViewParameters(); 
+				Abathur::setMaterialParam(pVisualComponent->material, "diffuse", viewParameters.GetRenderTarget());
+			}
+		}
 	}
 }
