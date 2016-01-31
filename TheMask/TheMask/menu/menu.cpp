@@ -27,7 +27,7 @@ namespace Menu
 
 	void STitle::Init(const Abathur::TSceneId sceneId)
 	{
-		if (Abathur::TAbathurEntity* pEntity = Abathur::GetEntityByName("", sceneId))
+		if (Abathur::TAbathurEntity* pEntity = Abathur::GetEntityByName("Rituality", sceneId))
 		{
 			m_entityId = pEntity->GetId();
 			m_initTransform = pEntity->QueryComponent<Abathur::TLocationComponent>()->mtx;
@@ -64,9 +64,7 @@ namespace Menu
 		if (Abathur::TAbathurEntity* pEntity = Abathur::GetEntity(m_entityId))
 		{
 			pEntity->QueryComponent<Abathur::TLocationComponent>()->mtx = scaleMtx*m_initTransform;
-
-			float selector = m_type == EType::Title ? 0.0f : m_type == EType::Win ? 1.0f : 2.0f;
-			Abathur::setMaterialParam(pEntity->QueryComponent<Abathur::TVisualComponent>()->material, "texture_selector", selector);
+			pEntity->QueryComponent<Abathur::TVisualComponent>()->material = Abathur::getMaterial(m_type == EType::Title ? "Titulo" : (m_type == EType::Win ? "Win" : "Lose"));
 		}
 	}
 
