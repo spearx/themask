@@ -184,5 +184,13 @@
       },
       "specular_color" : "0.000000  0.000000 0.000000 1.000000",
       "vertex_shader" : "data/shaders/vp_basic.glsl"
+   },
+   "_01 - Default" : {
+      "ambient_color" : "0.588235  0.588235 0.588235 1.000000",
+      "diffuse_color" : "0.588235  0.588235 0.588235 1.000000",
+      "emission_color" : "0.000000  0.000000 0.000000 1.000000",
+      "pixel_shader" : "data/shaders/fp_textured.glsl",
+      "specular_color" : "0.000000  0.000000 0.000000 1.000000",
+      "vertex_shader" : "data/shaders/vp_basic.glsl"
    }
 }

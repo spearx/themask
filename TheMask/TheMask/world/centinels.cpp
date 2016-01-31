@@ -16,6 +16,8 @@ namespace World
   void CCentinels::Update(const Abathur::SUpdateContext& context) 
   {
     Menu::CMenu::Get().SetTimeFactor(1.0f);
+    Menu::CMenu::Get().SetTotemIconState(false);
+
     float speed_elapsed = context.frameTime * m_speedFactor;
     for (auto &c : m_centinels) 
     {
@@ -27,12 +29,16 @@ namespace World
         if (c.m_timeToTurn <= 0.0f) {
           Abathur::setVolumeAudio(m_tottemAudio, 1.0f);
         }
+        Menu::CMenu::Get().SetTotemIconState(true);
+
         Abathur::TEntityId eID = CWorld::Get().GetPlayerEntityId();
         Abathur::TAbathurEntity *pPlayerEntity = Abathur::GetEntity(eID);
         CPlayerComponent *comp = pPlayerEntity->QueryComponent<CPlayerComponent>();
         bool is_moving = comp->IsMoving();
-        if(is_moving)
+        if (is_moving) {
           Menu::CMenu::Get().SetTimeFactor(c.m_timeFactorPlayer);
+          break;
+        }
         continue;
       }
 
@@ -40,7 +46,7 @@ namespace World
       mtx.SetIdentity();
       Abathur::TAbathurEntity *pTotemEntity = Abathur::GetEntity(c.m_entity);
       ASSERT(pTotemEntity);      
-      c.m_yaw += c.m_speed * speed_elapsed;
+      c.m_yaw += c.m_turnSpeed * speed_elapsed;
       if( c.m_yaw >= gfPI2 )
       {
         //
@@ -71,7 +77,7 @@ namespace World
     }
   }
 
-  void CCentinels::RegisterCentinel(Abathur::TEntityId entity, std::string room_name, float time_factor_player)
+  void CCentinels::RegisterCentinel(Abathur::TEntityId entity, const TCentinelsParams &params)
   {
     ASSERT(entity.IsValid());
     Abathur::TAbathurEntity *pTotemEntity = Abathur::GetEntity(entity);
@@ -80,14 +86,14 @@ namespace World
 
     TCentinel centinel;
     centinel.m_entity = entity;
-    centinel.m_roomName = room_name;
     centinel.m_yaw = 0.0f;
-    centinel.m_speed = 1.0f;
     centinel.m_timeToTurn = 0.0f;
     centinel.m_matrixOriginal = pLocComponent->mtx;
     centinel.m_matrixOriginal.SetTranslation(Vector3(0.0f));
     centinel.m_state = EState::SLEEPING;
-    centinel.m_timeFactorPlayer = time_factor_player;
+    centinel.m_roomName = params.m_roomName;
+    centinel.m_turnSpeed = params.m_turnSpeed;
+    centinel.m_timeFactorPlayer = params.m_timeFactorPlayer;
     m_centinels.push_back(centinel);
 
     if (m_centinels.size() == 1) { //hack, when register first centinel, we register update callback

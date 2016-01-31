@@ -36,18 +36,23 @@ namespace Menu
     vTexts.push_back(text);
   }
 
+  void CPopup::ApplyOrthoMatrix()
+  {
+    Matrix44 mtx_identity;
+    mtx_identity.SetIdentity();
+    Abathur::setMatrix(Abathur::MATRIX_PROJECTION, &mtx_ortho);
+    Abathur::setMatrix(Abathur::MATRIX_VIEW, &mtx_identity);
+    Abathur::setMatrix(Abathur::MATRIX_WORLD, &mtx_identity);
+  }
+
   void CPopup::Render()
   {
     ImGui::SliderFloat("mOffsetText X", &mOffsetText.x, 0.0f, 0.6f);
     ImGui::SliderFloat("mOffsetText Y", &mOffsetText.y, 0.0f, 0.6f);
 
     if (vTexts.size() > 0) {
-      Matrix44 mtx_identity;
-      mtx_identity.SetIdentity();
-      Abathur::setMatrix(Abathur::MATRIX_PROJECTION, &mtx_ortho);
-      Abathur::setMatrix(Abathur::MATRIX_VIEW, &mtx_identity);
-      Abathur::setMatrix(Abathur::MATRIX_WORLD, &mtx_identity);
-
+      
+      ApplyOrthoMatrix();
       Abathur::DisableDepthState.apply();
       Abathur::AlphaBlendState.apply();
       Abathur::renderQuad2D(mPopupSize.x, mPopupSize.y, mPopupSize.z, mPopupSize.w, mBGColor, mTextureBG);

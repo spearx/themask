@@ -10,6 +10,7 @@ namespace World
   
   CLasers::TLaserData *CLasers::RegistreTypeLaser(ELaserType laser_type, Abathur::TEntityId collision_mesh)
   {
+    ASSERT(collision_mesh.IsValid());
     TLaserData data;
     data.mType = laser_type;
     data.mCollisionMesh = collision_mesh;

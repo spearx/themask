@@ -14,6 +14,12 @@ namespace World
       AWAKE
     };
 
+    struct TCentinelsParams {
+      std::string m_roomName;
+      float m_turnSpeed;
+      float m_timeFactorPlayer;
+    };
+
   private:    
 
     struct TCentinel
@@ -22,7 +28,7 @@ namespace World
       std::string m_roomName;
       Matrix44 m_matrixOriginal;
       float m_yaw;
-      float m_speed;
+      float m_turnSpeed;
       float m_timeToTurn;
       float m_timeFactorPlayer;
       EState m_state;
@@ -39,7 +45,7 @@ namespace World
 
 	public:
     CCentinels();
-    void RegisterCentinel(Abathur::TEntityId entity, std::string room_name, float time_factor_player);
+    void RegisterCentinel(Abathur::TEntityId entity, const TCentinelsParams &params);
     void SetSpeedSpeed(float delta);
     void SetCentinelsStateInRoom(const std::string &name, CCentinels::EState state);
   };

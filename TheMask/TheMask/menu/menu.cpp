@@ -16,6 +16,7 @@ namespace Menu
 	Vector3 gCameraTargetStart(139.766f, 47.967f, -46.528f);
 	float   gCameraFovStart = DEG2RAD(26.231f);
 	float   gTotalTime = 0.0f;
+  float   gElapsedTime = 0.0f;
 
 	void afterRender(const Abathur::TViewId viewId, const Abathur::CViewParameters& params)
 	{
@@ -110,6 +111,8 @@ namespace Menu
     : m_pFont(nullptr)
     , m_totalTime(0.0f)
     , m_timeFactor(1.0f)
+    , m_totemIcon(nullptr)
+    , m_awakeTotem(false)
 	{}
 
 	void CMenu::Init()
@@ -145,6 +148,9 @@ namespace Menu
 		CPopup::Get().Init(m_pFont);
 
     PlayBGMMusic("data/audio/bgm_menu.wav");
+    
+    m_totemIcon = Abathur::loadTexture("data/textures/totem_head.tga");
+    ASSERT(m_totemIcon);
 	}
 
 	void CMenu::SetState(const EState newState)
@@ -154,7 +160,7 @@ namespace Menu
 		case EState::Intro: break;
 		case EState::Playing:
 		{
-      m_totalTime = 2 * 60;
+      m_totalTime = 8 * 60;
 			m_logicUpdate.SetCallback(Abathur::TUpdateCallback::SetMethod<CMenu, &CMenu::LogicUpdate>(this));
 			m_logicUpdate.Register(Abathur::GetUpdatePriority(Abathur::EUpdateTier::PostPhysics, Abathur::EUpdateStage::Default));
 			m_camera.Start();
@@ -184,12 +190,49 @@ namespace Menu
     char timerText[12];
     sprintf(timerText, "%02d:%02d", minutes, seconds);
     Abathur::renderText(m_pFont, 10.0f, 30.0f, 0xffffffff, timerText);
+    
+    //Render
+    static unsigned color = COLOR_ARGB(0xff, 0xff, 0xff, 0xff);
+    static float acum_time = 0.0f;
+    
+    static Vector4 quadIcon(0.007f, 0.048f, 0.026f, 0.038f);
+    //ImGui::SliderFloat4("Pos", &quadIcon.x, 0.0f, 0.05f);
+
+    if( m_awakeTotem )
+    {
+      CPopup::Get().ApplyOrthoMatrix();
+
+      Abathur::DisableDepthState.apply();
+      Abathur::AlphaBlendState.apply();
+
+
+      float time = 0.3f;
+      acum_time += gElapsedTime;
+      if (acum_time > time) {
+        if( color == 0x0 )
+          color = COLOR_ARGB(0xff, 0xff, 0xff, 0xff);
+        else
+          color = 0x0;
+        acum_time = 0.0f;
+      }
+
+      Abathur::renderQuad2D(quadIcon.x, quadIcon.y, quadIcon.z, quadIcon.w, color, m_totemIcon);
+
+      Abathur::NoneBlendState.apply();
+      Abathur::DefaultDepthState.apply();
+    }
+    else {
+      acum_time = 0.0f;
+      color = COLOR_ARGB(0xff, 0xff, 0xff, 0xff);
+    }
+
   }
 
 	void CMenu::PreRenderUpdate(const Abathur::SUpdateContext& context)
 	{
 		//TODO ~ intro transition proper
 		gTotalTime += context.frameTime*2.0f;
+    gElapsedTime = context.frameTime;
 
 		m_introThreshold.Update(context.frameTime);
 
@@ -345,6 +388,11 @@ namespace Menu
       Abathur::setVolumeAudio(m_nextBgmMusic, 0.0f);
       m_volumnFactor = 1.0f;
     }
+  }
+
+  void CMenu::SetTotemIconState(bool is_enabled)
+  {
+    m_awakeTotem = is_enabled;
   }
 
   void CMenu::UpdateMusicFade(float elapsed)
