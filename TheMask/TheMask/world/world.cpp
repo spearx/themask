@@ -365,6 +365,12 @@ namespace World
     else if (event_type == CTriggers::ETriggerEvent::ON_EXIT)
       printf("On Trigger Event %s ON EXIT\n", event_name.c_str());
 
+    static bool first_time_caldero_room = true;
+    if (event_name == "Room_5" && first_time_caldero_room) {
+      first_time_caldero_room = false;
+      Abathur::playAudio("data/audio/caldero_enter.wav",false);
+    }
+
     if (event_name.find("Room_") == std::string::npos) {
       Abathur::TAbathurEntity* pPlayerEntity = Abathur::GetEntity(CWorld::Get().GetPlayerEntityId());
       ASSERT(pPlayerEntity);

@@ -229,7 +229,8 @@ namespace Menu
 			m_logicUpdate.Unregister();
 			m_camera.Stop();
 			m_introThreshold.SetValue(0.0f, 1.0f);
-		}
+      Abathur::playAudio("data/audio/laughter.wav", false);
+    }
 		break;
 		case EState::Failed:
 		{
@@ -237,6 +238,7 @@ namespace Menu
 			m_logicUpdate.Unregister();
 			m_camera.Stop();
 			m_introThreshold.SetValue(0.0f, 1.0f);
+      Abathur::playAudio("data/audio/game_over.wav", false);
 		}
 		break;
 		}
