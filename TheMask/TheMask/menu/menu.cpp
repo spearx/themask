@@ -8,7 +8,7 @@
 namespace Menu
 {
 
-	Vector2 gCameraMoveFreq(0.197f,0.591f);
+	Vector2 gCameraMoveFreq(0.197f, 0.591f);
 	Vector2 gCameraMoveAmp(0.551f, 0.906f);
 	Vector2 gCameraMovePhase(0.5f, 0.0f);
 
@@ -16,6 +16,59 @@ namespace Menu
 	Vector3 gCameraTargetStart(139.766f, 47.967f, -46.528f);
 	float   gCameraFovStart = DEG2RAD(26.231f);
 	float   gTotalTime = 0.0f;
+
+
+	STitle::STitle()
+		: m_initTransform(MathUtils::IDENTITY)
+		, m_type(EType::Title)
+	{
+	}
+
+	void STitle::Init(const Abathur::TSceneId sceneId)
+	{
+		if (Abathur::TAbathurEntity* pEntity = Abathur::GetEntityByName("", sceneId))
+		{
+			m_entityId = pEntity->GetId();
+			m_initTransform = pEntity->QueryComponent<Abathur::TLocationComponent>()->mtx;
+		}
+
+		m_update.SetCallback(Abathur::TUpdateCallback::SetMethod<STitle, &STitle::Update>(this));
+		m_update.Register();
+
+		m_scale.Reset(1.0f);
+
+		m_type = EType::Title;
+
+	}
+
+	void STitle::Show(const EType type)
+	{
+		m_scale.SetValue(1.0f, 1.0f);
+
+		m_type = type;
+	}
+
+	void STitle::Hide()
+	{
+		m_scale.SetValue(0.0f, 1.0f);
+	}
+
+	void STitle::Update(const Abathur::SUpdateContext& context)
+	{
+		m_scale.Update(context.frameTime);
+
+		Matrix44 scaleMtx;
+		scaleMtx.SetScale(m_scale.GetValue());
+
+		if (Abathur::TAbathurEntity* pEntity = Abathur::GetEntity(m_entityId))
+		{
+			pEntity->QueryComponent<Abathur::TLocationComponent>()->mtx = scaleMtx*m_initTransform;
+
+			float selector = m_type == EType::Title ? 0.0f : m_type == EType::Win ? 1.0f : 2.0f;
+			Abathur::setMaterialParam(pEntity->QueryComponent<Abathur::TVisualComponent>()->material, "texture_selector", selector);
+		}
+	}
+
 
 	void afterRender(const Abathur::TViewId viewId, const Abathur::CViewParameters& params)
 	{
@@ -49,6 +102,8 @@ namespace Menu
 			}
 		}
 
+		gCameraTargetStart = Vector3(360.0f, m_cameraTarget.y, m_cameraTarget.z);
+		gCameraFovStart = DEG2RAD(55.f);
 		m_camPos.Reset(gCameraPositionStart);
 		m_camTarget.Reset(gCameraTargetStart);
 		m_fov.Reset(gCameraFovStart);
@@ -122,6 +177,8 @@ namespace Menu
 
 		m_introThreshold.Reset(0.0f);
 
+		m_title.Init(m_sceneId);
+
 		//Cameras
 		m_camera.Init(m_sceneId);
     m_camera.GetViewParameters().SetAfterCallback(Abathur::TViewCallback::SetMethod<CMenu, &CMenu::AfterRender>(this));
@@ -154,6 +211,7 @@ namespace Menu
 		case EState::Intro: break;
 		case EState::Playing:
 		{
+			m_title.Hide();
       m_totalTime = 2 * 60;
 			m_logicUpdate.SetCallback(Abathur::TUpdateCallback::SetMethod<CMenu, &CMenu::LogicUpdate>(this));
 			m_logicUpdate.Register(Abathur::GetUpdatePriority(Abathur::EUpdateTier::PostPhysics, Abathur::EUpdateStage::Default));
@@ -162,8 +220,16 @@ namespace Menu
 		}
 		break;
 		case EState::Success:
+		{
+			m_title.Show(STitle::EType::Win);
+			m_logicUpdate.Unregister();
+			m_camera.Stop();
+			m_introThreshold.SetValue(0.0f, 1.0f);
+		}
+		break;
 		case EState::Failed:
 		{
+			m_title.Show(STitle::EType::Lose);
 			m_logicUpdate.Unregister();
 			m_camera.Stop();
 			m_introThreshold.SetValue(0.0f, 1.0f);

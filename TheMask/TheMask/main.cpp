@@ -14,7 +14,7 @@ void sys_printf(const char* input)
 
 int main()
 {
-	Abathur::Init("The Incredible Mask", 1280, 720, false);
+	Abathur::Init("Rituality", 1280, 720, false);
 	Abathur::SetLogCallback(Abathur::TLogCallback::SetFunction<&sys_printf>());
 	Abathur::InitGui();
 
