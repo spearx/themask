@@ -7,13 +7,6 @@
 namespace Menu
 {
 
-	void afterRender(const Abathur::TViewId viewId, const Abathur::CViewParameters& params)
-	{
-		//CPopup::Get().AddTextLine("Hola mundo");
-		//CPopup::Get().AddTextLine("Adios...");
-		CPopup::Get().Render();
-	}
-
 	////////////////////////////////////////////////////////////////////////////
 	CCamera::CCamera()
 		: m_cameraPos(5.0f)
@@ -42,7 +35,6 @@ namespace Menu
 		m_viewParameters.SetProjection(DEG2RAD(55.f), 0.1f, 1000.0f);
 		m_viewParameters.SetLookAt(m_cameraPos, m_cameraTarget);
 		m_viewParameters.SetPriority(Abathur::TViewPriority(100));
-		m_viewParameters.SetAfterCallback(Abathur::TViewCallback::SetFunction<&afterRender>());
 
 		Abathur::SetViewParameters(m_viewId, m_viewParameters);
 
@@ -63,7 +55,10 @@ namespace Menu
 
 	CMenu* CMenu::m_pInstance = nullptr;
 
-	CMenu::CMenu()
+  CMenu::CMenu()
+    : m_pFont(nullptr)
+    , m_totalTime(0.0f)
+    , m_timeFactor(1.0f)
 	{}
 
 	void CMenu::Init()
@@ -76,6 +71,7 @@ namespace Menu
 
 		//Cameras
 		m_camera.Init(m_sceneId);
+    m_camera.GetViewParameters().SetAfterCallback(Abathur::TViewCallback::SetMethod<CMenu, &CMenu::AfterRender>(this));
 
 		//Register Updates
 		//m_offlineGame.Init();
@@ -91,9 +87,9 @@ namespace Menu
 		SetState(EState::Playing);
 
 		//Load Font and configure Popup
-		Abathur::TAbathurFont *font = Abathur::loadFont("data/fonts/mask_font.fnt", "data/fonts/mask_font.tga");
-		ASSERT(font);
-		CPopup::Get().Init(font);
+    m_pFont = Abathur::loadFont("data/fonts/mask_font.fnt", "data/fonts/mask_font.tga");
+		ASSERT(m_pFont);
+		CPopup::Get().Init(m_pFont);
 
 	}
 
@@ -104,6 +100,7 @@ namespace Menu
 		case EState::Intro: break;
 		case EState::Playing:
 		{
+      m_totalTime = 2 * 60;
 			m_logicUpdate.SetCallback(Abathur::TUpdateCallback::SetMethod<CMenu, &CMenu::LogicUpdate>(this));
 			m_logicUpdate.Register(Abathur::GetUpdatePriority(Abathur::EUpdateTier::PostPhysics, Abathur::EUpdateStage::Default));
 		}
@@ -118,6 +115,18 @@ namespace Menu
 
 		m_state = newState;
 	}
+
+  void CMenu::AfterRender(const Abathur::TViewId viewId, const Abathur::CViewParameters& params)
+  {
+    //CPopup::Get().AddTextLine("Hola mundo");
+    //CPopup::Get().AddTextLine("Adios...");
+    CPopup::Get().Render();
+    int minutes = m_totalTime / 60;
+    int seconds = m_totalTime - minutes * 60;
+    char timerText[12];
+    sprintf(timerText, "%02d:%02d", minutes, seconds);
+    Abathur::renderText(m_pFont, 10.0f, 30.0f, 0xffffffff, timerText);
+  }
 
 	void CMenu::PreRenderUpdate(const Abathur::SUpdateContext& context)
 	{
@@ -136,6 +145,11 @@ namespace Menu
 
 	void CMenu::LogicUpdate(const Abathur::SUpdateContext& context)
 	{
+    m_totalTime -= context.frameTime * m_timeFactor;
+    if (m_totalTime < 0.0f) {
+      SetState(EState::Failed);
+    }
+
     /*
 		COfflineGame::EState state = m_offlineGame.GetState();
 		if (state == COfflineGame::EState::Success)
@@ -160,6 +174,10 @@ namespace Menu
         {
           World::CWorld::Get().GetLasers().DisableTypeLaser(World::CLasers::ELaserType::BLUE_LASER, true);
         }
+        else if (i == Totem)
+        {
+          World::CWorld::Get().GetLasers().DisableTypeLaser(World::CLasers::ELaserType::BLUE_LASER, true);
+        }
       }
       else if (button_comp->JustReleased())
       {
@@ -170,6 +188,10 @@ namespace Menu
         else if (i == Laser2)
         {
           World::CWorld::Get().GetLasers().EnableTypeLaser(World::CLasers::ELaserType::BLUE_LASER);
+        }
+        else if (i == Totem)
+        {
+          World::CWorld::Get().GetLasers().DisableTypeLaser(World::CLasers::ELaserType::BLUE_LASER, true);
         }
       }
     }

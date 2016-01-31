@@ -66,6 +66,7 @@ namespace Menu
 		COfflineGame& GetOfflineGame() { return m_offlineGame; }
 
 		Abathur::TEntityId AddButton(const char* entityName, const Vector2& areaMin, const Vector2& areaMax, const Vector3& hoverOffset, const Vector4& baseTintColor, const Vector4& tintColor);
+    void SetTimeFactor(float f) { m_timeFactor = f; }
 
 	private: 
 		static CMenu& CreateInstance() { m_pInstance = new CMenu();  return *m_pInstance; }
@@ -74,6 +75,7 @@ namespace Menu
 
 		CMenu();
 
+    void AfterRender(const Abathur::TViewId viewId, const Abathur::CViewParameters& params);
 		void PreRenderUpdate(const Abathur::SUpdateContext& context);
 		void LogicUpdate(const Abathur::SUpdateContext& context);
 		void InitButtons();
@@ -90,6 +92,10 @@ namespace Menu
 		EState                   m_state;
 
 		const char*              m_buttonNames[ButtonCount];
+
+    Abathur::TAbathurFont *  m_pFont;
+    float                    m_totalTime;
+    float                    m_timeFactor;
 	};
 
 }

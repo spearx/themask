@@ -2,6 +2,8 @@
 
 #include "abathur.h"
 #include "lasers.h"
+#include "triggers.h"
+#include "centinels.h"
 
 namespace World
 {
@@ -66,8 +68,10 @@ namespace World
 
 		inline CCamera& GetPlayerCamera() { return m_playerCamera; }
 
-		inline Abathur::TEntityId GetPlayerEntityId() const { return m_playerId; }
+    inline Abathur::TEntityId GetPlayerEntityId() const { return m_playerId; }
+    inline Abathur::TEntityId GetRoomEntityId() const { return m_currentRoomId; }
     CLasers &GetLasers() { return m_lasers; }
+    void SetCentinelsSpeedFactor(float factor);
     void AfterRenderCallback(const Abathur::TViewId viewId, const Abathur::CViewParameters& params);
 
 	private: 
@@ -77,8 +81,10 @@ namespace World
 
 		void SpawnPlayer();
 		void SetupCameras();
-    void RegisterTriggers();
     void RegisterLasers();
+    void RegisterTriggers();
+    void RegisterCentinels();
+    void OnTriggerEvent(const std::string &event_name, CTriggers::ETriggerEvent event_type);
 
 	private: 
 		static CWorld*     m_pInstance;
@@ -87,5 +93,7 @@ namespace World
 		Abathur::TSceneId  m_sceneId;
 		Abathur::TEntityId m_playerId;
     CLasers            m_lasers;
+    CCentinels         m_centinels;
+    Abathur::TEntityId m_currentRoomId;
   };
 }

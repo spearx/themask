@@ -49,7 +49,7 @@ namespace World
     m_update_post_physx.SetCallback(Abathur::TUpdateCallback::SetMethod<CPlayerComponent, &CPlayerComponent::UpdatePostPhysX>(this));
     m_update_post_physx.Register();
 
-	CTriggers::Get().RegisterListenner(CTriggers::TTriggerEventCallback::SetMethod<CPlayerComponent,&CPlayerComponent::OnTriggerEvent>(this));
+    CTriggers::Get().RegisterListenner(CTriggers::TTriggerEventCallback::SetMethod<CPlayerComponent,&CPlayerComponent::OnTriggerEvent>(this));
 
     if (Abathur::TLocationComponent* pLocComponent = entity->QueryComponent<Abathur::TLocationComponent>())
     {
@@ -92,6 +92,19 @@ namespace World
 			}
 			
 		}
+
+    if (m_state != EState::Inactive && button == Abathur::Input::EButton::GamepadB)
+    {
+      if (buttonEvent == Abathur::Input::EButtonEvent::Press) {
+        Abathur::TEntityId entityId = CWorld::Get().GetRoomEntityId();
+        std::string room_name = "";
+        if (entityId.IsValid())
+        {
+          room_name = Abathur::GetEntity(entityId)->GetName();
+        }
+        printf("Player is in Room: '%s'\n", room_name.c_str());
+      }
+    }
 		return false; 
 	}
 
@@ -178,9 +191,7 @@ namespace World
 
   void CPlayerComponent::UpdatePostPhysX(const Abathur::SUpdateContext& context)
   {    
-
-    float len = m_inputDirection.GetLengthSquared();
-    if (len > 0.01f )
+    if (IsMoving())
     {
        if (Abathur::TLocationComponent* pLocComponent = entity->QueryComponent<Abathur::TLocationComponent>())
        {
@@ -238,5 +249,11 @@ namespace World
 		  }
 	  }
   }
+
+  bool CPlayerComponent::IsMoving() const {
+    float len = m_inputDirection.GetLengthSquared();
+    return (len > 0.01f);
+  }
+
 
 }

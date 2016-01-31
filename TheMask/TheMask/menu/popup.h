@@ -24,12 +24,14 @@ namespace Menu
    Matrix44 mtx_ortho;
    Abathur::TAbathurFont *mFont;
    Abathur::TAbathurTexture *mTextureBG;
+   
+   void SetRectangle(float x, float y, float width, float height, unsigned color);
+
 	public:
 
     CPopup();
 
     void Init(Abathur::TAbathurFont *font);
-    void SetRectangle(float x, float y, float width, float height, unsigned color);
     void AddTextLine(const std::string &text);
     void Render();
     

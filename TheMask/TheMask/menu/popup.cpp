@@ -1,5 +1,6 @@
 #include "popup.h"
 #include "utils/math/matrix_operations.h"
+#include "abathur_gui.h"
 
 namespace Menu
 {
@@ -17,7 +18,7 @@ namespace Menu
     ASSERT(mTextureBG);
 
     mFont = font;
-    mOffsetText.Set(-0.14f, 0.5f);
+    mOffsetText.Set(0.069f, 0.215f);
     mLineEnter = 0.05f;
     MathUtils::MatrixOrthoOffCenterTpl(&mtx_ortho, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f);
     SetRectangle(0.4f, 0.2f, 0.28f, 0.5f, 0xffffffff);
@@ -37,6 +38,9 @@ namespace Menu
 
   void CPopup::Render()
   {
+    ImGui::SliderFloat("mOffsetText X", &mOffsetText.x, 0.0f, 0.6f);
+    ImGui::SliderFloat("mOffsetText Y", &mOffsetText.y, 0.0f, 0.6f);
+
     if (vTexts.size() > 0) {
       Matrix44 mtx_identity;
       mtx_identity.SetIdentity();

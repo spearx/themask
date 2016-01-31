@@ -26,6 +26,9 @@
     <ClCompile Include="world\lasers.cpp">
       <Filter>world</Filter>
     </ClCompile>
+    <ClCompile Include="world\centinels.cpp">
+      <Filter>world</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="menu">
@@ -58,6 +61,9 @@
       <Filter>menu</Filter>
     </ClInclude>
     <ClInclude Include="world\lasers.h">
+      <Filter>world</Filter>
+    </ClInclude>
+    <ClInclude Include="world\centinels.h">
       <Filter>world</Filter>
     </ClInclude>
   </ItemGroup>

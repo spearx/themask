@@ -49,17 +49,17 @@ namespace World
 	void CCamera::Update(const Abathur::SUpdateContext& context)
 	{
     ImGui::SliderFloat("Camera Distance:", &gDistance, 0.0f, 50.0f);
-    static float rot_totem = 0.0f;
-    rot_totem += 1.0f * context.frameTime;
-    /*bool changed = ImGui::SliderFloat("Rotation Totem:", &rot_totem, 0.0f, 2.0f);
-    if (changed) {*/
-      Matrix33 mtx;
-      mtx.SetIdentity();
-      Abathur::TLocationComponent* pLocComponent = pTotemEntity->QueryComponent<Abathur::TLocationComponent>();
-      mtx.SetRotationY(rot_totem);
-      Vector3 loc = pLocComponent->mtx.GetTranslation();
-      pLocComponent->mtx = mtx * matrixOriginal;
-      pLocComponent->mtx.SetTranslation(loc);
+    //static float rot_totem = 0.0f;
+    ////rot_totem += 1.0f * context.frameTime;
+    //bool changed = ImGui::SliderFloat("Rotation Totem:", &rot_totem, -2.0f, 2.0f);
+    //if (changed) {
+    //  Matrix33 mtx;
+    //  mtx.SetIdentity();
+    //  Abathur::TLocationComponent* pLocComponent = pTotemEntity->QueryComponent<Abathur::TLocationComponent>();
+    //  mtx.SetRotationY(rot_totem);
+    //  Vector3 loc = pLocComponent->mtx.GetTranslation();
+    //  pLocComponent->mtx = mtx * matrixOriginal;
+    //  pLocComponent->mtx.SetTranslation(loc);
     //}
 
 		Vector3 target(MathUtils::ZERO);
@@ -114,8 +114,15 @@ namespace World
 
     //Lasers
     RegisterLasers();
+
+    //Centinels
+    RegisterCentinels();
   }
 
+  void CWorld::SetCentinelsSpeedFactor(float factor)
+  {
+    m_centinels.SetSpeedSpeed(factor);
+  }
 
   void CWorld::AfterRenderCallback(const Abathur::TViewId viewId, const Abathur::CViewParameters& params)
   {
@@ -211,6 +218,7 @@ namespace World
       CTriggers::Get().RegisterTriggerSphere(entity, 2.5f, "Interact_Cauldron");
     }
     {
+
       Abathur::TEntityId entity = Abathur::GetEntityIdByName("Item_1", m_sceneId);
       CTriggers::Get().RegisterTriggerSphere(entity, 1.0f, "Interact_Item_1");
     }
@@ -234,8 +242,44 @@ namespace World
       Abathur::TEntityId entity = Abathur::GetEntityIdByName("Item_6", m_sceneId);
       CTriggers::Get().RegisterTriggerSphere(entity, 1.0f, "Interact_Item_6");
     }
+    {
+      Vector3 min(-7.0f, 0.0f, -5.0f);
+      Vector3 max(7.0f, 0.0f, 5.0f);
+      CTriggers::Get().RegisterTriggerBox(min, max, "Room_1");
+    }
+    {
+      Vector3 min(-24.0f, 0.0f, -2.7f);
+      Vector3 max(-9.0f, 0.0f, 5.0f);
+      CTriggers::Get().RegisterTriggerBox(min, max, "Room_2");
+    }
+    {
+      Vector3 min(-36.0f, 0.0f, -8.0f);
+      Vector3 max(-26.0f, 0.0f, 7.5f);
+      CTriggers::Get().RegisterTriggerBox(min, max, "Room_3");
+    }
+    {
+      Vector3 min(-36.0f, 0.0f, -9.6f);
+      Vector3 max(-26.0f, 0.0f, -25.0f);
+      CTriggers::Get().RegisterTriggerBox(min, max, "Room_4");
+    }
+    {
+      Vector3 min(-24.0f, 0.0f, -22.8f);
+      Vector3 max(-1.0f, 0.0f, -11.5f);
+      CTriggers::Get().RegisterTriggerBox(min, max, "Room_5");
+    }
+    {
+      Vector3 min(0.0f, 0.0f, -22.8f);
+      Vector3 max(31.0f, 0.0f, -11.5f);
+      CTriggers::Get().RegisterTriggerBox(min, max, "Room_6");
+    }
+    {
+      Vector3 min(8.5f, 0.0f, -6.0f);
+      Vector3 max(19.1f, 0.0f, 5.5f);
+      CTriggers::Get().RegisterTriggerBox(min, max, "Room_7");
+    }
+    CTriggers::Get().RegisterListenner(CTriggers::TTriggerEventCallback::SetMethod<CWorld, &CWorld::OnTriggerEvent>(this));
   }
-
+  
   void CWorld::RegisterLasers() {
     {
       Abathur::TEntityId entity_collision = Abathur::GetEntityIdByName("Laser_Collision_Red_001", m_sceneId);      
@@ -269,7 +313,30 @@ namespace World
 
   }
 
+  void CWorld::OnTriggerEvent(const std::string &event_name, CTriggers::ETriggerEvent event_type)
+  {
+    if (event_name.find("Room_") == std::string::npos)
+      return;
 
+    if (event_type == CTriggers::ETriggerEvent::ON_ENTER)
+    {
+      printf("On Trigger Event %s ON ENTER\n", event_name.c_str());
+      m_currentRoomId = Abathur::GetEntityIdByName(event_name.c_str(), m_sceneId);
+      m_centinels.SetCentinelsStateInRoom(event_name, CCentinels::EState::AWAKE);
+    }
+    else if (event_type == CTriggers::ETriggerEvent::ON_EXIT)
+    {
+      printf("On Trigger Event %s ON EXIT\n", event_name.c_str());
+      m_centinels.SetCentinelsStateInRoom(event_name, CCentinels::EState::SLEEPING);
+    }
+  }
+
+  void CWorld::RegisterCentinels( ) {
+    {
+      Abathur::TEntityId entity = Abathur::GetEntityIdByName("Centinel_Head_1", m_sceneId);
+      m_centinels.RegisterCentinel(entity, "Room_1", 10.0f);
+    }
+  }
 
 }
 
