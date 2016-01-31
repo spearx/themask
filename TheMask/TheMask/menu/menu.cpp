@@ -16,7 +16,7 @@ namespace Menu
 	Vector3 gCameraTargetStart(139.766f, 47.967f, -46.528f);
 	float   gCameraFovStart = DEG2RAD(26.231f);
 	float   gTotalTime = 0.0f;
-  float   gElapsedTime = 0.0f;
+	float   gElapsedTime = 0.0f;
 
 
 	STitle::STitle()
@@ -27,9 +27,9 @@ namespace Menu
 
 	void STitle::Init(const Abathur::TSceneId sceneId)
 	{
-		if (Abathur::TAbathurEntity* pEntity = Abathur::GetEntityByName("", sceneId))
+		m_sceneId = sceneId;
+		if (Abathur::TAbathurEntity* pEntity = Abathur::GetEntityByName("Rituality", sceneId))
 		{
-			m_entityId = pEntity->GetId();
 			m_initTransform = pEntity->QueryComponent<Abathur::TLocationComponent>()->mtx;
 		}
 
@@ -51,7 +51,7 @@ namespace Menu
 
 	void STitle::Hide()
 	{
-		m_scale.SetValue(0.0f, 1.0f);
+		m_scale.SetValue(0.8f, 1.0f);
 	}
 
 	void STitle::Update(const Abathur::SUpdateContext& context)
@@ -61,12 +61,13 @@ namespace Menu
 		Matrix44 scaleMtx;
 		scaleMtx.SetScale(m_scale.GetValue());
 
-		if (Abathur::TAbathurEntity* pEntity = Abathur::GetEntity(m_entityId))
-		{
-			pEntity->QueryComponent<Abathur::TLocationComponent>()->mtx = scaleMtx*m_initTransform;
+		Matrix44 rotationMtx;
+		rotationMtx = Matrix44(Matrix34(Quat(Angle3(0.1f*sinf(gTotalTime*0.75f), 0.1f*cosf(gTotalTime*0.17f), 0.0f))));
 
-			float selector = m_type == EType::Title ? 0.0f : m_type == EType::Win ? 1.0f : 2.0f;
-			Abathur::setMaterialParam(pEntity->QueryComponent<Abathur::TVisualComponent>()->material, "texture_selector", selector);
+		if (Abathur::TAbathurEntity* pEntity = Abathur::GetEntityByName("Rituality",m_sceneId))
+		{
+			pEntity->QueryComponent<Abathur::TLocationComponent>()->mtx = m_initTransform*scaleMtx*rotationMtx;
+			pEntity->QueryComponent<Abathur::TVisualComponent>()->material = Abathur::getMaterial(m_type == EType::Title ? "Titulo" : (m_type == EType::Win ? "Win" : "Lose"));
 		}
 	}
 
@@ -300,7 +301,7 @@ namespace Menu
 	{
 		//TODO ~ intro transition proper
 		gTotalTime += context.frameTime*2.0f;
-    gElapsedTime = context.frameTime;
+		gElapsedTime = context.frameTime;
 
 		m_introThreshold.Update(context.frameTime);
 

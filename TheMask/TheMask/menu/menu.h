@@ -28,7 +28,7 @@ namespace Menu
 		void Update(const Abathur::SUpdateContext& context);
 
 		Abathur::CScopedUpdate   m_update;
-		Abathur::TEntityId       m_entityId;
+		Abathur::TSceneId        m_sceneId;
 		Matrix44                 m_initTransform;
 		EType                    m_type;
 

@@ -32,7 +32,7 @@
          "mtx" : "-0.396 0.804 -0.442 73.432 -0.769 -0.028 0.638 49.342 0.501 0.593 0.630 23.872 0.000 0.000 0.000 1.000"
       },
       "comp_visual" : {
-         "material" : "Needle",
+         "material" : "Needle_1",
          "mesh" : "data/menu/meshes/Needle_1.mesh"
       }
    },
@@ -41,7 +41,7 @@
          "mtx" : "-0.350 -0.401 0.847 147.158 0.000 0.904 0.428 119.285 -0.937 0.150 -0.316 -22.164 0.000 0.000 0.000 1.000"
       },
       "comp_visual" : {
-         "material" : "Needle",
+         "material" : "Needle_2",
          "mesh" : "data/menu/meshes/Needle_2.mesh"
       }
    },
@@ -50,7 +50,7 @@
          "mtx" : "-0.415 0.277 -0.866 75.497 0.261 0.949 0.178 110.878 0.872 -0.152 -0.466 -17.226 0.000 0.000 0.000 1.000"
       },
       "comp_visual" : {
-         "material" : "Needle",
+         "material" : "Needle_3",
          "mesh" : "data/menu/meshes/Needle_3.mesh"
       }
    },
@@ -59,7 +59,7 @@
          "mtx" : "0.870 -0.126 0.476 70.020 -0.335 0.558 0.759 24.118 -0.362 -0.820 0.444 51.398 0.000 0.000 0.000 1.000"
       },
       "comp_visual" : {
-         "material" : "Needle",
+         "material" : "Needle_4",
          "mesh" : "data/menu/meshes/Needle_4.mesh"
       }
    },
@@ -68,7 +68,7 @@
          "mtx" : "0.856 -0.408 0.317 120.926 -0.172 0.354 0.919 12.322 -0.487 -0.842 0.233 48.717 0.000 0.000 0.000 1.000"
       },
       "comp_visual" : {
-         "material" : "Needle",
+         "material" : "Needle_5",
          "mesh" : "data/menu/meshes/Needle_5.mesh"
       }
    },
@@ -77,7 +77,7 @@
          "mtx" : "-0.213 0.574 -0.791 53.736 0.265 0.813 0.519 30.537 0.941 -0.099 -0.325 4.785 0.000 0.000 0.000 1.000"
       },
       "comp_visual" : {
-         "material" : "Needle",
+         "material" : "Needle_6",
          "mesh" : "data/menu/meshes/Needle_6.mesh"
       }
    },
@@ -151,7 +151,7 @@
          "mtx" : "0.966 -0.259 0.000 77.278 0.000 0.000 1.000 4.274 -0.259 -0.966 0.000 134.386 0.000 0.000 0.000 1.000"
       },
       "comp_visual" : {
-         "material" : "Material #2",
+         "material" : "Button_3",
          "mesh" : "data/menu/meshes/button_3.mesh"
       }
    },
