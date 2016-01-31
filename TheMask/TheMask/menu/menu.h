@@ -14,6 +14,28 @@ namespace World
 
 namespace Menu
 {
+	struct STitle
+	{
+		enum class EType { Title, Win, Lose};
+
+		STitle();
+
+		void Init(const Abathur::TSceneId sceneId);
+
+		void Show(const EType type);
+		void Hide();
+
+		void Update(const Abathur::SUpdateContext& context);
+
+		Abathur::CScopedUpdate   m_update;
+		Abathur::TEntityId       m_entityId;
+		Matrix44                 m_initTransform;
+		EType                    m_type;
+
+		Interpolations::InterpolableFixed<float,Interpolations::EaseOutElasticInterpolation> m_scale; 
+	};
+
+
 	class CCamera
 	{
 	public: 
@@ -102,6 +124,7 @@ namespace Menu
 		Interpolations::InterpolableFixed<float, Interpolations::EaseInOutCubicInterpolation> m_introThreshold;
 
 		COfflineGame             m_offlineGame;
+		STitle                   m_title;
 		CCamera                  m_camera;
 		Abathur::TSceneId        m_sceneId;
 		Abathur::CScopedUpdate   m_preRenderUpdate;

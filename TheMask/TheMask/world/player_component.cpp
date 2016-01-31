@@ -252,27 +252,38 @@ namespace World
 	  {
 		  if (m_currentInteraction == "Interact_Item_1")
 		  {
-			  Menu::CPopup::Get().AddTextLine("THIS IS ITERACTIVE ITEM 1!");
+			  Menu::CPopup::Get().AddTextLine("This is Sandro's spiritual");
+			  Menu::CPopup::Get().AddTextLine("hideout.");
 		  }
 		  else if (m_currentInteraction == "Interact_Item_2")
 		  { 
-			  Menu::CPopup::Get().AddTextLine("THIS IS ITERACTIVE ITEM 2!");
+			  Menu::CPopup::Get().AddTextLine("Sandro has always been a");
+			  Menu::CPopup::Get().AddTextLine("kind person, and never used");
+			  Menu::CPopup::Get().AddTextLine("slaves as work assets.");
 		  }
 		  else if (m_currentInteraction == "Interact_Item_3")
 		  {
-			  Menu::CPopup::Get().AddTextLine("THIS IS ITERACTIVE ITEM 3!");
+			  Menu::CPopup::Get().AddTextLine("Sandro always put more");
+			  Menu::CPopup::Get().AddTextLine("more snake poison to his");
+			  Menu::CPopup::Get().AddTextLine("food after crafting potions.");
 		  }
 		  else if (m_currentInteraction == "Interact_Item_4")
 		  {
-			  Menu::CPopup::Get().AddTextLine("THIS IS ITERACTIVE ITEM 4!");
+			  Menu::CPopup::Get().AddTextLine("All the traped souls");
+			  Menu::CPopup::Get().AddTextLine("here, are a sign of");
+			  Menu::CPopup::Get().AddTextLine("really bad JuJu.");
 		  }
 		  else if (m_currentInteraction == "Interact_Item_5")
 		  {
-			  Menu::CPopup::Get().AddTextLine("THIS IS ITERACTIVE ITEM 5!");
+			  Menu::CPopup::Get().AddTextLine("Mambo usally eats");
+			  Menu::CPopup::Get().AddTextLine("Voodoo Flamme");
+			  Menu::CPopup::Get().AddTextLine("after creating dolls.");
 		  }
 		  else if (m_currentInteraction == "Interact_Item_6")
 		  {
-			  Menu::CPopup::Get().AddTextLine("THIS IS ITERACTIVE ITEM 6!");
+			  Menu::CPopup::Get().AddTextLine("The spirits around");
+			  Menu::CPopup::Get().AddTextLine("this hideout are");
+			  Menu::CPopup::Get().AddTextLine("Rada.");
 		  }
 	  }
   }
