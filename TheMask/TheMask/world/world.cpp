@@ -203,15 +203,15 @@ namespace World
   void CWorld::RegisterTriggers() {
     {
       Abathur::TEntityId entity = Abathur::GetEntityIdByName("Button_Centinel_1", m_sceneId);
-      CTriggers::Get().RegisterTriggerSphere(entity, 1.0f, "Unlock_Totem");
+      CTriggers::Get().RegisterTriggerSphere(entity, 1.6f, "Unlock_Totem");
     }
     {
       Abathur::TEntityId entity = Abathur::GetEntityIdByName("Button_Laser_1", m_sceneId);
-      CTriggers::Get().RegisterTriggerSphere(entity, 1.0f, "Unlock_Laser_1");
+      CTriggers::Get().RegisterTriggerSphere(entity, 1.6f, "Unlock_Laser_1");
     }
     {
       Abathur::TEntityId entity = Abathur::GetEntityIdByName("Button_Laser_B", m_sceneId);
-      CTriggers::Get().RegisterTriggerSphere(entity, 1.0f, "Unlock_Laser_2");
+      CTriggers::Get().RegisterTriggerSphere(entity, 1.6f, "Unlock_Laser_2");
     }
     {
       Abathur::TEntityId entity = Abathur::GetEntityIdByName("Cauldron", m_sceneId);
@@ -220,27 +220,27 @@ namespace World
     {
 
       Abathur::TEntityId entity = Abathur::GetEntityIdByName("Item_1", m_sceneId);
-      CTriggers::Get().RegisterTriggerSphere(entity, 1.0f, "Interact_Item_1");
+      CTriggers::Get().RegisterTriggerSphere(entity, 1.6f, "Interact_Item_1");
     }
     {
       Abathur::TEntityId entity = Abathur::GetEntityIdByName("Item_2", m_sceneId);
-      CTriggers::Get().RegisterTriggerSphere(entity, 1.0f, "Interact_Item_2");
+      CTriggers::Get().RegisterTriggerSphere(entity, 1.6f, "Interact_Item_2");
     }
     {
       Abathur::TEntityId entity = Abathur::GetEntityIdByName("Item_3", m_sceneId);
-      CTriggers::Get().RegisterTriggerSphere(entity, 1.0f, "Interact_Item_3");
+      CTriggers::Get().RegisterTriggerSphere(entity, 1.6f, "Interact_Item_3");
     }
     {
       Abathur::TEntityId entity = Abathur::GetEntityIdByName("Item_4", m_sceneId);
-      CTriggers::Get().RegisterTriggerSphere(entity, 1.0f, "Interact_Item_4");
+      CTriggers::Get().RegisterTriggerSphere(entity, 1.6f, "Interact_Item_4");
     }
     {
       Abathur::TEntityId entity = Abathur::GetEntityIdByName("Item_5", m_sceneId);
-      CTriggers::Get().RegisterTriggerSphere(entity, 1.0f, "Interact_Item_5");
+      CTriggers::Get().RegisterTriggerSphere(entity, 1.6f, "Interact_Item_5");
     }
     {
       Abathur::TEntityId entity = Abathur::GetEntityIdByName("Item_6", m_sceneId);
-      CTriggers::Get().RegisterTriggerSphere(entity, 1.0f, "Interact_Item_6");
+      CTriggers::Get().RegisterTriggerSphere(entity, 1.6f, "Interact_Item_6");
     }
     {
       Vector3 min(-7.0f, 0.0f, -5.0f);
@@ -311,10 +311,60 @@ namespace World
       data->AddRayLaser(Abathur::GetEntityIdByName("Laser_B009", m_sceneId), Abathur::GetEntityIdByName("Laser_B006", m_sceneId));
     }
 
+    //Room 6
+    {
+      Abathur::TEntityId entity_collision = Abathur::GetEntityIdByName("Laser_Collision_Red_003", m_sceneId);
+      CLasers::TLaserData *data = m_lasers.RegistreTypeLaser(CLasers::ELaserType::RED_LASER, entity_collision);
+      data->AddRayLaser(Abathur::GetEntityIdByName("Laser_011", m_sceneId), Abathur::GetEntityIdByName("Laser_011.Target", m_sceneId));
+    }
+    {
+      Abathur::TEntityId entity_collision = Abathur::GetEntityIdByName("Laser_Collision_Blue_003", m_sceneId);
+      CLasers::TLaserData *data = m_lasers.RegistreTypeLaser(CLasers::ELaserType::BLUE_LASER, entity_collision);
+      data->AddRayLaser(Abathur::GetEntityIdByName("Laser_012", m_sceneId), Abathur::GetEntityIdByName("Laser_012.Target", m_sceneId));
+    }
+    {
+      Abathur::TEntityId entity_collision = Abathur::GetEntityIdByName("Laser_Collision_Red_004", m_sceneId);
+      CLasers::TLaserData *data = m_lasers.RegistreTypeLaser(CLasers::ELaserType::RED_LASER, entity_collision);
+      data->AddRayLaser(Abathur::GetEntityIdByName("Laser_013", m_sceneId), Abathur::GetEntityIdByName("Laser_013.Target", m_sceneId));
+    }
+
+    {
+      Abathur::TEntityId entity_collision = Abathur::GetEntityIdByName("Laser_Collision_Blue_004", m_sceneId);
+      CLasers::TLaserData *data = m_lasers.RegistreTypeLaser(CLasers::ELaserType::BLUE_LASER, entity_collision);
+      data->AddRayLaser(Abathur::GetEntityIdByName("Laser_016", m_sceneId), Abathur::GetEntityIdByName("Laser_016.Target", m_sceneId));
+    }
+    {
+      Abathur::TEntityId entity_collision = Abathur::GetEntityIdByName("Laser_Collision_Red_005", m_sceneId);
+      CLasers::TLaserData *data = m_lasers.RegistreTypeLaser(CLasers::ELaserType::RED_LASER, entity_collision);
+      data->AddRayLaser(Abathur::GetEntityIdByName("Laser_017", m_sceneId), Abathur::GetEntityIdByName("Laser_017.Target", m_sceneId));
+    }
+    {
+      Abathur::TEntityId entity_collision = Abathur::GetEntityIdByName("Laser_Collision_Blue_005", m_sceneId);
+      CLasers::TLaserData *data = m_lasers.RegistreTypeLaser(CLasers::ELaserType::BLUE_LASER, entity_collision);
+      data->AddRayLaser(Abathur::GetEntityIdByName("Laser_018", m_sceneId), Abathur::GetEntityIdByName("Laser_018.Target", m_sceneId));
+    }
+
+    //Room 7
+    {
+      Abathur::TEntityId entity_collision = Abathur::GetEntityIdByName("Laser_Collision_Red_006", m_sceneId);
+      CLasers::TLaserData *data = m_lasers.RegistreTypeLaser(CLasers::ELaserType::RED_LASER, entity_collision);
+      data->AddRayLaser(Abathur::GetEntityIdByName("Laser_015", m_sceneId), Abathur::GetEntityIdByName("Laser_015.Target", m_sceneId));
+    }
+    {
+      Abathur::TEntityId entity_collision = Abathur::GetEntityIdByName("Laser_Collision_Blue_006", m_sceneId);
+      CLasers::TLaserData *data = m_lasers.RegistreTypeLaser(CLasers::ELaserType::BLUE_LASER, entity_collision);
+      data->AddRayLaser(Abathur::GetEntityIdByName("Laser_014", m_sceneId), Abathur::GetEntityIdByName("Laser_014.Target", m_sceneId));
+    }
+
   }
 
   void CWorld::OnTriggerEvent(const std::string &event_name, CTriggers::ETriggerEvent event_type)
   {
+    if (event_type == CTriggers::ETriggerEvent::ON_ENTER)
+      printf("On Trigger Event %s ON ENTER\n", event_name.c_str());
+    else if (event_type == CTriggers::ETriggerEvent::ON_EXIT)
+      printf("On Trigger Event %s ON EXIT\n", event_name.c_str());
+
     if (event_name.find("Room_") == std::string::npos) {
       Abathur::TAbathurEntity* pPlayerEntity = Abathur::GetEntity(CWorld::Get().GetPlayerEntityId());
       ASSERT(pPlayerEntity);
@@ -326,21 +376,43 @@ namespace World
 
     if (event_type == CTriggers::ETriggerEvent::ON_ENTER)
     {
-      printf("On Trigger Event %s ON ENTER\n", event_name.c_str());
       m_currentRoomId = Abathur::GetEntityIdByName(event_name.c_str(), m_sceneId);
       m_centinels.SetCentinelsStateInRoom(event_name, CCentinels::EState::AWAKE);
     }
     else if (event_type == CTriggers::ETriggerEvent::ON_EXIT)
     {
-      printf("On Trigger Event %s ON EXIT\n", event_name.c_str());
       m_centinels.SetCentinelsStateInRoom(event_name, CCentinels::EState::SLEEPING);
     }
   }
 
   void CWorld::RegisterCentinels( ) {
+    CCentinels::TCentinelsParams params;
+    params.m_turnSpeed = 1.0f;
+    params.m_timeFactorPlayer = 10.0f;
+
     {
+      params.m_roomName = "Room_1";
       Abathur::TEntityId entity = Abathur::GetEntityIdByName("Centinel_Head_1", m_sceneId);
-      m_centinels.RegisterCentinel(entity, "Room_1", 10.0f);
+      m_centinels.RegisterCentinel(entity, params);
+    }
+    {
+      params.m_roomName = "Room_4";
+      params.m_turnSpeed = 1.0f;
+      Abathur::TEntityId entity = Abathur::GetEntityIdByName("Centinel_Head_003", m_sceneId);
+      m_centinels.RegisterCentinel(entity, params);
+      params.m_turnSpeed = 1.5f;
+      entity = Abathur::GetEntityIdByName("Centinel_Head_005", m_sceneId);
+      m_centinels.RegisterCentinel(entity, params);
+    }
+    {
+      params.m_roomName = "Room_6";
+      params.m_turnSpeed = 1.0f;
+      params.m_timeFactorPlayer = 20.0f;
+      Abathur::TEntityId entity = Abathur::GetEntityIdByName("Centinel_Head_002", m_sceneId);
+      m_centinels.RegisterCentinel(entity, params);
+      params.m_turnSpeed = 1.5f;
+      entity = Abathur::GetEntityIdByName("Centinel_Head_004", m_sceneId);
+      m_centinels.RegisterCentinel(entity, params);
     }
   }
 

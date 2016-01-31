@@ -101,6 +101,7 @@ namespace Menu
 		Abathur::TEntityId AddButton(const char* entityName, const Vector2& areaMin, const Vector2& areaMax, const Vector3& hoverOffset, const Vector4& baseTintColor, const Vector4& tintColor);
     void SetTimeFactor(float f) { m_timeFactor = f; }
     void PlayBGMMusic(const char *filename);
+    void SetTotemIconState(bool is_enabled);
 
 	private: 
 		static CMenu& CreateInstance() { m_pInstance = new CMenu();  return *m_pInstance; }
@@ -139,6 +140,9 @@ namespace Menu
     Abathur::TAudioId        m_bgmMusic;
     Abathur::TAudioId        m_nextBgmMusic;
     float                    m_volumnFactor;
+    
+    Abathur::TAbathurTexture* m_totemIcon;
+    bool                     m_awakeTotem;
 	};
 
 }

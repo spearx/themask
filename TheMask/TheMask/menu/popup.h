@@ -34,7 +34,8 @@ namespace Menu
     void Init(Abathur::TAbathurFont *font);
     void AddTextLine(const std::string &text);
     void Render();
-    
+    void ApplyOrthoMatrix();
+
     static CPopup& Get() { return m_pInstance ? *m_pInstance : CreateInstance(); }
   };
 }
