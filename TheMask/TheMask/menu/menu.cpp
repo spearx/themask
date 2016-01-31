@@ -8,9 +8,13 @@
 namespace Menu
 {
 
-	Vector2 gCameraMoveFreq(0.1f,0.1f);
-	Vector2 gCameraMoveAmp(0.2f, 0.5f);
+	Vector2 gCameraMoveFreq(0.197f,0.591f);
+	Vector2 gCameraMoveAmp(0.551f, 0.906f);
 	Vector2 gCameraMovePhase(0.5f, 0.0f);
+
+	Vector3 gCameraPositionStart(20.194f, 159.921f, 269.434f);
+	Vector3 gCameraTargetStart(139.766f, 47.967f, -46.528f);
+	float   gCameraFovStart = DEG2RAD(26.231f);
 
 	void afterRender(const Abathur::TViewId viewId, const Abathur::CViewParameters& params)
 	{
@@ -44,9 +48,13 @@ namespace Menu
 			}
 		}
 
+		m_camPos.Reset(gCameraPositionStart);
+		m_camTarget.Reset(gCameraTargetStart);
+		m_fov.Reset(gCameraFovStart);
+
 		m_viewId = Abathur::AddSceneView(sceneId);
-		m_viewParameters.SetProjection(DEG2RAD(55.f), 0.1f, 1000.0f);
-		m_viewParameters.SetLookAt(m_cameraPos, m_cameraTarget);
+		m_viewParameters.SetProjection(gCameraFovStart, 0.1f, 1000.0f);
+		m_viewParameters.SetLookAt(m_camPos.GetValue(), m_camTarget.GetValue());
 		m_viewParameters.SetPriority(Abathur::TViewPriority(100));
 		m_viewParameters.SetAfterCallback(Abathur::TViewCallback::SetFunction<&afterRender>());
 
@@ -55,6 +63,20 @@ namespace Menu
 		m_update.SetPriority(Abathur::GetUpdatePriority(Abathur::EUpdateTier::PrePhysics, Abathur::EUpdateStage::Default));
 		m_update.SetCallback(Abathur::TUpdateCallback::SetMethod<CCamera, &CCamera::Update>(this));
 		m_update.Register();
+	}
+
+	void CCamera::Start()
+	{
+		m_camPos.SetValue(m_cameraPos,2.0f);
+		m_camTarget.SetValue(m_cameraTarget, 2.0f);
+		m_fov.SetValue(DEG2RAD(55.f),2.0f);
+	}
+
+	void CCamera::Stop()
+	{
+		m_camPos.SetValue(gCameraPositionStart, 2.0f);
+		m_camTarget.SetValue(gCameraTargetStart, 2.0f);
+		m_fov.SetValue(gCameraFovStart);
 	}
 
 	void CCamera::Update(const Abathur::SUpdateContext& context)
@@ -68,8 +90,13 @@ namespace Menu
 		ImGui::SliderFloat("Camera Move Phase X", &gCameraMovePhase.x, 0.0f, 10.0f);
 		ImGui::SliderFloat("Camera Move Phase Y", &gCameraMovePhase.y, 0.0f, 10.0f);
 
+		m_camPos.Update(context.frameTime);
+		m_camTarget.Update(context.frameTime);
+		m_fov.Update(context.frameTime);
+
 		m_totalTime += context.frameTime;
-		m_viewParameters.SetLookAt(m_cameraPos, m_cameraTarget+Vector3(gCameraMoveAmp.x*sinf(gCameraMovePhase.x+gCameraMoveFreq.x*gfPI2*m_totalTime), gCameraMoveAmp.y*cosf(gCameraMovePhase.y + gCameraMoveFreq.y*gfPI2*m_totalTime),0.0f));
+		m_viewParameters.SetProjection(m_fov.GetValue(), 0.1f, 1000.0f);
+		m_viewParameters.SetLookAt(m_camPos.GetValue(), m_camTarget.GetValue()+Vector3(gCameraMoveAmp.x*sinf(gCameraMovePhase.x+gCameraMoveFreq.x*gfPI2*m_totalTime), gCameraMoveAmp.y*cosf(gCameraMovePhase.y + gCameraMoveFreq.y*gfPI2*m_totalTime),0.0f));
 		Abathur::SetViewParameters(m_viewId, m_viewParameters);
 	}
 
@@ -102,7 +129,7 @@ namespace Menu
 		//Start Scene
 		Abathur::StartScene(m_sceneId);
 
-		SetState(EState::Playing);
+		SetState(EState::Intro);
 
 		//Load Font and configure Popup
 		Abathur::TAbathurFont *font = Abathur::loadFont("data/fonts/mask_font.fnt", "data/fonts/mask_font.tga");
@@ -120,13 +147,14 @@ namespace Menu
 		{
 			m_logicUpdate.SetCallback(Abathur::TUpdateCallback::SetMethod<CMenu, &CMenu::LogicUpdate>(this));
 			m_logicUpdate.Register(Abathur::GetUpdatePriority(Abathur::EUpdateTier::PostPhysics, Abathur::EUpdateStage::Default));
+			m_camera.Start();
 		}
 		break;
 		case EState::Success:
 		case EState::Failed:
 		{
 			m_logicUpdate.Unregister();
-
+			m_camera.Stop();
 
 		}
 		break;

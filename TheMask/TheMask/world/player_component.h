@@ -30,6 +30,8 @@ namespace World
 
 		void OnTriggerEvent(const std::string &event_name, CTriggers::ETriggerEvent event_type);
 
+		bool IsInteractionTrigger(const std::string& event_name) const;
+
 		void Update(const Abathur::SUpdateContext& context);
     void UpdatePostPhysX(const Abathur::SUpdateContext& context);
 	void ShowDialogs();

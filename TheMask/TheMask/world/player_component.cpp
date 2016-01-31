@@ -200,9 +200,16 @@ namespace World
 	}
   }
 
+  bool CPlayerComponent::IsInteractionTrigger(const std::string& event_name) const
+  {
+	  return event_name == "Interact_Item_1" || event_name == "Interact_Item_2" || event_name == "Interact_Item_3"
+		  || event_name == "Interact_Item_4" || event_name == "Interact_Item_5" || event_name == "Interact_Item_6"
+		  || event_name == "Unlock_Totem" || event_name == "Unlock_Laser_1" || event_name == "Unlock_Laser_2" || event_name == "Interact_Cauldron";
+  }
+
   void CPlayerComponent::OnTriggerEvent(const std::string &event_name, CTriggers::ETriggerEvent event_type)
   {
-	  if (event_type == CTriggers::ETriggerEvent::ON_ENTER)
+	  if (event_type == CTriggers::ETriggerEvent::ON_ENTER && IsInteractionTrigger(event_name))
 	  {
 		  //printf("On Trigger Event %s ON ENTER\n", event_name.c_str());
 

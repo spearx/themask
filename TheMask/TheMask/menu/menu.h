@@ -4,6 +4,8 @@
 
 #include "offline_game.h"
 
+#include "utils/ease_interpolators.h"
+
 //declaration forward
 namespace World
 {
@@ -19,6 +21,9 @@ namespace Menu
 
 		void Init(const Abathur::TSceneId sceneId);
 
+		void Start();
+		void Stop();
+
 		Abathur::CViewParameters& GetViewParameters() { return m_viewParameters; }
 
 	private: 
@@ -28,6 +33,11 @@ namespace Menu
 		Abathur::TViewId         m_viewId;
 		Abathur::CViewParameters m_viewParameters;
 		Abathur::CScopedUpdate   m_update;
+
+		Interpolations::InterpolableFixed<Vector3, Interpolations::EaseInOutCubicInterpolation> m_camPos;
+		Interpolations::InterpolableFixed<Vector3, Interpolations::EaseInOutCubicInterpolation> m_camTarget;
+		Interpolations::InterpolableFixed<float,   Interpolations::EaseInOutCubicInterpolation> m_fov;
+
 		Vector3                  m_cameraPos;
 		Vector3                  m_cameraTarget;
 		float                    m_totalTime;
