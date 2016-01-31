@@ -368,7 +368,7 @@ namespace World
     static bool first_time_caldero_room = true;
     if (event_name == "Room_5" && first_time_caldero_room) {
       first_time_caldero_room = false;
-      Abathur::playAudio("data/audio/caldero_enter.wav");
+      Abathur::playAudio("data/audio/caldero_enter.wav",false);
     }
 
     if (event_name.find("Room_") == std::string::npos) {
