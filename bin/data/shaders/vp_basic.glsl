@@ -12,7 +12,6 @@ attribute vec2 texcoord0;
 
 //varying lowp vec4 colorVarying;
 varying vec2 tex_coord;
-varying vec3 eye_normal;
 
 uniform mat4 mvp;
 uniform mat3 normalMatrix;
@@ -27,7 +26,6 @@ void main()
                  
     //vec4 colorVarying = diffuseColor * nDotVP;
     tex_coord = texcoord0;
-	eye_normal = normal;
     //tex_coord = colorVarying.xy;
     
     gl_Position = position * mvp;

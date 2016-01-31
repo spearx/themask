@@ -15,6 +15,7 @@ namespace Menu
 	Vector3 gCameraPositionStart(20.194f, 159.921f, 269.434f);
 	Vector3 gCameraTargetStart(139.766f, 47.967f, -46.528f);
 	float   gCameraFovStart = DEG2RAD(26.231f);
+	float   gTotalTime = 0.0f;
 
 	void afterRender(const Abathur::TViewId viewId, const Abathur::CViewParameters& params)
 	{
@@ -115,6 +116,8 @@ namespace Menu
 		//Load scene
 		m_sceneId = Abathur::LoadScene("data/menu/scenes/themask_menu.scene");
 
+		m_introThreshold.Reset(0.0f);
+
 		//Cameras
 		m_camera.Init(m_sceneId);
 
@@ -148,6 +151,7 @@ namespace Menu
 			m_logicUpdate.SetCallback(Abathur::TUpdateCallback::SetMethod<CMenu, &CMenu::LogicUpdate>(this));
 			m_logicUpdate.Register(Abathur::GetUpdatePriority(Abathur::EUpdateTier::PostPhysics, Abathur::EUpdateStage::Default));
 			m_camera.Start();
+			m_introThreshold.SetValue(1.0f, 4.0f);
 		}
 		break;
 		case EState::Success:
@@ -155,7 +159,7 @@ namespace Menu
 		{
 			m_logicUpdate.Unregister();
 			m_camera.Stop();
-
+			m_introThreshold.SetValue(0.0f, 1.0f);
 		}
 		break;
 		}
@@ -166,13 +170,26 @@ namespace Menu
 	void CMenu::PreRenderUpdate(const Abathur::SUpdateContext& context)
 	{
 		//TODO ~ intro transition proper
+		gTotalTime += context.frameTime*2.0f;
+
+		m_introThreshold.Update(context.frameTime);
 
 		if (Abathur::TAbathurEntity* pCristalPlayer = Abathur::GetEntityByName("Ball", m_sceneId))
 		{
 			if (Abathur::TVisualComponent* pVisualComponent = pCristalPlayer->QueryComponent<Abathur::TVisualComponent>())
 			{
+				Vector3 cameraPosition = m_camera.GetViewParameters().GetTransform().t;
+
 				Abathur::CViewParameters& viewParameters = World::CWorld::Get().GetPlayerCamera().GetViewParameters();
 				Abathur::setMaterialParam(pVisualComponent->material, "diffuse", viewParameters.GetRenderTarget());
+				Abathur::setMaterialParam(pVisualComponent->material, "eye_pos", cameraPosition);
+				Abathur::setMaterialParam(pVisualComponent->material, "global_time", gTotalTime);
+				Abathur::setMaterialParam(pVisualComponent->material, "threshold", const_cast<float&>(m_introThreshold.GetValue()));
+
+				if (ImGui::Button("Reload Ball Material"))
+				{
+					Abathur::reloadMaterial(pVisualComponent->material);
+				}
 			}
 		}
 	}
