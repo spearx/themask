@@ -33,6 +33,7 @@ namespace World
     float m_speedFactor;
     float m_timeInIdle;
     Abathur::CScopedUpdate m_updateCallback;
+    Abathur::TAudioId      m_tottemAudio;
 
     void Update(const Abathur::SUpdateContext& context);
 

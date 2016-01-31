@@ -4,6 +4,8 @@
 
 #include "offline_game.h"
 
+#include "utils/ease_interpolators.h"
+
 //declaration forward
 namespace World
 {
@@ -19,6 +21,9 @@ namespace Menu
 
 		void Init(const Abathur::TSceneId sceneId);
 
+		void Start();
+		void Stop();
+
 		Abathur::CViewParameters& GetViewParameters() { return m_viewParameters; }
 
 	private: 
@@ -28,8 +33,14 @@ namespace Menu
 		Abathur::TViewId         m_viewId;
 		Abathur::CViewParameters m_viewParameters;
 		Abathur::CScopedUpdate   m_update;
+
+		Interpolations::InterpolableFixed<Vector3, Interpolations::EaseInOutCubicInterpolation> m_camPos;
+		Interpolations::InterpolableFixed<Vector3, Interpolations::EaseInOutCubicInterpolation> m_camTarget;
+		Interpolations::InterpolableFixed<float,   Interpolations::EaseInOutCubicInterpolation> m_fov;
+
 		Vector3                  m_cameraPos;
 		Vector3                  m_cameraTarget;
+		float                    m_totalTime;
 	};
 
 	class CMenu : public Abathur::Input::InputListener
@@ -67,6 +78,7 @@ namespace Menu
 
 		Abathur::TEntityId AddButton(const char* entityName, const Vector2& areaMin, const Vector2& areaMax, const Vector3& hoverOffset, const Vector4& baseTintColor, const Vector4& tintColor);
     void SetTimeFactor(float f) { m_timeFactor = f; }
+    void PlayBGMMusic(const char *filename);
 
 	private: 
 		static CMenu& CreateInstance() { m_pInstance = new CMenu();  return *m_pInstance; }
@@ -80,6 +92,8 @@ namespace Menu
 		void LogicUpdate(const Abathur::SUpdateContext& context);
 		void InitButtons();
 		virtual bool OnButton(const Abathur::Input::EButton button, const Abathur::Input::EButtonEvent buttonEvent) override;
+
+    void UpdateMusicFade(float elapsed);
 
 	private:
 		static CMenu*            m_pInstance;
@@ -96,6 +110,10 @@ namespace Menu
     Abathur::TAbathurFont *  m_pFont;
     float                    m_totalTime;
     float                    m_timeFactor;
+
+    Abathur::TAudioId        m_bgmMusic;
+    Abathur::TAudioId        m_nextBgmMusic;
+    float                    m_volumnFactor;
 	};
 
 }

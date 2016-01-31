@@ -3,14 +3,31 @@
 
 #include "button_component.h"
 #include "world/world.h"
+#include "abathur_gui.h"
 
 namespace Menu
 {
+
+	Vector2 gCameraMoveFreq(0.197f,0.591f);
+	Vector2 gCameraMoveAmp(0.551f, 0.906f);
+	Vector2 gCameraMovePhase(0.5f, 0.0f);
+
+	Vector3 gCameraPositionStart(20.194f, 159.921f, 269.434f);
+	Vector3 gCameraTargetStart(139.766f, 47.967f, -46.528f);
+	float   gCameraFovStart = DEG2RAD(26.231f);
+
+	void afterRender(const Abathur::TViewId viewId, const Abathur::CViewParameters& params)
+	{
+		//CPopup::Get().AddTextLine("Hola mundo");
+		//CPopup::Get().AddTextLine("Adios...");
+		CPopup::Get().Render();
+	}
 
 	////////////////////////////////////////////////////////////////////////////
 	CCamera::CCamera()
 		: m_cameraPos(5.0f)
 		, m_cameraTarget(MathUtils::ZERO)
+		, m_totalTime(0.0f)
 	{}
 
 	void CCamera::Init(const Abathur::TSceneId sceneId)
@@ -31,9 +48,13 @@ namespace Menu
 			}
 		}
 
+		m_camPos.Reset(gCameraPositionStart);
+		m_camTarget.Reset(gCameraTargetStart);
+		m_fov.Reset(gCameraFovStart);
+
 		m_viewId = Abathur::AddSceneView(sceneId);
-		m_viewParameters.SetProjection(DEG2RAD(55.f), 0.1f, 1000.0f);
-		m_viewParameters.SetLookAt(m_cameraPos, m_cameraTarget);
+		m_viewParameters.SetProjection(gCameraFovStart, 0.1f, 1000.0f);
+		m_viewParameters.SetLookAt(m_camPos.GetValue(), m_camTarget.GetValue());
 		m_viewParameters.SetPriority(Abathur::TViewPriority(100));
 
 		Abathur::SetViewParameters(m_viewId, m_viewParameters);
@@ -43,11 +64,40 @@ namespace Menu
 		m_update.Register();
 	}
 
+	void CCamera::Start()
+	{
+		m_camPos.SetValue(m_cameraPos,2.0f);
+		m_camTarget.SetValue(m_cameraTarget, 2.0f);
+		m_fov.SetValue(DEG2RAD(55.f),2.0f);
+    CMenu::Get().PlayBGMMusic("data/audio/bgm_horror.wav");
+
+	}
+
+	void CCamera::Stop()
+	{
+		m_camPos.SetValue(gCameraPositionStart, 2.0f);
+		m_camTarget.SetValue(gCameraTargetStart, 2.0f);
+		m_fov.SetValue(gCameraFovStart);
+	}
+
 	void CCamera::Update(const Abathur::SUpdateContext& context)
 	{
-		//TODO ~ ramonv ~ move the camera
+		ImGui::SliderFloat("Camera Move Freq X", &gCameraMoveFreq.x, 0.0f, 10.0f);
+		ImGui::SliderFloat("Camera Move Freq Y", &gCameraMoveFreq.y, 0.0f, 10.0f);
 
-		m_viewParameters.SetLookAt(m_cameraPos, m_cameraTarget);
+		ImGui::SliderFloat("Camera Move Amp X", &gCameraMoveAmp.x, 0.0f, 10.0f);
+		ImGui::SliderFloat("Camera Move Amp Y", &gCameraMoveAmp.y, 0.0f, 10.0f);
+
+		ImGui::SliderFloat("Camera Move Phase X", &gCameraMovePhase.x, 0.0f, 10.0f);
+		ImGui::SliderFloat("Camera Move Phase Y", &gCameraMovePhase.y, 0.0f, 10.0f);
+
+		m_camPos.Update(context.frameTime);
+		m_camTarget.Update(context.frameTime);
+		m_fov.Update(context.frameTime);
+
+		m_totalTime += context.frameTime;
+		m_viewParameters.SetProjection(m_fov.GetValue(), 0.1f, 1000.0f);
+		m_viewParameters.SetLookAt(m_camPos.GetValue(), m_camTarget.GetValue()+Vector3(gCameraMoveAmp.x*sinf(gCameraMovePhase.x+gCameraMoveFreq.x*gfPI2*m_totalTime), gCameraMoveAmp.y*cosf(gCameraMovePhase.y + gCameraMoveFreq.y*gfPI2*m_totalTime),0.0f));
 		Abathur::SetViewParameters(m_viewId, m_viewParameters);
 	}
 
@@ -74,7 +124,7 @@ namespace Menu
     m_camera.GetViewParameters().SetAfterCallback(Abathur::TViewCallback::SetMethod<CMenu, &CMenu::AfterRender>(this));
 
 		//Register Updates
-		//m_offlineGame.Init();
+		m_offlineGame.Init();
 
 		InitButtons();
 
@@ -84,13 +134,14 @@ namespace Menu
 		//Start Scene
 		Abathur::StartScene(m_sceneId);
 
-		SetState(EState::Playing);
+		SetState(EState::Intro);
 
 		//Load Font and configure Popup
     m_pFont = Abathur::loadFont("data/fonts/mask_font.fnt", "data/fonts/mask_font.tga");
 		ASSERT(m_pFont);
 		CPopup::Get().Init(m_pFont);
 
+    PlayBGMMusic("data/audio/bgm_menu.wav");
 	}
 
 	void CMenu::SetState(const EState newState)
@@ -103,12 +154,15 @@ namespace Menu
       m_totalTime = 2 * 60;
 			m_logicUpdate.SetCallback(Abathur::TUpdateCallback::SetMethod<CMenu, &CMenu::LogicUpdate>(this));
 			m_logicUpdate.Register(Abathur::GetUpdatePriority(Abathur::EUpdateTier::PostPhysics, Abathur::EUpdateStage::Default));
+			m_camera.Start();
 		}
 		break;
 		case EState::Success:
 		case EState::Failed:
 		{
 			m_logicUpdate.Unregister();
+			m_camera.Stop();
+
 		}
 		break;
 		}
@@ -130,7 +184,6 @@ namespace Menu
 
 	void CMenu::PreRenderUpdate(const Abathur::SUpdateContext& context)
 	{
-		//Map other scene viewport
 		//TODO ~ intro transition proper
 
 		if (Abathur::TAbathurEntity* pCristalPlayer = Abathur::GetEntityByName("Ball", m_sceneId))
@@ -141,6 +194,7 @@ namespace Menu
 				Abathur::setMaterialParam(pVisualComponent->material, "diffuse", viewParameters.GetRenderTarget());
 			}
 		}
+    UpdateMusicFade(context.frameTime);
 	}
 
 	void CMenu::LogicUpdate(const Abathur::SUpdateContext& context)
@@ -150,17 +204,19 @@ namespace Menu
       SetState(EState::Failed);
     }
 
-    /*
 		COfflineGame::EState state = m_offlineGame.GetState();
 		if (state == COfflineGame::EState::Success)
 		{
 			SetState(EState::Success);
+			return;
 		}
 		else if (state == COfflineGame::EState::Failed)
 		{
 			SetState(EState::Failed);
+			return;
 		}
-    */
+		
+
     for (int i = 0; i < ButtonCount;++i) {
       const char *button_name = m_buttonNames[i];
       CButtonComponent *button_comp = Abathur::GetEntityByName(button_name, m_sceneId)->QueryComponent<CButtonComponent>();
@@ -176,7 +232,7 @@ namespace Menu
         }
         else if (i == Totem)
         {
-          World::CWorld::Get().GetLasers().DisableTypeLaser(World::CLasers::ELaserType::BLUE_LASER, true);
+          World::CWorld::Get().SetCentinelsSpeedFactor(0.35f);
         }
       }
       else if (button_comp->JustReleased())
@@ -191,7 +247,7 @@ namespace Menu
         }
         else if (i == Totem)
         {
-          World::CWorld::Get().GetLasers().DisableTypeLaser(World::CLasers::ELaserType::BLUE_LASER, true);
+          World::CWorld::Get().SetCentinelsSpeedFactor(1.0f);
         }
       }
     }
@@ -209,9 +265,9 @@ namespace Menu
 
 	void CMenu::InitButtons()
 	{
-		AddButton("button_1", Vector2(0.07f, 0.75f), Vector2(0.23f, 0.92f), Vector3(0.0f, 5.0f, 0.0f), Vector4(0.321f, 0.352f, 0.415f, 1.0f), Vector4(0.0f, 1.0f, 0.0f, 1.0f));
-		AddButton("button_2", Vector2(0.0f, 0.0f), Vector2(0.1f, 0.1f), Vector3(0.0f, 5.0f, 0.0f), Vector4(0.321f, 0.352f, 0.415f, 1.0f), Vector4(1.0f, 0.0f, 0.0f, 1.0f));
-		AddButton("button_3", Vector2(0.1f, 0.1f), Vector2(0.2f, 0.2f), Vector3(0.0f, 5.0f, 0.0f), Vector4(0.321f, 0.352f, 0.415f, 1.0f), Vector4(0.0f, 0.0f, 1.0f, 1.0f));
+		AddButton("button_1", Vector2(0.27f, 0.72f), Vector2(0.41f, 0.93f), Vector3(0.0f, 5.0f, 0.0f), Vector4(0.321f, 0.352f, 0.415f, 1.0f), Vector4(0.0f, 1.0f, 0.0f, 1.0f));
+		AddButton("button_2", Vector2(0.47f, 0.68f), Vector2(0.59f, 0.86f), Vector3(0.0f, 5.0f, 0.0f), Vector4(0.321f, 0.352f, 0.415f, 1.0f), Vector4(1.0f, 0.0f, 0.0f, 1.0f));
+		AddButton("button_3", Vector2(0.64f, 0.73f), Vector2(0.76f, 0.93f), Vector3(0.0f, 5.0f, 0.0f), Vector4(0.321f, 0.352f, 0.415f, 1.0f), Vector4(0.0f, 0.0f, 1.0f, 1.0f));
 
 		m_buttonNames[Totem]  = "button_1";
 		m_buttonNames[Laser1] = "button_2";
@@ -251,4 +307,38 @@ namespace Menu
 		}
 		return false;
 	}
+
+  void CMenu::PlayBGMMusic(const char *filename)
+  {
+    if (!m_bgmMusic.IsValid())
+    {
+      m_bgmMusic = Abathur::playAudio(filename, true);
+    }
+    else
+    {
+      m_nextBgmMusic = Abathur::playAudio(filename, true);
+      Abathur::setVolumeAudio(m_nextBgmMusic, 0.0f);
+      m_volumnFactor = 1.0f;
+    }
+  }
+
+  void CMenu::UpdateMusicFade(float elapsed)
+  {
+    if (m_nextBgmMusic.IsValid()) {
+      m_volumnFactor -= elapsed;
+      if (m_volumnFactor > 0) 
+      {
+        Abathur::setVolumeAudio(m_bgmMusic, m_volumnFactor);
+        Abathur::setVolumeAudio(m_nextBgmMusic, 1.0f - m_volumnFactor);
+      }
+      else 
+      {
+        m_bgmMusic = m_nextBgmMusic;
+        Abathur::setVolumeAudio(m_bgmMusic, 1.0f);
+        m_nextBgmMusic.Invalidate();
+      }
+    }
+  }
+
+
 }

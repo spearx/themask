@@ -24,6 +24,9 @@ namespace World
       if (c.m_timeToTurn > 0.0f)
       {
         c.m_timeToTurn -= context.frameTime;
+        if (c.m_timeToTurn <= 0.0f) {
+          Abathur::setVolumeAudio(m_tottemAudio, 1.0f);
+        }
         Abathur::TEntityId eID = CWorld::Get().GetPlayerEntityId();
         Abathur::TAbathurEntity *pPlayerEntity = Abathur::GetEntity(eID);
         CPlayerComponent *comp = pPlayerEntity->QueryComponent<CPlayerComponent>();
@@ -44,6 +47,7 @@ namespace World
         c.m_yaw = 0.0f;
         c.m_timeToTurn = m_timeInIdle;
         printf("Centinel is Awake Warning!!!\n");
+        Abathur::setVolumeAudio(m_tottemAudio, 0.0f);
       }
       Abathur::TLocationComponent* pLocComponent = pTotemEntity->QueryComponent<Abathur::TLocationComponent>();
       mtx.SetRotationY(c.m_yaw);
@@ -90,6 +94,8 @@ namespace World
       m_updateCallback.SetPriority(Abathur::GetUpdatePriority(Abathur::EUpdateTier::PreRender, Abathur::EUpdateStage::Default));
       m_updateCallback.SetCallback(Abathur::TUpdateCallback::SetMethod<CCentinels, &CCentinels::Update>(this));
       m_updateCallback.Register();
+      m_tottemAudio = Abathur::playAudio("data/audio/tottem_turn.wav", true);
+      Abathur::setVolumeAudio(m_tottemAudio, 0.0f);
     }
 
   }

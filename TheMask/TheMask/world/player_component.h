@@ -24,12 +24,14 @@ namespace World
 
 		void CreateChildEntities(const Abathur::TSceneId sceneId);
     bool IsMoving() const;
+    void OnTriggerEvent(const std::string &event_name, CTriggers::ETriggerEvent event_type);
 
 	private:
 		virtual bool OnButton(const Abathur::Input::EButton button, const Abathur::Input::EButtonEvent buttonEvent) override;
 		virtual bool OnDirection(const Abathur::Input::EDirection direction, const Vector2& value) override;
 
-		void OnTriggerEvent(const std::string &event_name, CTriggers::ETriggerEvent event_type);
+
+		bool IsInteractionTrigger(const std::string& event_name) const;
 
 		void Update(const Abathur::SUpdateContext& context);
     void UpdatePostPhysX(const Abathur::SUpdateContext& context);

@@ -52,7 +52,17 @@ namespace Menu
 		{
 			m_isPressed = buttonEvent == Abathur::Input::EButtonEvent::Press ? m_isEnabled : false;
 		}
+		/*
+		if (button == Abathur::Input::EButton::MouseRight)
+		{
+			Menu::CMenu::Get().GetOfflineGame().Enable();
+		}
 
+		if (button == Abathur::Input::EButton::MouseMiddle)
+		{
+			Menu::CMenu::Get().GetOfflineGame().Disable();
+		}
+		*/
 		return false;
 	}
 

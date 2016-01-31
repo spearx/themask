@@ -49,8 +49,6 @@ namespace World
     m_update_post_physx.SetCallback(Abathur::TUpdateCallback::SetMethod<CPlayerComponent, &CPlayerComponent::UpdatePostPhysX>(this));
     m_update_post_physx.Register();
 
-    CTriggers::Get().RegisterListenner(CTriggers::TTriggerEventCallback::SetMethod<CPlayerComponent,&CPlayerComponent::OnTriggerEvent>(this));
-
     if (Abathur::TLocationComponent* pLocComponent = entity->QueryComponent<Abathur::TLocationComponent>())
     {
       m_matrix_original = Matrix33(pLocComponent->mtx);
@@ -211,27 +209,40 @@ namespace World
 	}
   }
 
+  bool CPlayerComponent::IsInteractionTrigger(const std::string& event_name) const
+  {
+	  return event_name == "Interact_Item_1" || event_name == "Interact_Item_2" || event_name == "Interact_Item_3"
+		  || event_name == "Interact_Item_4" || event_name == "Interact_Item_5" || event_name == "Interact_Item_6"
+		  || event_name == "Unlock_Totem" || event_name == "Unlock_Laser_1" || event_name == "Unlock_Laser_2" || event_name == "Interact_Cauldron";
+  }
+
   void CPlayerComponent::OnTriggerEvent(const std::string &event_name, CTriggers::ETriggerEvent event_type)
   {
-	  if (event_type == CTriggers::ETriggerEvent::ON_ENTER)
+    if (!IsInteractionTrigger(event_name))
+      return;
+
+	  if (event_type == CTriggers::ETriggerEvent::ON_ENTER )
 	  {
-		  printf("On Trigger Event %s ON ENTER\n", event_name.c_str());
+		  //printf("On Trigger Event %s ON ENTER\n", event_name.c_str());
 
 		  if (event_name == "Interact_Cauldron")
 		  {
-			//  Menu::CMenu::Get().GetOfflineGame().Enable();
+			printf("Enable Offline\n");
+			Menu::CMenu::Get().GetOfflineGame().Enable();
 		  }
 		  m_currentInteraction = event_name;
 	  }
 	  else if (event_type == CTriggers::ETriggerEvent::ON_EXIT)
 	  {
-		  printf("On Trigger Event %s ON EXIT\n", event_name.c_str());
+		  //printf("On Trigger Event %s ON EXIT\n", event_name.c_str());
 
 		  if (event_name == "Interact_Cauldron")
 		  {
-			//  Menu::CMenu::Get().GetOfflineGame().Disable();
+			  printf("Disable Offline\n");
+			  Menu::CMenu::Get().GetOfflineGame().Disable();
 		  }
 		  m_currentInteraction = "";
+		  m_showItemDialog = false;
 	  }
   }
 
@@ -246,6 +257,22 @@ namespace World
 		  else if (m_currentInteraction == "Interact_Item_2")
 		  { 
 			  Menu::CPopup::Get().AddTextLine("THIS IS ITERACTIVE ITEM 2!");
+		  }
+		  else if (m_currentInteraction == "Interact_Item_3")
+		  {
+			  Menu::CPopup::Get().AddTextLine("THIS IS ITERACTIVE ITEM 3!");
+		  }
+		  else if (m_currentInteraction == "Interact_Item_4")
+		  {
+			  Menu::CPopup::Get().AddTextLine("THIS IS ITERACTIVE ITEM 4!");
+		  }
+		  else if (m_currentInteraction == "Interact_Item_5")
+		  {
+			  Menu::CPopup::Get().AddTextLine("THIS IS ITERACTIVE ITEM 5!");
+		  }
+		  else if (m_currentInteraction == "Interact_Item_6")
+		  {
+			  Menu::CPopup::Get().AddTextLine("THIS IS ITERACTIVE ITEM 6!");
 		  }
 	  }
   }
