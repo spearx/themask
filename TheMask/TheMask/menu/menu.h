@@ -139,6 +139,7 @@ namespace Menu
 
     Abathur::TAudioId        m_bgmMusic;
     Abathur::TAudioId        m_nextBgmMusic;
+    Abathur::TAudioId        m_magicAudio;
     float                    m_volumnFactor;
     
     Abathur::TAbathurTexture* m_totemIcon;

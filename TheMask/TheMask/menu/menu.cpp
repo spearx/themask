@@ -351,6 +351,11 @@ namespace Menu
       CButtonComponent *button_comp = Abathur::GetEntityByName(button_name, m_sceneId)->QueryComponent<CButtonComponent>();
       if (button_comp->JustPressed())
       {
+        if (!m_magicAudio.IsValid() && ( i == Laser1 || i == Laser2 || i == Totem))
+        {
+          m_magicAudio = Abathur::playAudio("data/audio/magic_spell3.wav", true);
+        }
+
         if (i == Laser1)
         {
           World::CWorld::Get().GetLasers().DisableTypeLaser(World::CLasers::ELaserType::RED_LASER, true);
@@ -377,6 +382,12 @@ namespace Menu
         else if (i == Totem)
         {
           World::CWorld::Get().SetCentinelsSpeedFactor(1.0f);
+        }
+
+        if (m_magicAudio.IsValid())
+        {
+          Abathur::stopAudio(m_magicAudio);
+          m_magicAudio.Invalidate();
         }
       }
     }

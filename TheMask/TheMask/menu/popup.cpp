@@ -50,8 +50,14 @@ namespace Menu
     ImGui::SliderFloat("mOffsetText X", &mOffsetText.x, 0.0f, 0.6f);
     ImGui::SliderFloat("mOffsetText Y", &mOffsetText.y, 0.0f, 0.6f);
 
+    static bool lastFrameHasPopup = false;
+
     if (vTexts.size() > 0) {
+      if (!lastFrameHasPopup)
+        Abathur::playAudio("data/audio/popup.wav", false);      
       
+      lastFrameHasPopup = true;
+
       ApplyOrthoMatrix();
       Abathur::DisableDepthState.apply();
       Abathur::AlphaBlendState.apply();
@@ -69,6 +75,12 @@ namespace Menu
       vTexts.clear();
       Abathur::NoneBlendState.apply();
       Abathur::DefaultDepthState.apply();
+    }
+    else {
+      if (lastFrameHasPopup)
+        Abathur::playAudio("data/audio/popup_out.wav", false);
+
+      lastFrameHasPopup = false;
     }
   }
 
