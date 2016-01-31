@@ -17,12 +17,14 @@ namespace Menu
 
 	void COfflineGame::Init()
 	{
-		CMenu::Get().AddButton("Needle_1", Vector2(0.58f, 0.31f), Vector2(0.62f, 0.38f), Vector3(5.0f,  -3.0f, -1.0f), Vector4(0.321f, 0.352f, 0.415f, 1.0f), Vector4(0.0f, 0.0f, 1.0f, 1.0f));
-		CMenu::Get().AddButton("Needle_2", Vector2(0.85f, 0.04f), Vector2(0.89f, 0.11f), Vector3(-7.0f,-7.0f, 0.0f), Vector4(0.321f, 0.352f, 0.415f, 1.0f), Vector4(0.0f, 0.0f, 1.0f, 1.0f));
-		CMenu::Get().AddButton("Needle_3", Vector2(0.51f, 0.14f), Vector2(0.54f, 0.21f), Vector3(6.5f,  -1.0f, 0.0f), Vector4(0.321f, 0.352f, 0.415f, 1.0f), Vector4(0.0f, 0.0f, 1.0f, 1.0f));
-		CMenu::Get().AddButton("Needle_4", Vector2(0.82f, 0.25f), Vector2(0.86f, 0.34f), Vector3(-2.0f, -5.0f, 0.0f), Vector4(0.321f, 0.352f, 0.415f, 1.0f), Vector4(0.0f, 0.0f, 1.0f, 1.0f));
-		CMenu::Get().AddButton("Needle_5", Vector2(0.80f, 0.37f), Vector2(0.83f, 0.44f), Vector3(-1.0f,  -8.0f, 0.0f), Vector4(0.321f, 0.352f, 0.415f, 1.0f), Vector4(0.0f, 0.0f, 1.0f, 1.0f));
-		CMenu::Get().AddButton("Needle_6", Vector2(0.50f, 0.35f), Vector2(0.52f, 0.40f), Vector3(6.0f,  -2.0f, 0.0f), Vector4(0.321f, 0.352f, 0.415f, 1.0f), Vector4(0.0f, 0.0f, 1.0f, 1.0f));
+		const Vector4 needleHightlightColor = Vector4(0.65f, 0.06f, 0.06f, 1.0f);
+
+		CMenu::Get().AddButton("Needle_1", Vector2(0.58f, 0.31f), Vector2(0.62f, 0.38f), Vector3(5.0f,  -3.0f, -1.0f), Vector4(0.321f, 0.352f, 0.415f, 1.0f), needleHightlightColor);
+		CMenu::Get().AddButton("Needle_2", Vector2(0.85f, 0.04f), Vector2(0.89f, 0.11f), Vector3(-7.0f,-7.0f, 0.0f),   Vector4(0.321f, 0.352f, 0.415f, 1.0f), needleHightlightColor);
+		CMenu::Get().AddButton("Needle_3", Vector2(0.51f, 0.14f), Vector2(0.54f, 0.21f), Vector3(6.5f,  -1.0f, 0.0f),  Vector4(0.321f, 0.352f, 0.415f, 1.0f), needleHightlightColor);
+		CMenu::Get().AddButton("Needle_4", Vector2(0.82f, 0.25f), Vector2(0.86f, 0.34f), Vector3(-2.0f, -5.0f, 0.0f),  Vector4(0.321f, 0.352f, 0.415f, 1.0f), needleHightlightColor);
+		CMenu::Get().AddButton("Needle_5", Vector2(0.80f, 0.37f), Vector2(0.83f, 0.44f), Vector3(-1.0f,  -8.0f, 0.0f), Vector4(0.321f, 0.352f, 0.415f, 1.0f), needleHightlightColor);
+		CMenu::Get().AddButton("Needle_6", Vector2(0.50f, 0.35f), Vector2(0.52f, 0.40f), Vector3(6.0f,  -2.0f, 0.0f),  Vector4(0.321f, 0.352f, 0.415f, 1.0f), needleHightlightColor);
 
 		m_buttons[First]  = "Needle_1";
 		m_buttons[Second] = "Needle_2";

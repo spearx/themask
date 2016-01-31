@@ -54,14 +54,12 @@ namespace Menu
 		{
 			m_isPressed = buttonEvent == Abathur::Input::EButtonEvent::Press ? m_isEnabled : false;
 		}
-
 		/*
 		if (button == Abathur::Input::EButton::MouseRight)
 		{
 			CMenu::Get().GetOfflineGame().Enable();
 		}
 		*/
-
 		return false;
 	}
 
@@ -160,10 +158,10 @@ namespace Menu
 
 			entity->QueryComponent<Abathur::TLocationComponent>()->mtx = scaleMtx*m_initTransform;
 
-			Vector3 position = Interpolations::LerpInterpolation::Compute(m_initTransform.GetTranslation(), m_initTransform.GetTranslation() + m_hoverOffsetTarget, m_hover.GetValue());
+			Vector3 position = Interpolations::LerpInterpolation::Compute(m_initTransform.GetTranslation(), m_initTransform.GetTranslation() + m_hoverOffsetTarget, m_press.GetValue());
 			entity->QueryComponent<Abathur::TLocationComponent>()->mtx.SetTranslation(position);
 
-			Vector4 color = Interpolations::LerpInterpolation::Compute(m_baseColor, m_pressedColor, m_press.GetValue());
+			Vector4 color = Interpolations::LerpInterpolation::Compute(m_baseColor, m_pressedColor, m_hover.GetValue());
 			Abathur::setMaterialParam(entity->QueryComponent<Abathur::TVisualComponent>()->material, "diffuse_color", const_cast<Vector4&>(color));
 		}
 		else
