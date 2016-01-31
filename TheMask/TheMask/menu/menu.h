@@ -98,6 +98,8 @@ namespace Menu
 	private:
 		static CMenu*            m_pInstance;
 
+		Interpolations::InterpolableFixed<float, Interpolations::EaseInOutCubicInterpolation> m_introThreshold;
+
 		COfflineGame             m_offlineGame;
 		CCamera                  m_camera;
 		Abathur::TSceneId        m_sceneId;
