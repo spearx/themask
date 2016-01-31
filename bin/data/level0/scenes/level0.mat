@@ -64,7 +64,7 @@
       "emission_color" : "0.000000  0.000000 0.000000 1.000000",
       "pixel_shader" : "data/shaders/fp_textured.glsl",
       "samplers" : {
-         "diffuse" : "data/level0/textures/Cauldron_Diffuse.tga"
+         "diffuse" : "data/level0/textures/Cauldron_LightingMap.tga"
       },
       "specular_color" : "0.000000  0.000000 0.000000 1.000000",
       "vertex_shader" : "data/shaders/vp_basic.glsl"
@@ -105,12 +105,22 @@
       "specular_color" : "0.000000  0.000000 0.000000 1.000000",
       "vertex_shader" : "data/shaders/vp_basic_lighting.glsl"
    },
+   "Material #248" : {
+      "ambient_color" : "0.631373  0.541176 0.384314 1.000000",
+      "emission_color" : "0.000000  0.000000 0.000000 1.000000",
+      "samplers" : {
+         "diffuse" : "data/level0/textures/Ivy001CompleteMap.tga"
+      },
+      "pixel_shader" : "data/shaders/fp_textured.glsl",
+      "vertex_shader" : "data/shaders/vp_basic.glsl",      
+      "specular_color" : "0.000000  0.000000 0.000000 1.000000"
+   },
    "Material #3" : {
       "ambient_color" : "0.631373  0.541176 0.384314 1.000000",
       "emission_color" : "0.000000  0.000000 0.000000 1.000000",
       "pixel_shader" : "data/shaders/fp_textured.glsl",
       "samplers" : {
-         "diffuse" : "data/level0/textures/Ivy_Diffuse.tga"
+         "diffuse" : "data/level0/textures/Ivy001CompleteMap.tga"
       },
       "specular_color" : "0.000000  0.000000 0.000000 1.000000",
       "vertex_shader" : "data/shaders/vp_basic.glsl"
@@ -184,6 +194,26 @@
       },
       "specular_color" : "0.000000  0.000000 0.000000 1.000000",
       "vertex_shader" : "data/shaders/vp_basic.glsl"
+   },
+   "Trapo" : {
+      "ambient_color" : "0.321569  0.352941 0.415686 1.000000",
+      "emission_color" : "0.000000  0.000000 0.000000 1.000000",
+      "samplers" : {
+         "diffuse" : "data/level0/textures/Trapo_difuso.tga"
+      },
+      "pixel_shader" : "data/shaders/fp_textured.glsl",
+      "vertex_shader" : "data/shaders/vp_basic.glsl",      
+      "specular_color" : "0.000000  0.000000 0.000000 1.000000"
+   },
+   "MaterialBox001" : {
+      "ambient_color" : "0.321569  0.352941 0.415686 1.000000",
+      "emission_color" : "0.000000  0.000000 0.000000 1.000000",
+      "samplers" : {
+         "diffuse" : "data/level0/textures/Box001LightingMap.tga"
+      },
+      "pixel_shader" : "data/shaders/fp_textured.glsl",
+      "vertex_shader" : "data/shaders/vp_basic.glsl",      
+      "specular_color" : "0.000000  0.000000 0.000000 1.000000"
    },
    "_01 - Default" : {
       "ambient_color" : "0.588235  0.588235 0.588235 1.000000",
