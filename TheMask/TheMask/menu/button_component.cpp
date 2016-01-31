@@ -55,10 +55,10 @@ namespace Menu
 			m_isPressed = buttonEvent == Abathur::Input::EButtonEvent::Press ? m_isEnabled : false;
 		}
 
-		if (button == Abathur::Input::EButton::MouseRight)
-		{
-			CMenu::Get().GetOfflineGame().Enable();
-		}
+		//if (button == Abathur::Input::EButton::MouseRight)
+		//{
+		//	CMenu::Get().GetOfflineGame().Enable();
+		//}
 
 		return false;
 	}
@@ -171,10 +171,12 @@ namespace Menu
 			Abathur::setMaterialParam(pMaterial, "diffuse_color", m_pressedColor);
 			Abathur::setMaterialParam(pMaterial, "button_factors", Vector3(m_enable.GetValue(),m_hover.GetValue(),m_press.GetValue()));
 
+      /*
 			if (ImGui::Button("Reload Button Material"))
 			{
 				Abathur::reloadMaterial(pMaterial);
 			}
+      */
 
 		}
 		

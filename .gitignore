@@ -3,3 +3,7 @@ TheMask/TheMask/x64
 TheMask/x64/
 TheMask/TheMask.opensdf
 bin/TheMask_d.exp
+AbathurLib/code/x64
+bin/TheMask.exp
+bin/TheMask.iobj
+bin/TheMask.ipdb

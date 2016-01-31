@@ -119,10 +119,9 @@ namespace World
 
 	void CPlayerComponent::Update(const Abathur::SUpdateContext& context)
 	{
-		ImGui::SliderFloat("Amplitude", &gAmplitude, 0.0f, 10.0f);
-		ImGui::SliderFloat("Frequency", &gFrequency, 0.0f, 10.0f);
-		ImGui::SliderFloat("Offset",    &gOffset,    -10.0f, 10.0f);
-		
+		//ImGui::SliderFloat("Amplitude", &gAmplitude, 0.0f, 10.0f);
+		//ImGui::SliderFloat("Frequency", &gFrequency, 0.0f, 10.0f);
+		//ImGui::SliderFloat("Offset",    &gOffset,    -10.0f, 10.0f);
 
 		ShowDialogs();
 

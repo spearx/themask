@@ -140,14 +140,14 @@ namespace Menu
 
 	void CCamera::Update(const Abathur::SUpdateContext& context)
 	{
-		ImGui::SliderFloat("Camera Move Freq X", &gCameraMoveFreq.x, 0.0f, 10.0f);
-		ImGui::SliderFloat("Camera Move Freq Y", &gCameraMoveFreq.y, 0.0f, 10.0f);
+		//ImGui::SliderFloat("Camera Move Freq X", &gCameraMoveFreq.x, 0.0f, 10.0f);
+		//ImGui::SliderFloat("Camera Move Freq Y", &gCameraMoveFreq.y, 0.0f, 10.0f);
 
-		ImGui::SliderFloat("Camera Move Amp X", &gCameraMoveAmp.x, 0.0f, 10.0f);
-		ImGui::SliderFloat("Camera Move Amp Y", &gCameraMoveAmp.y, 0.0f, 10.0f);
+		//ImGui::SliderFloat("Camera Move Amp X", &gCameraMoveAmp.x, 0.0f, 10.0f);
+		//ImGui::SliderFloat("Camera Move Amp Y", &gCameraMoveAmp.y, 0.0f, 10.0f);
 
-		ImGui::SliderFloat("Camera Move Phase X", &gCameraMovePhase.x, 0.0f, 10.0f);
-		ImGui::SliderFloat("Camera Move Phase Y", &gCameraMovePhase.y, 0.0f, 10.0f);
+		//ImGui::SliderFloat("Camera Move Phase X", &gCameraMovePhase.x, 0.0f, 10.0f);
+		//ImGui::SliderFloat("Camera Move Phase Y", &gCameraMovePhase.y, 0.0f, 10.0f);
 
 		m_camPos.Update(context.frameTime);
 		m_camTarget.Update(context.frameTime);
@@ -317,10 +317,10 @@ namespace Menu
 				Abathur::setMaterialParam(pVisualComponent->material, "global_time", gTotalTime);
 				Abathur::setMaterialParam(pVisualComponent->material, "threshold", const_cast<float&>(m_introThreshold.GetValue()));
 
-				if (ImGui::Button("Reload Ball Material"))
-				{
-					Abathur::reloadMaterial(pVisualComponent->material);
-				}
+				//if (ImGui::Button("Reload Ball Material"))
+				//{
+				//	Abathur::reloadMaterial(pVisualComponent->material);
+				//}
 			}
 		}
     UpdateMusicFade(context.frameTime);

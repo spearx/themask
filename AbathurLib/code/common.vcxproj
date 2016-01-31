@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="utils\Callbacks.h" />
+    <ClInclude Include="utils\compileTime\compile_time_utils.h" />
+    <ClInclude Include="utils\compileTime\typelist.h" />
+    <ClInclude Include="utils\crc_hash.h" />
+    <ClInclude Include="utils\ease_interpolators.h" />
+    <ClInclude Include="utils\file_utils.h" />
+    <ClInclude Include="utils\json\assertions.h" />
+    <ClInclude Include="utils\json\autolink.h" />
+    <ClInclude Include="utils\json\config.h" />
+    <ClInclude Include="utils\json\features.h" />
+    <ClInclude Include="utils\json\forwards.h" />
+    <ClInclude Include="utils\json\json.h" />
+    <ClInclude Include="utils\json\json_tool.h" />
+    <ClInclude Include="utils\json\reader.h" />
+    <ClInclude Include="utils\json\value.h" />
+    <ClInclude Include="utils\json\version.h" />
+    <ClInclude Include="utils\json\writer.h" />
+    <ClInclude Include="utils\log.h" />
+    <ClInclude Include="utils\math\Aabb.h" />
+    <ClInclude Include="utils\math\Angle3.h" />
+    <ClInclude Include="utils\math\Atomic.h" />
+    <ClInclude Include="utils\math\BSphere.h" />
+    <ClInclude Include="utils\math\Color.h" />
+    <ClInclude Include="utils\math\Math.h" />
+    <ClInclude Include="utils\math\Matrix33.h" />
+    <ClInclude Include="utils\math\Matrix34.h" />
+    <ClInclude Include="utils\math\Matrix44.h" />
+    <ClInclude Include="utils\math\matrix_operations.h" />
+    <ClInclude Include="utils\math\Quat.h" />
+    <ClInclude Include="utils\math\valid_number.h" />
+    <ClInclude Include="utils\math\Vector2.h" />
+    <ClInclude Include="utils\math\Vector3.h" />
+    <ClInclude Include="utils\math\Vector4.h" />
+    <ClInclude Include="utils\string_utils.h" />
+    <ClInclude Include="utils\types.h" />
+    <ClInclude Include="utils\xml\tinyxml2.h" />
+    <ClInclude Include="utils\xml\xml_parser.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="utils\ease_interpolators.cpp" />
+    <ClCompile Include="utils\file_utils.cpp" />
+    <ClCompile Include="utils\json\json_reader.cpp" />
+    <ClCompile Include="utils\json\json_value.cpp" />
+    <ClCompile Include="utils\json\json_writer.cpp" />
+    <ClCompile Include="utils\string_utils.cpp" />
+    <ClCompile Include="utils\xml\tinyxml2.cpp" />
+    <ClCompile Include="utils\xml\xml_parser.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="utils\ease_interpolators.inl" />
+    <None Include="utils\json\json_valueiterator.inl" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{0FEBDD8A-81D1-4457-A8AF-B09DC7BE7926}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>common</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

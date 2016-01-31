@@ -48,7 +48,7 @@ namespace World
 
 	void CCamera::Update(const Abathur::SUpdateContext& context)
 	{
-    ImGui::SliderFloat("Camera Distance:", &gDistance, 0.0f, 50.0f);
+    //ImGui::SliderFloat("Camera Distance:", &gDistance, 0.0f, 50.0f);
     //static float rot_totem = 0.0f;
     ////rot_totem += 1.0f * context.frameTime;
     //bool changed = ImGui::SliderFloat("Rotation Totem:", &rot_totem, -2.0f, 2.0f);

@@ -47,8 +47,8 @@ namespace Menu
 
   void CPopup::Render()
   {
-    ImGui::SliderFloat("mOffsetText X", &mOffsetText.x, 0.0f, 0.6f);
-    ImGui::SliderFloat("mOffsetText Y", &mOffsetText.y, 0.0f, 0.6f);
+    //ImGui::SliderFloat("mOffsetText X", &mOffsetText.x, 0.0f, 0.6f);
+    //ImGui::SliderFloat("mOffsetText Y", &mOffsetText.y, 0.0f, 0.6f);
 
     static bool lastFrameHasPopup = false;
 

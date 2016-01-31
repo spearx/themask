@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="utils">
+      <UniqueIdentifier>{61677305-4f66-464c-abb7-683a1f7f3a61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utils\compileTime">
+      <UniqueIdentifier>{f92cb76d-c4b2-4126-98c4-59d510a0269f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utils\json">
+      <UniqueIdentifier>{12af1132-7908-4229-99c1-12846b0e5661}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utils\math">
+      <UniqueIdentifier>{46200733-4a38-46d1-be85-8ad6c1384abb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utils\xml">
+      <UniqueIdentifier>{8cdfb78e-e7ac-494f-b906-19e5ba6aead3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="utils\log.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\types.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\Callbacks.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\compileTime\typelist.h">
+      <Filter>utils\compileTime</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\compileTime\compile_time_utils.h">
+      <Filter>utils\compileTime</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\json\features.h">
+      <Filter>utils\json</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\json\forwards.h">
+      <Filter>utils\json</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\json\json.h">
+      <Filter>utils\json</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\json\json_tool.h">
+      <Filter>utils\json</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\json\reader.h">
+      <Filter>utils\json</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\json\value.h">
+      <Filter>utils\json</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\json\version.h">
+      <Filter>utils\json</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\json\writer.h">
+      <Filter>utils\json</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\json\assertions.h">
+      <Filter>utils\json</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\json\autolink.h">
+      <Filter>utils\json</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\json\config.h">
+      <Filter>utils\json</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\math\Math.h">
+      <Filter>utils\math</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\math\matrix_operations.h">
+      <Filter>utils\math</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\math\Matrix33.h">
+      <Filter>utils\math</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\math\Matrix34.h">
+      <Filter>utils\math</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\math\Matrix44.h">
+      <Filter>utils\math</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\math\Quat.h">
+      <Filter>utils\math</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\math\valid_number.h">
+      <Filter>utils\math</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\math\Vector2.h">
+      <Filter>utils\math</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\math\Vector3.h">
+      <Filter>utils\math</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\math\Vector4.h">
+      <Filter>utils\math</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\math\Angle3.h">
+      <Filter>utils\math</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\math\Atomic.h">
+      <Filter>utils\math</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\math\Color.h">
+      <Filter>utils\math</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\xml\tinyxml2.h">
+      <Filter>utils\xml</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\xml\xml_parser.h">
+      <Filter>utils\xml</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\string_utils.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\file_utils.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\crc_hash.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\ease_interpolators.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\math\Aabb.h">
+      <Filter>utils\math</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\math\BSphere.h">
+      <Filter>utils\math</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="utils\json\json_reader.cpp">
+      <Filter>utils\json</Filter>
+    </ClCompile>
+    <ClCompile Include="utils\json\json_value.cpp">
+      <Filter>utils\json</Filter>
+    </ClCompile>
+    <ClCompile Include="utils\json\json_writer.cpp">
+      <Filter>utils\json</Filter>
+    </ClCompile>
+    <ClCompile Include="utils\xml\xml_parser.cpp">
+      <Filter>utils\xml</Filter>
+    </ClCompile>
+    <ClCompile Include="utils\xml\tinyxml2.cpp">
+      <Filter>utils\xml</Filter>
+    </ClCompile>
+    <ClCompile Include="utils\string_utils.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="utils\file_utils.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="utils\ease_interpolators.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="utils\json\json_valueiterator.inl">
+      <Filter>utils\json</Filter>
+    </None>
+    <None Include="utils\ease_interpolators.inl">
+      <Filter>utils</Filter>
+    </None>
+  </ItemGroup>
+</Project>
