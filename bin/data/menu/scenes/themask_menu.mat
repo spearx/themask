@@ -12,7 +12,6 @@
    "Ball_Up" : {
       "ambient_color" : "1.000000  1.000000 1.000000 1.000000",
       "emission_color" : "0.000000  0.000000 0.000000 1.000000",
-	  "eye_pos" : "0.000000 0.000000 0.000000",
 	  "global_time": "0.000000",
 	  "threshold" : "0.000000",
       "pixel_shader" : "data/shaders/fp_textured_ball.glsl",
@@ -25,8 +24,12 @@
    "Button_1" : {
       "ambient_color" : "0.321569  0.352941 0.415686 1.000000",
       "diffuse_color" : "0.321569  0.352941 0.415686 1.000000",
+	  "button_factors" : "0.000000  0.000000 0.000000",
       "emission_color" : "0.000000  0.000000 0.000000 1.000000",
-      "pixel_shader" : "data/shaders/fp_basic_lighting.glsl",
+      "pixel_shader" : "data/shaders/fp_button.glsl",
+	  "samplers" : {
+         "diffuse" : "data/menu/textures/button_1_diffuse.tga"
+      },
       "specular_color" : "0.360000  0.360000 0.360000 1.000000",
       "vertex_shader" : "data/shaders/vp_basic_lighting.glsl"
    },
@@ -34,7 +37,11 @@
       "ambient_color" : "0.321569  0.352941 0.415686 1.000000",
       "diffuse_color" : "0.321569  0.352941 0.415686 1.000000",
       "emission_color" : "0.000000  0.000000 0.000000 1.000000",
-      "pixel_shader" : "data/shaders/fp_basic_lighting.glsl",
+	  "button_factors" : "0.000000  0.000000 0.000000",
+      "pixel_shader" : "data/shaders/fp_button.glsl",
+	  "samplers" : {
+         "diffuse" : "data/menu/textures/button_2_diffuse.tga"
+      },
       "specular_color" : "0.360000  0.360000 0.360000 1.000000",
       "vertex_shader" : "data/shaders/vp_basic_lighting.glsl"
    },
@@ -42,7 +49,11 @@
       "ambient_color" : "0.321569  0.352941 0.415686 1.000000",
       "diffuse_color" : "0.321569  0.352941 0.415686 1.000000",
       "emission_color" : "0.000000  0.000000 0.000000 1.000000",
-      "pixel_shader" : "data/shaders/fp_basic_lighting.glsl",
+	  "button_factors" : "0.000000  0.000000 0.000000",
+	  "samplers" : {
+         "diffuse" : "data/menu/textures/button_2_diffuse.tga"
+      },
+      "pixel_shader" : "data/shaders/fp_button.glsl",
       "specular_color" : "0.360000  0.360000 0.360000 1.000000",
       "vertex_shader" : "data/shaders/vp_basic_lighting.glsl"
    },

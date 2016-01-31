@@ -1,6 +1,7 @@
 #include "button_component.h"
 
 #include "menu.h"
+#include "abathur_gui.h"
 
 namespace Menu
 {
@@ -11,6 +12,7 @@ namespace Menu
 		, m_initTransform(MathUtils::IDENTITY)
 		, m_hoverOffsetTarget(MathUtils::ZERO)
 		, m_pressedColor(MathUtils::ZERO)
+		, m_mode(EMode::Transform)
 		, m_prevIsHover(false)
 		, m_isHover(false)
 		, m_isPrevPressed(false)
@@ -35,9 +37,9 @@ namespace Menu
 		m_prevIsHover = false;
 		m_isHover = false; 
 		m_initTransform = entity->QueryComponent<Abathur::TLocationComponent>()->mtx;
-		m_color.Reset(m_baseColor);
-		m_scale.Reset(0.0f);
-		m_transform.Reset(m_initTransform.GetTranslation());
+		m_press.Reset(0.0f);
+		m_enable.Reset(0.0f);
+		m_hover.Reset(0.0f);
 		m_update.Register(Abathur::GetUpdatePriority(Abathur::EUpdateTier::PostPhysics, Abathur::EUpdateStage::Latest), Abathur::TUpdateCallback::SetMethod<CButtonComponent,&CButtonComponent::Update>(this));
 	}
 
@@ -52,17 +54,6 @@ namespace Menu
 		{
 			m_isPressed = buttonEvent == Abathur::Input::EButtonEvent::Press ? m_isEnabled : false;
 		}
-		/*
-		if (button == Abathur::Input::EButton::MouseRight)
-		{
-			Menu::CMenu::Get().GetOfflineGame().Enable();
-		}
-
-		if (button == Abathur::Input::EButton::MouseMiddle)
-		{
-			Menu::CMenu::Get().GetOfflineGame().Disable();
-		}
-		*/
 		return false;
 	}
 
@@ -81,19 +72,21 @@ namespace Menu
 	{
 		if (m_isEnabled && !isEnabled)
 		{
-			m_scale.SetValue(0.0f, 0.4f);
+			m_enable.SetValue(0.0f, 0.4f);
 		}
 		else if (!m_isEnabled && isEnabled)
 		{
-			m_scale.SetValue(1.0f, 0.4f);
+			m_enable.SetValue(1.0f, 0.4f);
 		}
 
 		m_isEnabled = isEnabled;
+		/*
 		Abathur::TVisualComponent *comp = entity->QueryComponent<Abathur::TVisualComponent>();
 		if (comp)
 		{
 			comp->visible = true;
 		}
+		*/
 	}
 	
 	bool CButtonComponent::IsPressed(const bool input)
@@ -125,11 +118,11 @@ namespace Menu
 		{
 			if (m_isHover && !m_prevIsHover)
 			{
-				m_transform.SetValue(m_initTransform.GetTranslation()+m_hoverOffsetTarget, 0.5f);
+				m_hover.SetValue(1.0f, 0.5f);
 			}
 			else if (!m_isHover && m_prevIsHover)
 			{
-				m_transform.SetValue(m_initTransform.GetTranslation(), 0.5f);
+				m_hover.SetValue(0.0f, 0.5f);
 			}
 		}
 		else
@@ -139,30 +132,45 @@ namespace Menu
 
 		if (JustPressed())
 		{
-			m_color.SetValue(m_pressedColor, 0.2f);
+			m_press.SetValue(1.0f, 0.2f);
 		}
 		else if (JustReleased())
 		{
-			m_color.SetValue(m_baseColor, 0.2f);
+			m_press.SetValue(0.0f, 0.2f);
 		}
 
 		m_isPrevPressed = m_isPressed;
 		
-		m_transform.Update(context.frameTime);
-		m_color.Update(context.frameTime);
-		m_scale.Update(context.frameTime);
+		m_press.Update(context.frameTime);
+		m_hover.Update(context.frameTime);
+		m_enable.Update(context.frameTime);
 
+		if (m_mode == EMode::Transform)
+		{
+			Matrix44 scaleMtx;
+			scaleMtx.SetScale(Interpolations::LerpInterpolation::Compute(0.0f,1.0f,m_enable.GetValue()));
 
-		Vector4 value = m_color.GetValue();
+			entity->QueryComponent<Abathur::TLocationComponent>()->mtx = scaleMtx*m_initTransform;
 
-		Matrix44 scaleMtx;
-		scaleMtx.SetScale(m_scale.GetValue());
+			Vector3 position = Interpolations::LerpInterpolation::Compute(m_initTransform.GetTranslation(), m_initTransform.GetTranslation() + m_hoverOffsetTarget, m_hover.GetValue());
+			entity->QueryComponent<Abathur::TLocationComponent>()->mtx.SetTranslation(position);
 
-		entity->QueryComponent<Abathur::TLocationComponent>()->mtx = scaleMtx*m_initTransform;
-		entity->QueryComponent<Abathur::TLocationComponent>()->mtx.SetTranslation(m_transform.GetValue());
+			Vector4 color = Interpolations::LerpInterpolation::Compute(m_baseColor, m_pressedColor, m_press.GetValue());
+			Abathur::setMaterialParam(entity->QueryComponent<Abathur::TVisualComponent>()->material, "diffuse_color", const_cast<Vector4&>(color));
+		}
+		else
+		{
+			Abathur::TAbathurMaterial* pMaterial = entity->QueryComponent<Abathur::TVisualComponent>()->material; 
+			Abathur::setMaterialParam(pMaterial, "diffuse_color", m_pressedColor);
+			Abathur::setMaterialParam(pMaterial, "button_factors", Vector3(m_enable.GetValue(),m_hover.GetValue(),m_press.GetValue()));
 
-		Abathur::setMaterialParam(entity->QueryComponent<Abathur::TVisualComponent>()->material, "diffuse_color", const_cast<Vector4&>(m_color.GetValue()));
-	
+			if (ImGui::Button("Reload Button Material"))
+			{
+				Abathur::reloadMaterial(pMaterial);
+			}
+
+		}
+		
 	}
 
 	bool CButtonComponent::IsMouseHover() const

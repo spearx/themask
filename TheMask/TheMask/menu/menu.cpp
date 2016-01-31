@@ -197,11 +197,11 @@ namespace Menu
 		{
 			if (Abathur::TVisualComponent* pVisualComponent = pCristalPlayer->QueryComponent<Abathur::TVisualComponent>())
 			{
-				Vector3 cameraPosition = m_camera.GetViewParameters().GetTransform().t;
+				//Vector3 cameraPosition = m_camera.GetViewParameters().GetTransform().t;
 
 				Abathur::CViewParameters& viewParameters = World::CWorld::Get().GetPlayerCamera().GetViewParameters();
 				Abathur::setMaterialParam(pVisualComponent->material, "diffuse", viewParameters.GetRenderTarget());
-				Abathur::setMaterialParam(pVisualComponent->material, "eye_pos", cameraPosition);
+				//Abathur::setMaterialParam(pVisualComponent->material, "eye_pos", cameraPosition);
 				Abathur::setMaterialParam(pVisualComponent->material, "global_time", gTotalTime);
 				Abathur::setMaterialParam(pVisualComponent->material, "threshold", const_cast<float&>(m_introThreshold.GetValue()));
 
@@ -293,10 +293,18 @@ namespace Menu
 		for (int i = 0; i < ButtonCount; ++i) 
 		{
 			const char *button_name = m_buttonNames[i];
-			Abathur::TVisualComponent *comp = Abathur::GetEntityByName(button_name, m_sceneId)->QueryComponent<Abathur::TVisualComponent>();
-			if (comp)
+			if (Abathur::TAbathurEntity* pEntity = Abathur::GetEntityByName(button_name, m_sceneId))
 			{
-				comp->visible = false;
+				/*
+				if (Abathur::TVisualComponent *comp = pEntity->QueryComponent<Abathur::TVisualComponent>())
+				{
+					comp->visible = false;
+				}
+				*/
+				if (CButtonComponent *comp = pEntity->QueryComponent<CButtonComponent>())
+				{
+					comp->SetMode(CButtonComponent::EMode::Texture);
+				}
 			}
 		}
 

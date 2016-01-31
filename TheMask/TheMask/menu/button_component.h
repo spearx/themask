@@ -8,6 +8,13 @@ namespace Menu
 {
 	class CButtonComponent : public Abathur::TComponent, public Abathur::Input::InputListener
 	{
+	public: 
+		enum class EMode
+		{
+			Transform,
+			Texture,
+		};
+
 	public:
 		CButtonComponent();
 
@@ -24,6 +31,8 @@ namespace Menu
 
 		inline void SetHoverOffset(const Vector3& offset) { m_hoverOffsetTarget = offset; }
 		inline void SetPressedColor(const Vector4& base_color, const Vector4& color) { m_baseColor = base_color; m_pressedColor = color; }
+
+		inline void SetMode(const EMode input) { m_mode = input; }
 
 		bool IsPressed(const bool input);
 		bool JustPressed() const;
@@ -44,14 +53,16 @@ namespace Menu
 		Vector4   m_pressedColor;
 		Vector4   m_baseColor;
 
-		Interpolations::InterpolableFixed<Vector3, Interpolations::EaseOutBackInterpolation> m_transform;
-		Interpolations::InterpolableFixed<Vector4, Interpolations::EaseOutBackInterpolation> m_color;
-		Interpolations::InterpolableFixed<float,   Interpolations::EaseOutBackInterpolation> m_scale;
+		Interpolations::InterpolableFixed<float, Interpolations::EaseOutBackInterpolation> m_hover;
+		Interpolations::InterpolableFixed<float, Interpolations::EaseOutBackInterpolation> m_press;
+		Interpolations::InterpolableFixed<float, Interpolations::EaseOutBackInterpolation> m_enable;
 
 		Vector2 m_areaMin; 
 		Vector2 m_areaMax;
 
 		Abathur::CScopedUpdate m_update;
+
+		EMode m_mode;
 
 		bool m_isPressed; 
 		bool m_isPrevPressed;
