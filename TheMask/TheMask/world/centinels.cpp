@@ -17,6 +17,7 @@ namespace World
   {
     Menu::CMenu::Get().SetTimeFactor(1.0f);
     Menu::CMenu::Get().SetTotemIconState(false);
+    bool oneTotemAwake = false;
 
     float speed_elapsed = context.frameTime * m_speedFactor;
     for (auto &c : m_centinels) 
@@ -25,10 +26,8 @@ namespace World
 
       if (c.m_timeToTurn > 0.0f)
       {
+        oneTotemAwake = true;
         c.m_timeToTurn -= context.frameTime;
-        if (c.m_timeToTurn <= 0.0f) {
-          Abathur::setVolumeAudio(m_tottemAudio, 1.0f);
-        }
         Menu::CMenu::Get().SetTotemIconState(true);
 
         Abathur::TEntityId eID = CWorld::Get().GetPlayerEntityId();
@@ -53,7 +52,7 @@ namespace World
         c.m_yaw = 0.0f;
         c.m_timeToTurn = m_timeInIdle;
         printf("Centinel is Awake Warning!!!\n");
-        Abathur::setVolumeAudio(m_tottemAudio, 0.0f);
+        //Abathur::setVolumeAudio(m_tottemAudio, 0.0f);
       }
       Abathur::TLocationComponent* pLocComponent = pTotemEntity->QueryComponent<Abathur::TLocationComponent>();
       mtx.SetRotationY(c.m_yaw);
@@ -61,6 +60,10 @@ namespace World
       pLocComponent->mtx = mtx * c.m_matrixOriginal;
       pLocComponent->mtx.SetTranslation(loc);
     }
+    if(oneTotemAwake)
+      Abathur::setVolumeAudio(m_tottemAudio, 1.0f);
+    else
+      Abathur::setVolumeAudio(m_tottemAudio, 0.0f);
   }
 
   void CCentinels::SetSpeedSpeed(float delta)

@@ -79,7 +79,8 @@ namespace Menu
 				if (m_sequenceIndex == 0u)
 				{
 					m_state = EState::Failed;
-					printf("FAILURE~~~~\n");
+          Abathur::playAudio("data/audio/bad_click.wav", false);
+          printf("FAILURE~~~~\n");
 					break;
 				}
 				else if (m_sequenceIndex >= SEQUENCE_LENGTH)
@@ -88,6 +89,10 @@ namespace Menu
 					printf("AWESOME~~~~\n");
 					break;
 				}
+        else  //Good click
+        { 
+          Abathur::playAudio("data/audio/good_click.wav", false);
+        }
 
 			}
 		}

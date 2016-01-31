@@ -55,12 +55,10 @@ namespace Menu
 			m_isPressed = buttonEvent == Abathur::Input::EButtonEvent::Press ? m_isEnabled : false;
 		}
 
-		/*
 		if (button == Abathur::Input::EButton::MouseRight)
 		{
 			CMenu::Get().GetOfflineGame().Enable();
 		}
-		*/
 
 		return false;
 	}
